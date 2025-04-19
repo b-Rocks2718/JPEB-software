@@ -3,3 +3,4 @@ c-compiler
 JPEB-emulator
 *.bin
 *.out
+collatz/*.s
