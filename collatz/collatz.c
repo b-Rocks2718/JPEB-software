@@ -86,7 +86,7 @@ unsigned print_seq(unsigned x){
 unsigned digits[3];
 
 unsigned read_num(void){
-  int result = 100 * digits[2] + 10 * digits[1] + digits[0];
+  int result = 100 * digits[0] + 10 * digits[1] + digits[2];
   return result;
 }
 
