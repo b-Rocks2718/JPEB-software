@@ -1,19 +1,26 @@
 write_tilemap:
 		push r2
-  	movi r2 tilemap
-  	movi r4 0x0F00
-  	movi r5 tilemap_end
+    movi r2 0xC000
+    movi r3 0xE000
 write_tilemap_loop:
+    sw   r0 r2 0
+    addi r2 r2 1
+    cmp  r2 r3
+    bnz  write_tilemap_loop
+  	movi r2 tilemap
+  	movi r4 0x00F0
+  	movi r5 tilemap_end
+write_tilemap_loop_2:
   	lw   r3 r2 0
   	sw   r4 r3 0
   	addi r2 r2 1
   	cmp  r2 r5
-  	bnz  write_tilemap_loop
+  	bnz  write_tilemap_loop_2
 		pop r2
   	jalr r0 r7
 
 tilemap:
-	# space (0xC00)
+	# space
 
 	# !
 	.fill 0xC84B
