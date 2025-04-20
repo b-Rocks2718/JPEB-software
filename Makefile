@@ -10,6 +10,13 @@ COMMON      := $(strip $(MAPPED_S) $(EXTRA_S))
 
 .PRECIOUS: %.bin %.s
 
+math_demos/math_demos.run: math_demos/math_demos.bin
+	$(EMU) math_demos/math_demos.bin
+
+math_demos/math_demos.bin: math_demos/math_demos.s mandelbrot/mandelbrot.s collatz/collatz.s $(COMMON)
+	rm -f $@
+	$(AS) math_demos/math_demos.s mandelbrot/mandelbrot.s collatz/collatz.s $(COMMON)
+
 %.run: %.bin
 	$(EMU) $<
 

@@ -7,6 +7,7 @@ unsigned putchar(unsigned n);
 unsigned print_unsigned(unsigned n);
 unsigned write_text_tilemap(void);
 int write_solid_tile(unsigned tile_num, unsigned color);
+int clear_screen(void);
 
 // constants
 int FIXED_ONE = 0x0100;
@@ -51,15 +52,20 @@ unsigned colors[26] =
    0xF08, 0xF0C, 0xF0F, 0xC0F, 0x80F,
    0x40F};
 
-int main(void){
+int mandelbrot_main(void){
   write_text_tilemap();
+  clear_screen();
+
+  unsigned *p = (unsigned*)RESOLUTION_REG;
+  // max resolution
+  *p = 0;
   
   // set up colors
   for (int i = 0; i < 20; ++i){
     if (i != 10) write_solid_tile(i, colors[i]);
   }
 
-  unsigned* p = (unsigned*)INPUT_STREAM;
+  p = (unsigned*)INPUT_STREAM;
 
   int start_x = -0x0200;
   int start_y = 0x0110;

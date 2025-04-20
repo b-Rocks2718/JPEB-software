@@ -64,25 +64,26 @@ unsigned read_num(void){
 }
 
 // Enter a 3 digit number \n
-unsigned msg[25] = {0x45, 0x6E, 0x74, 0x65, 0x72, 0x20, 0x61, 0x20, 0x33,
+unsigned enter_digit[25] = {0x45, 0x6E, 0x74, 0x65, 0x72, 0x20, 0x61, 0x20, 0x33,
                 0x20, 0x64, 0x69, 0x67, 0x69, 0x74, 0x20, 0x6E, 0x75, 0x6D, 
                 0x62, 0x65, 0x72, 0x3A, 0x0A, 0x0};
 
 // q to quit\n
-unsigned msg2[15] = {0x28, 0x71, 0x20, 0x74, 0x6F, 0x20, 0x71, 0x75, 
+unsigned quit[15] = {0x28, 0x71, 0x20, 0x74, 0x6F, 0x20, 0x71, 0x75, 
   0x69, 0x74, 0x29, 0x0A, 0x0};
 
 // press any key to restart
-unsigned msg3[26] = {0X50,0X72,0X65,0X73,0X73,0X20,0X61,0X6E,0X79,0X20,0X6B,0X65,
+unsigned reset[26] = {0X50,0X72,0X65,0X73,0X73,0X20,0X61,0X6E,0X79,0X20,0X6B,0X65,
   0X79,0X20,0X74,0X6F,0X20,0X72,0X65,0X73,0X74,0X61,0X72,0X74,0X0A,0X00};
 
-int main(void) {
+int collatz_main(void) {
+  clear_screen();
   write_text_tilemap();
   unsigned *p = (unsigned*)RESOLUTION_REG;
   // decrease resolution
   *p = 1;
 
-  print(msg);
+  print(enter_digit);
 
   p = (unsigned*)INPUT_STREAM;
 
@@ -106,15 +107,15 @@ int main(void) {
     putchar(10);
     print_seq(result);
     putchar(10);
-    print(msg3);
-    print(msg2);
+    print(reset);
+    print(quit);
 
     while (1){
       d = *p; // start over on next keypress
       if (d != 0) {
         if (d == 0x71) return 0; // this was a q
         end: clear_screen();
-        print(msg);
+        print(enter_digit);
         break;
       }
     }
