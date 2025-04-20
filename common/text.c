@@ -23,7 +23,11 @@ unsigned putchar (unsigned c){
   }
   cursor_index++;
 
-  if (cursor_index >= 40){
+  p = (unsigned*)RESOLUTION_REG;
+  int resolution = *p;
+  int max = 80 >> resolution;
+
+  if (cursor_index >= max){
     cursor_index = 0; // go to next line
     line_index++;
   }

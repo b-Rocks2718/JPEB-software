@@ -1,10 +1,12 @@
-
+# Need c-compiler and JPEB-emulator in root directory to use this makefile
 CC = ./c-compiler
 AS = python3 Assembler.py
 EMU = ./JPEB-emulator
 
 COMMON_C := $(wildcard common/*.c)
-COMMON := $(COMMON_C:.c=.s) $(wildcard common/*.s)
+MAPPED_S    := $(COMMON_C:.c=.s)                            
+EXTRA_S     := $(filter-out $(MAPPED_S),$(wildcard common/*.s))
+COMMON      := $(strip $(MAPPED_S) $(EXTRA_S))
 
 .PRECIOUS: %.bin %.s
 

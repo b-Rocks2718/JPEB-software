@@ -1,6 +1,6 @@
 // link with text.c
 
-int write_tilemap(void);
+int write_text_tilemap(void);
 unsigned putchar(unsigned c);
 unsigned print_unsigned(unsigned x);
 unsigned clear_screen(void);
@@ -77,7 +77,7 @@ unsigned msg3[26] = {0X50,0X72,0X65,0X73,0X73,0X20,0X61,0X6E,0X79,0X20,0X6B,0X65
   0X79,0X20,0X74,0X6F,0X20,0X72,0X65,0X73,0X74,0X61,0X72,0X74,0X0A,0X00};
 
 int main(void) {
-  write_tilemap();
+  write_text_tilemap();
   unsigned *p = (unsigned*)RESOLUTION_REG;
   // decrease resolution
   *p = 1;
@@ -93,6 +93,7 @@ int main(void) {
       d = *p; // read input
       if (d != 0) {
         putchar(d);
+        if (d == 0x71) return 0; // this was a q
         if (d < ZERO_CHAR || d > ZERO_CHAR + 9) goto end; // invalid input
         digits[i] = d - ZERO_CHAR; // store input
         ++i;
