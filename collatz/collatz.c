@@ -1,44 +1,16 @@
-unsigned ZERO_CHAR = 48;
-
-unsigned FRAMEBUFFER_START = 0xE000;
-unsigned RESOLUTION_REG = 0xFFFC;
-unsigned INPUT_STREAM = 0xFFFF;
-
-static unsigned cursor_index = 0;
-static unsigned line_index = 0;
+// link with text.c
 
 int write_tilemap(void);
+unsigned putchar(unsigned c);
+unsigned print_unisgned(unsigned x);
+unsigned clear_screen(void);
+unsigned print(unsigned* string);
 
-unsigned putchar (unsigned c){
-  unsigned* p = (unsigned*)FRAMEBUFFER_START + 64 * line_index + cursor_index / 2;
-
-  if (c == 10){
-    cursor_index = 0;
-    line_index++;
-    return 0;
-  }
-
-  if (cursor_index & 1) {
-    *p = *p | (c << 8);
-  } else {
-    *p = c;
-  }
-  cursor_index++;
-
-  if (cursor_index >= 40){
-    cursor_index = 0; // go to next line
-    line_index++;
-  }
-}
-
-unsigned print_unisgned(unsigned x){
-  unsigned d = x % 10;
-  x = x / 10;
-  if (x != 0){
-    print_unisgned(x);
-  } 
-  putchar(ZERO_CHAR + d);
-}
+extern unsigned cursor_index;
+extern unsigned line_index;
+extern unsigned RESOLUTION_REG;
+extern unsigned INPUT_STREAM;
+extern unsigned ZERO_CHAR;
 
 unsigned next_collatz(unsigned x){
   if (x & 1){
@@ -81,6 +53,7 @@ unsigned print_seq(unsigned x){
   putchar(58); // :
   putchar(32); // space
   print_unisgned(max);
+  putchar(10);
 }
 
 unsigned digits[3];
@@ -90,20 +63,26 @@ unsigned read_num(void){
   return result;
 }
 
-unsigned clear_screen(void){
-  cursor_index = 0;
-  line_index = 0;
-  for (int i = 0; i < 60 * 80; ++i){
-    putchar(0);
-  }
-  cursor_index = 0;
-  line_index = 0;
-}
+// Enter a 3 digit number \n
+unsigned msg[25] = {0x45, 0x6E, 0x74, 0x65, 0x72, 0x20, 0x61, 0x20, 0x33,
+                0x20, 0x64, 0x69, 0x67, 0x69, 0x74, 0x20, 0x6E, 0x75, 0x6D, 
+                0x62, 0x65, 0x72, 0x3A, 0x0A, 0x0};
+
+// q to quit\n
+unsigned msg2[15] = {0x28, 0x71, 0x20, 0x74, 0x6F, 0x20, 0x71, 0x75, 
+  0x69, 0x74, 0x29, 0x0A, 0x0};
+
+// press any key to restart
+unsigned msg3[26] = {0X50,0X72,0X65,0X73,0X73,0X20,0X61,0X6E,0X79,0X20,0X6B,0X65,
+  0X79,0X20,0X74,0X6F,0X20,0X72,0X65,0X73,0X74,0X61,0X72,0X74,0X0A,0X00};
 
 int main(void) {
   write_tilemap();
   unsigned *p = (unsigned*)RESOLUTION_REG;
+  // decrease resolution
   *p = 1;
+
+  print(msg);
 
   p = (unsigned*)INPUT_STREAM;
 
@@ -111,23 +90,30 @@ int main(void) {
     int d = 0;
     int i = 0;
     while (1){
-      d = *p;
+      d = *p; // read input
       if (d != 0) {
         putchar(d);
-        digits[i] = d - ZERO_CHAR;
+        if (d < ZERO_CHAR || d > ZERO_CHAR + 9) goto end; // invalid input
+        digits[i] = d - ZERO_CHAR; // store input
         ++i;
         if (i == 3) break;
       }
     }
 
     unsigned result = read_num();
+    if (result < 1) goto end; // invalid input
     putchar(10);
     print_seq(result);
+    putchar(10);
+    print(msg3);
+    print(msg2);
 
     while (1){
-      d = *p;
+      d = *p; // start over on next keypress
       if (d != 0) {
-        clear_screen();
+        if (d == 0x71) return 0; // this was a q
+        end: clear_screen();
+        print(msg);
         break;
       }
     }
