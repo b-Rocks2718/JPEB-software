@@ -4,3 +4,5 @@ JPEB-emulator
 *.bin
 *.out
 collatz/*.s
+mandelbrot/*.s
+common/text.s

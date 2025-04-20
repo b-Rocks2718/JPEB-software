@@ -2,7 +2,7 @@
 
 int write_tilemap(void);
 unsigned putchar(unsigned c);
-unsigned print_unisgned(unsigned x);
+unsigned print_unsigned(unsigned x);
 unsigned clear_screen(void);
 unsigned print(unsigned* string);
 
@@ -38,13 +38,13 @@ unsigned print_seq(unsigned x){
   
 
   while (x != 1){
-    print_unisgned(x);
+    print_unsigned(x);
     putchar(44); // ,
     x = next_collatz(x);
     if (x > max) max = x;
     ++i;
   }
-  print_unisgned(x);
+  print_unsigned(x);
   putchar(10); //\n
   putchar(10); //\n
   putchar(77); // M
@@ -52,7 +52,7 @@ unsigned print_seq(unsigned x){
   putchar(120); // x
   putchar(58); // :
   putchar(32); // space
-  print_unisgned(max);
+  print_unsigned(max);
   putchar(10);
 }
 

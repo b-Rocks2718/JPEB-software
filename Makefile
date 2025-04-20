@@ -1,19 +1,28 @@
-# Makefile
+
 CC = ./c-compiler
 AS = python3 Assembler.py
 EMU = ./JPEB-emulator
 
-collatz.run: collatz.bin
-	$(EMU) collatz/collatz.bin
+COMMON_C := $(wildcard common/*.c)
+COMMON := $(COMMON_C:.c=.s) $(wildcard common/*.s)
 
-collatz.bin: collatz/collatz.s asm_libraries/arithmetic.s asm_libraries/text_tile_loader.s common/text.s Assembler.py
-	$(AS) collatz/collatz.s asm_libraries/arithmetic.s asm_libraries/text_tile_loader.s common/text.s
+.PRECIOUS: %.bin %.s
 
-collatz/collatz.s: collatz/collatz.c
-	$(CC) collatz/collatz.c
+%.run: %.bin
+	$(EMU) $<
+
+%.bin: %.s $(COMMON)
+	rm -f $@
+	$(AS) $< $(COMMON)
+
+%.s: %.c
+	rm -f $@
+	$(CC) $<
 
 common/text.s: common/text.c
+	rm -f common/text.s
 	$(CC) common/text.c
 
 clean:
-	rm -f collatz/collatz.s common/text.s collatz/collatz.out collatz/collatz.bin
+	rm -f collatz/collatz.s common/text.s collatz/collatz.out collatz/collatz.bin \
+		mandelbrot/mandelbrot.bin mandelbrot/mandelbrot.out mandelbrot/mandelbrot.s

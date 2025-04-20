@@ -3,6 +3,10 @@ extern unsigned RESOLUTION_REG;
 extern unsigned INPUT_STREAM;
 extern unsigned FRAMEBUFFER_START;
 
+unsigned putchar(unsigned n);
+unsigned print_unsigned(unsigned n);
+unsigned write_tilemap(void);
+
 // we'll used 16 bit fixed point integers with this format: XXXX XXXX.XXXX XXXX
 unsigned mul_fixed(unsigned x, unsigned y){
   unsigned result = 0;
@@ -39,6 +43,24 @@ int mandelbrot_count(unsigned c_x, unsigned c_y){
   return i;
 }
 
+unsigned FIXED_ONE = 0x0100;
+
 int main(void){
-  return 0;
+  write_tilemap();
+
+  unsigned *p = (unsigned*)RESOLUTION_REG;
+  // decrease resolution
+  *p = 1;
+
+  p = (unsigned*)INPUT_STREAM;
+
+  print_unsigned(FIXED_ONE);
+  putchar(10);
+  print_unsigned(mul_fixed(FIXED_ONE, FIXED_ONE));
+
+  int d;
+  while (1){
+    d = *p; // start over on next keypress
+    if (d == 0x71) return 0; // this was a q
+  }
 } 

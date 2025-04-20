@@ -29,11 +29,11 @@ unsigned putchar (unsigned c){
   }
 }
 
-unsigned print_unisgned(unsigned x){
+unsigned print_unsigned(unsigned x){
   unsigned d = x % 10;
   x = x / 10;
   if (x != 0){
-    print_unisgned(x);
+    print_unsigned(x);
   } 
   putchar(ZERO_CHAR + d);
 }
