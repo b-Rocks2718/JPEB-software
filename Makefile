@@ -13,9 +13,9 @@ COMMON      := $(strip $(MAPPED_S) $(EXTRA_S))
 math_demos/math_demos.run: math_demos/math_demos.bin
 	$(EMU) math_demos/math_demos.bin
 
-math_demos/math_demos.bin: math_demos/math_demos.s mandelbrot/mandelbrot.s collatz/collatz.s $(COMMON)
+math_demos/math_demos.bin: math_demos/math_demos.s mandelbrot/mandelbrot.s collatz/collatz.s life/life.s $(COMMON)
 	rm -f $@
-	$(AS) math_demos/math_demos.s mandelbrot/mandelbrot.s collatz/collatz.s $(COMMON)
+	$(AS) math_demos/math_demos.s mandelbrot/mandelbrot.s collatz/collatz.s life/life.s $(COMMON)
 
 %.run: %.bin
 	$(EMU) $<
@@ -31,6 +31,10 @@ math_demos/math_demos.bin: math_demos/math_demos.s mandelbrot/mandelbrot.s colla
 common/text.s: common/text.c
 	rm -f common/text.s
 	$(CC) common/text.c
+
+common/tile.s: common/tile.c
+	rm -f common/tile.s
+	$(CC) common/tile.c
 
 clean:
 	rm -f collatz/collatz.s common/text.s collatz/collatz.out collatz/collatz.bin \
