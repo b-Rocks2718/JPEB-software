@@ -39,7 +39,7 @@ int update_selector(int selector){
 int main(void){
   start:
   clear_screen();
-  write_text_tilemap(0x000, 0x0F0);
+  write_text_tilemap(0x0F0, 0x111);
   unsigned *p = (unsigned*)RESOLUTION_REG;
   // lower resolution
   *p = 1;
