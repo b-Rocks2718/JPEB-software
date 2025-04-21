@@ -1318,6 +1318,8 @@ life_main:
 	addi r2  r1  0
 	# Function Body
 	addi r1  r1  -62
+	movi r3 240
+	movi r4 0
 	call write_text_tilemap
 	sw r3  r2  -1
 	call clear_screen

@@ -5,5 +5,3 @@ JPEB-emulator
 *.out
 collatz/*.s
 mandelbrot/*.s
-common/text.s
-common/tile.s

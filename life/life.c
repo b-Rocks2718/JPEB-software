@@ -6,7 +6,7 @@ unsigned FRAMEBUFFER_BUFFER = 0x6000; // gonna hope this doesnt cause problems
 
 unsigned putchar(unsigned n);
 unsigned print_unsigned(unsigned n);
-unsigned write_text_tilemap(void);
+int write_text_tilemap(int text_color, int bg_color);
 int write_solid_tile(unsigned tile_num, unsigned color);
 unsigned draw_pixel(unsigned x, unsigned y, unsigned p);
 unsigned read_pixel(unsigned x, unsigned y);
@@ -114,7 +114,7 @@ int count_neighbors(int j, int i){
 }
 
 int life_main(void){
-  write_text_tilemap();
+  write_text_tilemap(0x0F0, 0x000);
   clear_screen();
   write_solid_tile(1, 0xFFF);
 
