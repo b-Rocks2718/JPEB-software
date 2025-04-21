@@ -1,17 +1,9 @@
-	movi r3 main
-	jalr r0  r3 
 
 # Data Section:
 line_index:
 	.fill 0
 cursor_index:
 	.fill 0
-INPUT_STREAM:
-	.fill 65535
-RESOLUTION_REG:
-	.fill 65532
-FRAMEBUFFER_START:
-	.fill 57344
 ZERO_CHAR:
 	.fill 48
 

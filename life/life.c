@@ -13,39 +13,47 @@ unsigned read_pixel(unsigned x, unsigned y);
 unsigned clear_screen(void);
 
 int setup_loop(void){
-  unsigned *p = (unsigned*)RESOLUTION_REG;
-  // lower resolution
-  *p = 1;
 
   unsigned* input = (unsigned*)INPUT_STREAM;
 
-  int cur_x = 5;
-  int cur_y = 1;
-  int erase = 1;
+  static int cur_x = 5; // static to help out the compiler
+  static int cur_y = 1;
+  static int erase = 1;
+  static int next_erase = 1;
 
   int keypress;
   while (1){
-    draw_pixel(cur_x, cur_y, 1);
     keypress = *input; // start over on next keypress
+    int moved = 0;
     if (keypress == 0x71) return 0; // this was a q
     else if (keypress == 0x77 && cur_y > 0) {
       if (erase) draw_pixel(cur_x, cur_y, 0);
+      else draw_pixel(cur_x, cur_y, 1);
       cur_y--;
+      moved = 1;
     }
     else if (keypress == 0x73 && cur_y < 59) {
       if (erase) draw_pixel(cur_x, cur_y, 0);
+      else draw_pixel(cur_x, cur_y, 1);
       cur_y++;
+      moved = 1;
     }
     if (keypress == 0x61 && cur_x > 0) {
-      if (erase)draw_pixel(cur_x, cur_y, 0);
+      if (erase) draw_pixel(cur_x, cur_y, 0);
+      else draw_pixel(cur_x, cur_y, 1);
       cur_x--;
+      moved = 1;
     }
     else if (keypress == 0x64 && cur_x < 79) {
       if (erase) draw_pixel(cur_x, cur_y, 0);
+      else draw_pixel(cur_x, cur_y, 1);
       cur_x++;
+      moved = 1;
     }
     else if (keypress == 32) erase = !erase;
     else if (keypress == 13) break;
+
+    draw_pixel(cur_x, cur_y, 2);
   }
 }
 
@@ -114,13 +122,13 @@ int count_neighbors(int j, int i){
 }
 
 int life_main(void){
-  write_text_tilemap(0x0F0, 0x000);
   clear_screen();
-  write_solid_tile(1, 0xFFF);
+  write_solid_tile(1, 0xCCC);
+  write_solid_tile(2, 0xFFF);
 
   unsigned *p = (unsigned*)RESOLUTION_REG;
-  // max resolution
-  *p = 0;
+  // lower resolution
+  *p = 1;
 
   unsigned* input = (unsigned*)INPUT_STREAM;
 

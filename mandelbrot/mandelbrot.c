@@ -2,12 +2,17 @@
 extern unsigned RESOLUTION_REG;
 extern unsigned INPUT_STREAM;
 extern unsigned FRAMEBUFFER_START;
+extern unsigned TILEMAP_START;
+extern unsigned SCROLL_X;
+extern unsigned SCROLL_Y;
 
 unsigned putchar(unsigned n);
 unsigned print_unsigned(unsigned n);
 int write_text_tilemap(int text_color, int bg_color);
 int write_solid_tile(unsigned tile_num, unsigned color);
 int clear_screen(void);
+unsigned read_pixel(unsigned x, unsigned y);
+unsigned draw_pixel(unsigned x, unsigned y, unsigned color);
 
 // constants
 int FIXED_ONE = 0x0100;
@@ -52,6 +57,24 @@ unsigned colors[26] =
    0xF08, 0xF0C, 0xF0F, 0xC0F, 0x80F,
    0x40F};
 
+int display_mandelbrot(unsigned start_x, unsigned start_y, unsigned diff){
+  for (int i = 0; i < 60; ++i){
+    for (int j = 0; j < 80; ++j){
+      int c_x = start_x + diff * j;
+      int c_y = start_y - diff * i;
+      int count = mandelbrot_count(c_x, c_y);
+      if (count >= 0){
+        count = count + 1;
+        if (count >= 10) count = count + 1;
+        if (count > 25) count = 25;
+        draw_pixel(j, i, count);
+      } else {
+        draw_pixel(j, i, 0);
+      }
+    }
+  }
+}
+
 int mandelbrot_main(void){
   write_text_tilemap(0x0F0, 0x000);
   clear_screen();
@@ -72,21 +95,7 @@ int mandelbrot_main(void){
 
   int diff = 0x0009;
 
-  for (int i = 0; i < 60; ++i){
-    for (int j = 0; j < 80; ++j){
-      int c_x = start_x + diff * j;
-      int c_y = start_y - diff * i;
-      int count = mandelbrot_count(c_x, c_y);
-      if (count >= 0){
-        count = count + 1;
-        if (count >= 10) count = count + 1;
-        if (count > 25) count = 25;
-        putchar(count);
-      } else {
-        putchar(0);
-      }
-    }
-  }
+  display_mandelbrot(start_x, start_y, diff);
 
   int d;
   while (1){

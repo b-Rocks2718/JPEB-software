@@ -1,8 +1,8 @@
 unsigned ZERO_CHAR = 48;
 
-unsigned FRAMEBUFFER_START = 0xE000;
-unsigned RESOLUTION_REG = 0xFFFC;
-unsigned INPUT_STREAM = 0xFFFF;
+extern unsigned FRAMEBUFFER_START;
+extern unsigned RESOLUTION_REG;
+extern unsigned INPUT_STREAM;
 
 static unsigned cursor_index = 0;
 static unsigned line_index = 0;
