@@ -1,7 +1,7 @@
 # Need c-compiler and JPEB-emulator in root directory to use this makefile
-CC = ./c-compiler
-AS = python3 Assembler.py
-EMU = ./JPEB-emulator
+CC = ../JPEB-compiler/dist-newstyle/build/x86_64-linux/ghc-9.4.8/c-compiler-0.1.0.0/x/c-compiler/build/c-compiler/c-compiler
+AS = python3 ../JPEB-compiler/Assembler.py
+EMU = ../JPEB-emulator/target/release/JPEB-emulator
 
 COMMON_C := $(wildcard common/*.c)
 MAPPED_S    := $(COMMON_C:.c=.s)                            
@@ -37,5 +37,6 @@ common/tile.s: common/tile.c
 	$(CC) common/tile.c
 
 clean:
-	rm -f collatz/collatz.s common/text.s collatz/collatz.out collatz/collatz.bin \
-		mandelbrot/mandelbrot.bin mandelbrot/mandelbrot.out mandelbrot/mandelbrot.s
+	find . -type f -name "*.bin" -exec rm -f {} +
+	find . -type f -name "*.out" -exec rm -f {} +
+	rm -f collatz/collatz.s common/text.s mandelbrot/mandelbrot.s life/life.s common/text.s common/tile.s

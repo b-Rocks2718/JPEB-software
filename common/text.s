@@ -1,5 +1,3 @@
-	movi r3 main
-	jalr r0  r3 
 
 # Data Section:
 line_index:
