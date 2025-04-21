@@ -1,362 +1,421 @@
-# note that this follows the following ISA convensions
-# r1 = stack pointer
-# r7 = return link
+# Data Section:
 
-PRESS_SPACE_TO_START:
-  movi r4, 0xFFFF
-  lw r4, r4, 0
-  movi r3, 0x20
-  cmp r4, r3
-  bne PRESS_SPACE_TO_START
-
-INIT:
-  # color the entire background to green (4)
-  movi r3, 0x0404
-  movi r5, 0x1000
-LBACKGROUND_INIT:
-  addi r5, r5, -1
-  movi r4, 0xE000
-  add r4, r4, r5
-  sw r3, r4, 0
-  cmp r5, r0
-  bnz LBACKGROUND_INIT
-LAPPLE_INIT:
-  # push previous return address
-  push r7
-  call FGROW_APPLE
-  pop r7
-LSNAKE_INIT:
-  # the data is stored at DATA
-  # at offset 0 is the snake's body's coordinates
-  movi r4, DATA
-  # the center coordinate is (x,y) = (40, 30)
-  movi r3, 0x281e
-  sw r3, r4, 0
-  addi r3, r3, 1    # lower order bytes is y
-  sw r3, r4, 1
-  # the length of the snake
-  movi r4, SNAKE_LENGTH
-  movi r3, 2
-  sw r3, r4, 0
-  # the color of the snake
-  movi r4, COLOR_STATE
-  movi r3, 1
-  sw r3, r4, 0
-  #graphics
-  # push previous return address
-  push r7
-  call FCOLOR_SNAKE
-  pop r7
-LMOTION_INIT:
-  movi r4, DIRECTION
-  movi r3, 0x00FF
-  sw r3, r4, 0
-MAIN:
-  movi r4, LOOP_COUNT
-  lw r3, r4, 0
-LSTALL:
-  addi r3, r3, -1
-  bnz LSTALL
-  lw r3, r4, 0
-  addi r3, r3, -1
-  sw r3, r4, 0
-LMOVE:
-  movi r4, 0xFFFF
-  lw r3, r4, 0 # get a key press
-  movi r4, DIRECTION
-
-  movi r5, 119 # 'w'
-  cmp r3, r5 # 'w'
-  bne NOTW
-  movi r3, 0x00FF
-  sw r3, r4, 0
-  jmp NOTD
-NOTW:
-  movi r5, 97 # 'a'
-  cmp r3, r5 # 'a'
-  bne NOTA
-  movi r3, 0xFF00
-  sw r3, r4, 0
-  jmp NOTD
-NOTA:
-  movi r5, 115 # 's'
-  cmp r3, r5 # 's'
-  bne NOTS
-  movi r3, 0x0001
-  sw r3, r4, 0
-  jmp NOTD
-NOTS:
-  movi r5, 100 # 'd'
-  cmp r3, r5 # 'd'
-  bne NOTD
-  movi r3, 0x0100
-  sw r3, r4, 0
-  jmp NOTD
-NOTD:
-LCLEAR_SNAKE:
-  # clear snake for redrawing
-  movi r4, COLOR_STATE
-  movi r3, 4
-  sw r3, r4, 0
-  push r7
-  call FCOLOR_SNAKE
-  pop r7
-LADVANCE_SNAKE:
-  # load next position
-  movi r4, DIRECTION
-  lw r3, r4, 0  # the direction the snake was going
-  # perform move
-  movi r4, DATA
-  lw r5, r4, 0 # the original head of the snake
-
-
-  # if next position is border, we die (i.e. if carry in y or x)
-  # left and top overflow are equivalent to right and bottom overflow, resp
-  # right overflow
-  add r2, r5, r3
-  movi r6, 0x5000
-  cmp r2, r6
-  bae LFAIL_ADV # too far right
-  # down overflow
-  movi r6, 0x00FF # we use this to mask out the y coordinate
-  and r2, r2, r6
-  movi r6, 0x3C
-  cmp r2, r6
-  bae LFAIL_ADV # too far down
-  jmp LEND_CHECKWALL
-LFAIL_ADV:
-  movi r4, FEND
-  jalr r0, r4
-LEND_CHECKWALL:
-  # correct for drift due to carry between y and x
-  movi r6, 0x00FF
-  and r6, r3, r6
-  addi r2, r6, 1
-  movi r6, 0x0100
-  and r2, r2, r6 # get carry bit
-  add r3, r3, r5 # r3 will store next position 
-  sub r3, r3, r2
-
-  movi r4, SNAKE_LENGTH
-  lw r2, r4, 0
-  # if next position is apple, we increase snake length and generate another apple
-  movi r5, APPLE
-  lw r5, r5, 0
-  cmp r3, r5
-  bne LEND_CHECKAPPLE
-  # increase snake length
-  addi r2, r2, 1
-  sw r2, r4, 0
-  # generate apple
-  push r7
-  call FGROW_APPLE
-  pop r7
-LEND_CHECKAPPLE:
-  movi r4, DATA
-LMOVE_FORWARD:
-  lw r5, r4, 0
-  sw r3, r4, 0
-  add r3, r0, r5
-  addi r4, r4, 1
-  addi r2, r2, -1
-  bnz LMOVE_FORWARD
-
-  movi r4, COLOR_STATE
-  movi r3, 1
-  sw r3, r4, 0
-  push r7
-  call FCOLOR_SNAKE
-  pop r7
-
-  movi r4, MAIN
-  jalr r0, r4
-
-# to set the apple to a certain color, call this function with COLOR_STATE set to the desired color
-# to set the apple at a certain location, pass the location in {x:hi,y:lo} via r4
-# will preserve r1, r2, r7
-FCOLOR_APPLE:
-  # get the tile address into r4
-  add r6, r0, r4
-  movi r3, 0xFF
-  and r3, r3, r6
-  shl r3, r3    # shl 6 times (for 'y')
-  shl r3, r3
-  shl r3, r3
-  shl r3, r3
-  shl r3, r3
-  shl r3, r3
-  shr r6, r6    # shr 9 times (for 'x')
-  shr r6, r6
-  shr r6, r6
-  shr r6, r6
-  shr r6, r6
-  shr r6, r6
-  shr r6, r6
-  shr r6, r6
-  movi r5, 1
-  and r5, r5, r6 # grab the even/odd bit before losing it
-  shr r6, r6
-  # r6 will be x
-  # if r5 (the sign) is even, the output will be OR'ed into the lower bits otherwise will OR into the upper bits
-  # calculate address
-  add r4, r3, r6
-  movi r3, 0xE000
-  add r4, r3, r4
-  # check even/odd
-  # get original value to OR with and store the OR'd result in r6
-  lw r3, r4, 0 # r3 is the original
-  cmp r5, r0
-  bnz LENDEVEN
-
-  # even -> lower order bits
-  movi r6, 0xFF00
-  and r6, r3, r6
-  movi r3, COLOR_STATE
-  lw r3, r3, 0
-  add r6, r6, r3
-  jmp LENDODD
-LENDEVEN:
-  # odd -> upper order bits
-  movi r6, 0x00FF
-  and r6, r3, r6
-  movi r3, COLOR_STATE
-  lw r3, r3, 0
-  shl r3, r3  # shl 8 bits
-  shl r3, r3
-  shl r3, r3
-  shl r3, r3
-  shl r3, r3
-  shl r3, r3
-  shl r3, r3
-  shl r3, r3
-  add r6, r6, r3
-LENDODD:
-  # draw to screen
-  sw r6, r4, 0
-  jalr r0, r7 # return
-
-# to set the snake to a certian color, call this function with COLOR_STATE set to the desired color
-FCOLOR_SNAKE:
-  # the loop
-  movi r2, SNAKE_LENGTH
-  lw r2, r2, 0
-LFILL:
-  # we assume snake always has some length to body
-  addi r2, r2, -1
-
-  movi r4, DATA   # load from snake body
-  add r4, r4, r2
-  lw r4, r4, 0
-  
-  # a snake is really just many apples
-  push r7
-  call FCOLOR_APPLE
-  pop r7
-
-  cmp r2, r0 # check not zero
-  bnz LFILL
-  jalr r0, r7 # return
-
-# places the apple in a location on-screen different from originally and not occupied by the snake
-# preserves all registers
-FGROW_APPLE:
-  push r2
-  push r3
-  push r4
-  push r5
-  push r6
-LGROW_LOOP:
-  # generate a new random location for apple x-location
-  movi r3, 0x50
-  push r7
-  call FRANDOM
-  pop r7
-  shl r3, r3
-  shl r3, r3
-  shl r3, r3
-  shl r3, r3
-  shl r3, r3
-  shl r3, r3
-  shl r3, r3
-  shl r3, r3
-  push r3
-  # generate a new random location for apple y-location
-  movi r3, 0x3c
-  push r7
-  call FRANDOM
-  pop r7
-  pop r5
-  add r5, r5, r3
-  movi r2, SNAKE_LENGTH
-  lw r2, r2, 0
-LNOTSNAKE_CHECK:
-  addi r2, r2, -1
-  movi r4, DATA
-  add r4, r2, r2
-  lw r3, r4, 0  # location of snake body part
-  cmp r3, r5
-  beq LGROW_LOOP # regenerate
-  cmp r2, r0
-  bne LNOTSNAKE_CHECK # check next part of snake
-  movi r4, COLOR_STATE # set color
-  sw r0, r4, 0
-  movi r4, APPLE
-  sw r5, r4, 0  # set apple location in memory to r5
-  add r4, r5, r0
-  push r7
-  call FCOLOR_APPLE
-  pop r7
-  pop r6
-  pop r5
-  pop r4
-  pop r3
-  pop r2
-  jalr r0, r7
-
-FMODULO:
-LMODULO_LOOP:
-  cmp r3, r4       # compare r3 (dividend) with r4 (divisor)
-  bl LMODULO_END  # if r3 < r4, exit loop
-  sub r3, r3, r4   # subtract r4 from r3
-  jmp LMODULO_LOOP # repeat
-LMODULO_END:
-  jalr r0, r7      # return
-
-# expects the end bound (exclusive) to be in r3
-# the end bound should be no more than 0xFF
-FRANDOM:
-  push r3
-  # Linear Congruential Generator (LCG)
-  movi r4, RANDOM_SEED
-  lw r3, r4, 0
-  movi r5, 0x4E6D  # Multiplier
-  xor r3, r3, r5
-  movi r5, 0x6073       # Increment
-  add r3, r3, r5
-  sw r3, r4, 0
-  # reduce the size of number
-  movi r4, 0xFF
-  and r3, r3, r4
-  # Modulo operation to get number in range
-  pop r4
-  push r7
-  call FMODULO
-  pop r7
-  jalr r0, r7
-
-RANDOM_SEED:
-  .fill 0x1023
-LOOP_COUNT: # the number of cycles to stall in the main loop
-  .fill 65000
-DIRECTION:
-  .fill 0x0001
-COLOR_STATE:
-  .fill 2
-DATA:
-  .space 4800
-APPLE:
-  .fill 0x1024
-SNAKE_LENGTH:
-  .fill 2
-
-FEND:
+# Code Section:
+write_solid_tile:
+	# Function Prologue
+	sw r7  r1  -1
+	sw r2  r1  -2
+	addi r1  r1  -2
+	addi r2  r1  0
+	# Function Body
+	addi r1  r1  -12
+	sw r3  r2  -1
+	sw r4  r2  -2
+	movi r3 49152
+	sw r3  r2  -3
+	lw r3  r2  -3
+	sw r3  r2  -4
+	lw r3  r2  -4
+	sw r3  r2  -5
+	lw r3  r2  -5
+	sw r3  r2  -6
+	movi r3 64
+	sw r3  r2  -7
+	lw r3  r2  -7
+	lw r4  r2  -1
+	call umul
+	sw r3  r2  -8
+	lw r3  r2  -6
+	lw r4  r2  -8
+	add r3  r3  r4 
+	sw r3  r2  -6
+	movi r3 0
+	sw r3  r2  -9
+write_solid_tile.for.0.start:
+	movi r3 1
+	sw r3  r2  -10
+	lw r3  r2  -9
+	movi r4 64
+	cmp r3  r4 
+	bl 1
+	jmp 3
+	movi r3 write_solid_tile.end.7
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -10
+write_solid_tile.end.7:
+	lw r3  r2  -10
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 write_solid_tile.for.0.break
+	jalr r0  r3 
+	lw r3  r2  -9
+	movi r4 1
+	call smul
+	sw r3  r2  -11
+	lw r3  r2  -6
+	lw r4  r2  -11
+	add r3  r3  r4 
+	sw r3  r2  -12
+	lw r3  r2  -12
+	lw r4  r2  -2
+	sw r4  r3  0
+write_solid_tile.for.0.continue:
+	lw r3  r2  -9
+	movi r4 1
+	add r3  r3  r4 
+	sw r3  r2  -9
+	movi r3 write_solid_tile.for.0.start
+	jalr r0  r3 
+write_solid_tile.for.0.break:
+	movi r3 0
+	# Function Epilogue
+	mov r1  r2 
+	lw r7  r2  1
+	lw r2  r2  0
+	addi r1  r1  2
+	jalr r0  r7 
+draw_pixel:
+	# Function Prologue
+	sw r7  r1  -1
+	sw r2  r1  -2
+	addi r1  r1  -2
+	addi r2  r1  0
+	# Function Body
+	addi r1  r1  -43
+	sw r3  r2  -1
+	sw r4  r2  -2
+	sw r5  r2  -3
+	movi r3 FRAMEBUFFER_START
+	lw r3  r3  0
+	sw r3  r2  -4
+	lw r3  r2  -4
+	sw r3  r2  -5
+	movi r3 2
+	sw r3  r2  -6
+	lw r3  r2  -1
+	lw r4  r2  -6
+	call udiv
+	sw r3  r2  -7
+	lw r3  r2  -7
+	movi r4 1
+	call umul
+	sw r3  r2  -8
+	lw r3  r2  -5
+	lw r4  r2  -8
+	add r3  r3  r4 
+	sw r3  r2  -9
+	movi r3 64
+	sw r3  r2  -10
+	lw r3  r2  -10
+	lw r4  r2  -2
+	call umul
+	sw r3  r2  -11
+	lw r3  r2  -11
+	movi r4 1
+	call umul
+	sw r3  r2  -12
+	lw r3  r2  -9
+	lw r4  r2  -12
+	add r3  r3  r4 
+	sw r3  r2  -13
+	lw r3  r2  -13
+	lw r4  r3  0
+	sw r4  r2  -14
+	lw r3  r2  -14
+	sw r3  r2  -15
+	movi r3 1
+	sw r3  r2  -16
+	lw r3  r2  -1
+	lw r4  r2  -16
+	and r3  r3  r4 
+	sw r3  r2  -17
+	lw r3  r2  -17
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 draw_pixel.else.25
+	jalr r0  r3 
+	movi r3 2
+	sw r3  r2  -18
+	lw r3  r2  -1
+	lw r4  r2  -18
+	call udiv
+	sw r3  r2  -19
+	lw r3  r2  -19
+	movi r4 1
+	call umul
+	sw r3  r2  -20
+	lw r3  r2  -5
+	lw r4  r2  -20
+	add r3  r3  r4 
+	sw r3  r2  -21
+	movi r3 64
+	sw r3  r2  -22
+	lw r3  r2  -22
+	lw r4  r2  -2
+	call umul
+	sw r3  r2  -23
+	lw r3  r2  -23
+	movi r4 1
+	call umul
+	sw r3  r2  -24
+	lw r3  r2  -21
+	lw r4  r2  -24
+	add r3  r3  r4 
+	sw r3  r2  -25
+	movi r3 8
+	sw r3  r2  -26
+	lw r3  r2  -3
+	lw r4  r2  -26
+	call left_shift
+	sw r3  r2  -27
+	movi r3 255
+	sw r3  r2  -28
+	lw r3  r2  -15
+	lw r4  r2  -28
+	and r3  r3  r4 
+	sw r3  r2  -29
+	lw r3  r2  -27
+	lw r4  r2  -29
+	or r3  r3  r4 
+	sw r3  r2  -30
+	lw r3  r2  -25
+	lw r4  r2  -30
+	sw r4  r3  0
+	movi r3 draw_pixel.end.39
+	jalr r0  r3 
+draw_pixel.else.25:
+	movi r3 2
+	sw r3  r2  -31
+	lw r3  r2  -1
+	lw r4  r2  -31
+	call udiv
+	sw r3  r2  -32
+	lw r3  r2  -32
+	movi r4 1
+	call umul
+	sw r3  r2  -33
+	lw r3  r2  -5
+	lw r4  r2  -33
+	add r3  r3  r4 
+	sw r3  r2  -34
+	movi r3 64
+	sw r3  r2  -35
+	lw r3  r2  -35
+	lw r4  r2  -2
+	call umul
+	sw r3  r2  -36
+	lw r3  r2  -36
+	movi r4 1
+	call umul
+	sw r3  r2  -37
+	lw r3  r2  -34
+	lw r4  r2  -37
+	add r3  r3  r4 
+	sw r3  r2  -38
+	movi r3 255
+	sw r3  r2  -39
+	lw r3  r2  -3
+	lw r4  r2  -39
+	and r3  r3  r4 
+	sw r3  r2  -40
+	movi r3 65280
+	sw r3  r2  -41
+	lw r3  r2  -15
+	lw r4  r2  -41
+	and r3  r3  r4 
+	sw r3  r2  -42
+	lw r3  r2  -40
+	lw r4  r2  -42
+	or r3  r3  r4 
+	sw r3  r2  -43
+	lw r3  r2  -38
+	lw r4  r2  -43
+	sw r4  r3  0
+draw_pixel.end.39:
+	movi r3 0
+	# Function Epilogue
+	mov r1  r2 
+	lw r7  r2  1
+	lw r2  r2  0
+	addi r1  r1  2
+	jalr r0  r7 
+	movi r3 0
+	# Function Epilogue
+	mov r1  r2 
+	lw r7  r2  1
+	lw r2  r2  0
+	addi r1  r1  2
+	jalr r0  r7 
+read_pixel:
+	# Function Prologue
+	sw r7  r1  -1
+	sw r2  r1  -2
+	addi r1  r1  -2
+	addi r2  r1  0
+	# Function Body
+	addi r1  r1  -40
+	sw r3  r2  -1
+	sw r4  r2  -2
+	movi r3 FRAMEBUFFER_START
+	lw r3  r3  0
+	sw r3  r2  -3
+	lw r3  r2  -3
+	sw r3  r2  -4
+	movi r3 2
+	sw r3  r2  -5
+	lw r3  r2  -1
+	lw r4  r2  -5
+	call udiv
+	sw r3  r2  -6
+	lw r3  r2  -6
+	movi r4 1
+	call umul
+	sw r3  r2  -7
+	lw r3  r2  -4
+	lw r4  r2  -7
+	add r3  r3  r4 
+	sw r3  r2  -8
+	movi r3 64
+	sw r3  r2  -9
+	lw r3  r2  -9
+	lw r4  r2  -2
+	call umul
+	sw r3  r2  -10
+	lw r3  r2  -10
+	movi r4 1
+	call umul
+	sw r3  r2  -11
+	lw r3  r2  -8
+	lw r4  r2  -11
+	add r3  r3  r4 
+	sw r3  r2  -12
+	lw r3  r2  -12
+	lw r4  r3  0
+	sw r4  r2  -13
+	lw r3  r2  -13
+	sw r3  r2  -14
+	movi r3 1
+	sw r3  r2  -15
+	lw r3  r2  -1
+	lw r4  r2  -15
+	and r3  r3  r4 
+	sw r3  r2  -16
+	lw r3  r2  -16
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 read_pixel.else.23
+	jalr r0  r3 
+	movi r3 2
+	sw r3  r2  -17
+	lw r3  r2  -1
+	lw r4  r2  -17
+	call udiv
+	sw r3  r2  -18
+	lw r3  r2  -18
+	movi r4 1
+	call umul
+	sw r3  r2  -19
+	lw r3  r2  -4
+	lw r4  r2  -19
+	add r3  r3  r4 
+	sw r3  r2  -20
+	movi r3 64
+	sw r3  r2  -21
+	lw r3  r2  -21
+	lw r4  r2  -2
+	call umul
+	sw r3  r2  -22
+	lw r3  r2  -22
+	movi r4 1
+	call umul
+	sw r3  r2  -23
+	lw r3  r2  -20
+	lw r4  r2  -23
+	add r3  r3  r4 
+	sw r3  r2  -24
+	lw r3  r2  -24
+	lw r4  r3  0
+	sw r4  r2  -25
+	lw r3  r2  -25
+	sw r3  r2  -26
+	lw r3  r2  -26
+	sw r3  r2  -27
+	lw r3  r2  -27
+	movi r4 8
+	call right_shift
+	sw r3  r2  -27
+	lw r3  r2  -27
+	sw r3  r2  -28
+	lw r3  r2  -28
+	# Function Epilogue
+	mov r1  r2 
+	lw r7  r2  1
+	lw r2  r2  0
+	addi r1  r1  2
+	jalr r0  r7 
+	movi r3 read_pixel.end.35
+	jalr r0  r3 
+read_pixel.else.23:
+	movi r3 2
+	sw r3  r2  -29
+	lw r3  r2  -1
+	lw r4  r2  -29
+	call udiv
+	sw r3  r2  -30
+	lw r3  r2  -30
+	movi r4 1
+	call umul
+	sw r3  r2  -31
+	lw r3  r2  -4
+	lw r4  r2  -31
+	add r3  r3  r4 
+	sw r3  r2  -32
+	movi r3 64
+	sw r3  r2  -33
+	lw r3  r2  -33
+	lw r4  r2  -2
+	call umul
+	sw r3  r2  -34
+	lw r3  r2  -34
+	movi r4 1
+	call umul
+	sw r3  r2  -35
+	lw r3  r2  -32
+	lw r4  r2  -35
+	add r3  r3  r4 
+	sw r3  r2  -36
+	lw r3  r2  -36
+	lw r4  r3  0
+	sw r4  r2  -37
+	lw r3  r2  -37
+	sw r3  r2  -38
+	lw r3  r2  -38
+	sw r3  r2  -39
+	lw r3  r2  -39
+	movi r4 255
+	and r3  r3  r4 
+	sw r3  r2  -39
+	lw r3  r2  -39
+	sw r3  r2  -40
+	lw r3  r2  -40
+	# Function Epilogue
+	mov r1  r2 
+	lw r7  r2  1
+	lw r2  r2  0
+	addi r1  r1  2
+	jalr r0  r7 
+read_pixel.end.35:
+	movi r3 0
+	# Function Epilogue
+	mov r1  r2 
+	lw r7  r2  1
+	lw r2  r2  0
+	addi r1  r1  2
+	jalr r0  r7 
