@@ -332,6 +332,8 @@ main:
 main.start:
 	call clear_screen
 	sw r3  r2  -1
+	movi r3 0
+	movi r4 240
 	call write_text_tilemap
 	sw r3  r2  -2
 	movi r3 RESOLUTION_REG

@@ -1,6 +1,6 @@
 // link with text.c
 
-int write_text_tilemap(void);
+int write_text_tilemap(int text_color, int bg_color);
 unsigned putchar(unsigned c);
 unsigned print_unsigned(unsigned x);
 unsigned clear_screen(void);
@@ -78,7 +78,7 @@ unsigned reset[26] = {0X50,0X72,0X65,0X73,0X73,0X20,0X61,0X6E,0X79,0X20,0X6B,0X6
 
 int collatz_main(void) {
   clear_screen();
-  write_text_tilemap();
+  write_text_tilemap(0x0F0, 0x000);
   unsigned *p = (unsigned*)RESOLUTION_REG;
   // decrease resolution
   *p = 1;

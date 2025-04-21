@@ -5,7 +5,7 @@ extern unsigned FRAMEBUFFER_START;
 
 unsigned putchar(unsigned n);
 unsigned print_unsigned(unsigned n);
-unsigned write_text_tilemap(void);
+int write_text_tilemap(int text_color, int bg_color);
 int write_solid_tile(unsigned tile_num, unsigned color);
 int clear_screen(void);
 
@@ -53,7 +53,7 @@ unsigned colors[26] =
    0x40F};
 
 int mandelbrot_main(void){
-  write_text_tilemap();
+  write_text_tilemap(0x0F0, 0x000);
   clear_screen();
 
   unsigned *p = (unsigned*)RESOLUTION_REG;
