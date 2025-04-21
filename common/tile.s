@@ -9,65 +9,62 @@ write_solid_tile:
 	addi r1  r1  -2
 	addi r2  r1  0
 	# Function Body
-	addi r1  r1  -12
+	addi r1  r1  -10
 	sw r3  r2  -1
 	sw r4  r2  -2
-	movi r3 49152
+	movi r3 TILEMAP_START
+	lw r3  r3  0
 	sw r3  r2  -3
 	lw r3  r2  -3
 	sw r3  r2  -4
-	lw r3  r2  -4
+	movi r3 64
 	sw r3  r2  -5
 	lw r3  r2  -5
-	sw r3  r2  -6
-	movi r3 64
-	sw r3  r2  -7
-	lw r3  r2  -7
 	lw r4  r2  -1
 	call umul
-	sw r3  r2  -8
-	lw r3  r2  -6
-	lw r4  r2  -8
-	add r3  r3  r4 
 	sw r3  r2  -6
+	lw r3  r2  -4
+	lw r4  r2  -6
+	add r3  r3  r4 
+	sw r3  r2  -4
 	movi r3 0
-	sw r3  r2  -9
+	sw r3  r2  -7
 write_solid_tile.for.0.start:
 	movi r3 1
-	sw r3  r2  -10
-	lw r3  r2  -9
+	sw r3  r2  -8
+	lw r3  r2  -7
 	movi r4 64
 	cmp r3  r4 
 	bl 1
 	jmp 3
-	movi r3 write_solid_tile.end.7
+	movi r3 write_solid_tile.end.6
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -10
-write_solid_tile.end.7:
-	lw r3  r2  -10
+	sw r3  r2  -8
+write_solid_tile.end.6:
+	lw r3  r2  -8
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
 	movi r3 write_solid_tile.for.0.break
 	jalr r0  r3 
-	lw r3  r2  -9
+	lw r3  r2  -7
 	movi r4 1
 	call smul
-	sw r3  r2  -11
-	lw r3  r2  -6
-	lw r4  r2  -11
+	sw r3  r2  -9
+	lw r3  r2  -4
+	lw r4  r2  -9
 	add r3  r3  r4 
-	sw r3  r2  -12
-	lw r3  r2  -12
+	sw r3  r2  -10
+	lw r3  r2  -10
 	lw r4  r2  -2
 	sw r4  r3  0
 write_solid_tile.for.0.continue:
-	lw r3  r2  -9
+	lw r3  r2  -7
 	movi r4 1
 	add r3  r3  r4 
-	sw r3  r2  -9
+	sw r3  r2  -7
 	movi r3 write_solid_tile.for.0.start
 	jalr r0  r3 
 write_solid_tile.for.0.break:

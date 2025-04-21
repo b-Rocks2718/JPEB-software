@@ -35,6 +35,7 @@ unsigned print_seq(unsigned x){
   putchar(122); // z
   putchar(58); // :
   putchar(10); // \n
+  putchar(10);
   
 
   while (x != 1){
@@ -66,7 +67,7 @@ unsigned read_num(void){
 // Enter a 3 digit number \n
 unsigned enter_digit[25] = {0x45, 0x6E, 0x74, 0x65, 0x72, 0x20, 0x61, 0x20, 0x33,
                 0x20, 0x64, 0x69, 0x67, 0x69, 0x74, 0x20, 0x6E, 0x75, 0x6D, 
-                0x62, 0x65, 0x72, 0x3A, 0x0A, 0x0};
+                0x62, 0x65, 0x72, 0x3A, 0x0};
 
 // q to quit\n
 unsigned quit[15] = {0x28, 0x71, 0x20, 0x74, 0x6F, 0x20, 0x71, 0x75, 
@@ -104,6 +105,7 @@ int collatz_main(void) {
 
     unsigned result = read_num();
     if (result < 1) goto end; // invalid input
+    putchar(10);
     putchar(10);
     print_seq(result);
     putchar(10);

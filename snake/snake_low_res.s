@@ -75,7 +75,8 @@ LPRESS_SPACE_TO_START:
   call clear_screen
   # restore scale 
   movi r4, 0xFFFC
-  sw r0, r4, 0
+  movi r3, 1
+  sw r3, r4, 0
 
 LAPPLE_INIT:
   # push previous return address
@@ -87,7 +88,7 @@ LSNAKE_INIT:
   # at offset 0 is the snake's body's coordinates
   movi r4, DATA
   # the center coordinate is (x,y) = (40, 30)
-  movi r3, 0x281e
+  movi r3, 0x140F
   sw r3, r4, 0
   addi r3, r3, 1    # lower order bytes is y
   sw r3, r4, 1
@@ -111,9 +112,14 @@ LMOTION_INIT:
 MAIN:
   movi r4, LOOP_COUNT
   lw r3, r4, 0
+  push r5
+  movi r5, 100
 LSTALL:
   addi r3, r3, -1
   bnz LSTALL
+  addi r5, r5, -1
+  bnz LSTALL
+  pop  r5
   lw r3, r4, 0
 LMOVE:
   movi r4, 0xFFFF
@@ -172,13 +178,13 @@ LADVANCE_SNAKE:
   # left and top overflow are equivalent to right and bottom overflow, resp
   # right overflow
   add r2, r5, r3
-  movi r6, 0x5000
+  movi r6, 0x2800
   cmp r2, r6
   bae LFAIL_ADV # too far right
   # down overflow
   movi r6, 0x00FF # we use this to mask out the y coordinate
   and r2, r2, r6
-  movi r6, 0x3C
+  movi r6, 0x1E
   cmp r2, r6
   bae LFAIL_ADV # too far down
   jmp LEND_CHECKWALL
@@ -333,7 +339,7 @@ FGROW_APPLE:
   push r6
 LGROW_LOOP:
   # generate a new random location for apple x-location
-  movi r3, 0x50
+  movi r3, 0x21
   push r7
   call FRANDOM
   pop r7
@@ -347,7 +353,7 @@ LGROW_LOOP:
   shl r3, r3
   push r3
   # generate a new random location for apple y-location
-  movi r3, 0x3c
+  movi r3, 0x1E
   push r7
   call FRANDOM
   pop r7

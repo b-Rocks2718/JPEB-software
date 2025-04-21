@@ -1,0 +1,16 @@
+
+# Data Section:
+SCROLL_Y:
+	.fill 65534
+SCROLL_X:
+	.fill 65533
+TILEMAP_START:
+	.fill 49152
+INPUT_STREAM:
+	.fill 65535
+RESOLUTION_REG:
+	.fill 65532
+FRAMEBUFFER_START:
+	.fill 57344
+
+# Code Section:
