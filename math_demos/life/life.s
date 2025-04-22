@@ -19,7 +19,7 @@ setup_loop:
 	addi r1  r1  -2
 	addi r2  r1  0
 	# Function Body
-	addi r1  r1  -62
+	addi r1  r1  -64
 	movi r3 INPUT_STREAM
 	lw r3  r3  0
 	sw r3  r2  -1
@@ -377,7 +377,7 @@ setup_loop.end.59:
 	sw r3  r4  0
 	movi r3 1
 	sw r3  r2  -6
-	movi r3 setup_loop.end.90
+	movi r3 setup_loop.end.94
 	jalr r0  r3 
 setup_loop.else.61:
 	movi r3 0
@@ -480,7 +480,7 @@ setup_loop.end.77:
 	sw r3  r4  0
 	movi r3 1
 	sw r3  r2  -6
-	movi r3 setup_loop.end.89
+	movi r3 setup_loop.end.93
 	jalr r0  r3 
 setup_loop.else.79:
 	movi r3 1
@@ -518,11 +518,13 @@ setup_loop.end.83:
 	lw r3  r2  -57
 	movi r4 erase.14
 	sw r3  r4  0
-	movi r3 setup_loop.end.88
+	movi r3 setup_loop.end.92
 	jalr r0  r3 
 setup_loop.else.84:
 	movi r3 1
 	sw r3  r2  -58
+	movi r3 1
+	sw r3  r2  -59
 	lw r3  r2  -5
 	movi r4 13
 	cmp r3  r4 
@@ -531,34 +533,63 @@ setup_loop.else.84:
 	movi r3 setup_loop.end.86
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -58
+	sw r3  r2  -59
 setup_loop.end.86:
+	lw r3  r2  -59
+	movi r4 0
+	cmp r3  r4 
+	bnz 1
+	jmp 3
+	movi r3 setup_loop.end.90
+	jalr r0  r3 
+	movi r3 1
+	sw r3  r2  -60
+	lw r3  r2  -5
+	movi r4 10
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 setup_loop.end.88
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -60
+setup_loop.end.88:
+	lw r3  r2  -60
+	movi r4 0
+	cmp r3  r4 
+	bnz 1
+	jmp 3
+	movi r3 setup_loop.end.90
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -58
+setup_loop.end.90:
 	lw r3  r2  -58
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 setup_loop.end.87
+	movi r3 setup_loop.end.91
 	jalr r0  r3 
 	movi r3 setup_loop.while.0.break
 	jalr r0  r3 
-setup_loop.end.87:
-setup_loop.end.88:
-setup_loop.end.89:
-setup_loop.end.90:
+setup_loop.end.91:
+setup_loop.end.92:
+setup_loop.end.93:
+setup_loop.end.94:
 	movi r3 cur_x.12
 	lw r3  r3  0
-	sw r3  r2  -59
+	sw r3  r2  -61
 	movi r3 cur_y.13
 	lw r3  r3  0
-	sw r3  r2  -60
-	movi r3 2
-	sw r3  r2  -61
-	lw r3  r2  -59
-	lw r4  r2  -60
-	lw r5  r2  -61
-	call draw_pixel
 	sw r3  r2  -62
+	movi r3 2
+	sw r3  r2  -63
+	lw r3  r2  -61
+	lw r4  r2  -62
+	lw r5  r2  -63
+	call draw_pixel
+	sw r3  r2  -64
 	movi r3 setup_loop.while.0.continue
 	jalr r0  r3 
 setup_loop.while.0.break:

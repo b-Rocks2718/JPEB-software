@@ -51,7 +51,7 @@ int setup_loop(void){
       moved = 1;
     }
     else if (keypress == 32) erase = !erase;
-    else if (keypress == 13) break;
+    else if (keypress == 13 || keypress == 10) break;
 
     draw_pixel(cur_x, cur_y, 2);
   }
