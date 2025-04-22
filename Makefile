@@ -13,9 +13,9 @@ COMMON      := $(strip $(MAPPED_S) $(EXTRA_S))
 math_demos/math_demos.run: math_demos/math_demos.bin
 	$(EMU) math_demos/math_demos.bin
 
-math_demos/math_demos.bin: math_demos/math_demos.s mandelbrot/mandelbrot.s collatz/collatz.s life/life.s $(COMMON)
+math_demos/math_demos.bin: math_demos/math_demos.s math_demos/mandelbrot/mandelbrot.s math_demos/collatz/collatz.s math_demos/life/life.s $(COMMON)
 	rm -f $@
-	$(AS) math_demos/math_demos.s mandelbrot/mandelbrot.s collatz/collatz.s life/life.s $(COMMON)
+	$(AS) math_demos/math_demos.s math_demos/mandelbrot/mandelbrot.s math_demos/collatz/collatz.s math_demos/life/life.s $(COMMON)
 
 %.run: %.bin
 	$(EMU) $<
