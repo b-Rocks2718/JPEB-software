@@ -72,19 +72,8 @@ int init_dino(void){
   }
 }
 
-int init_ground_tiles(void){
-  unsigned* p = (unsigned*)TILEMAP_START;
-  p += 64;
-  for (int i = 0; i < 8; ++i){
-    for (int j = 0; j < 8; ++j){
-      if (i == 0 || i == 7 || j == 0 || j == 7){
-        p[8 * i + j] = 0x1CE;
-      } else {
-        p[8 * i + j] = 0x3DF;
-      }
-    }
-  }
-  p = (unsigned*)FRAMEBUFFER_START;
+int draw_ground(void){
+  unsigned* p = (unsigned*)FRAMEBUFFER_START;
   for (int i = 0; i < 30; ++i){
     for (int j = 0; j < 128; ++j){
       if (i > 22){
@@ -92,6 +81,37 @@ int init_ground_tiles(void){
       }
     }
   }
+}
+
+int init_ground_tiles(void){
+  unsigned* p = (unsigned*)TILEMAP_START;
+  int k = 1;
+  p += 64;
+  for (int i = 0; i < 8; ++i){
+    for (int j = 0; j < 8; ++j){
+      if (k == 0){
+        p[8 * i + j] = 0x1CE;
+      } else if (k == 1){
+        p[8 * i + j] = 0x3BF;
+      } else if (k == 2){
+        p[8 * i + j] = 0x3DF;
+      } else if (k == 3){
+        p[8 * i + j] = 0x1BF;
+      } else if (k == 4){
+        p[8 * i + j] = 0x2EF;
+      } else if (k == 5){
+        p[8 * i + j] = 0x1AF;
+      } else if (k == 6){
+        p[8 * i + j] = 0x3EF;
+      } else {
+        p[8 * i + j] = 0x3FF;
+      }
+      k <<= 2;
+      k += 5;
+      k = k % 7;
+    }
+  }
+  draw_ground();
 }
 
 int init_obstacles(void){

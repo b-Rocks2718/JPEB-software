@@ -343,6 +343,117 @@ init_dino.for.0.break:
 	lw r2  r2  0
 	addi r1  r1  2
 	jalr r0  r7 
+draw_ground:
+	# Function Prologue
+	sw r7  r1  -1
+	sw r2  r1  -2
+	addi r1  r1  -2
+	addi r2  r1  0
+	# Function Body
+	addi r1  r1  -11
+	movi r3 FRAMEBUFFER_START
+	lw r3  r3  0
+	sw r3  r2  -1
+	lw r3  r2  -1
+	sw r3  r2  -2
+	movi r3 0
+	sw r3  r2  -3
+draw_ground.for.0.start:
+	movi r3 1
+	sw r3  r2  -4
+	lw r3  r2  -3
+	movi r4 30
+	cmp r3  r4 
+	bl 1
+	jmp 3
+	movi r3 draw_ground.end.11
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -4
+draw_ground.end.11:
+	lw r3  r2  -4
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 draw_ground.for.0.break
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -5
+draw_ground.for.1.start:
+	movi r3 1
+	sw r3  r2  -6
+	lw r3  r2  -5
+	movi r4 128
+	cmp r3  r4 
+	bl 1
+	jmp 3
+	movi r3 draw_ground.end.9
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -6
+draw_ground.end.9:
+	lw r3  r2  -6
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 draw_ground.for.1.break
+	jalr r0  r3 
+	movi r3 1
+	sw r3  r2  -7
+	lw r3  r2  -3
+	movi r4 22
+	cmp r3  r4 
+	bg 1
+	jmp 3
+	movi r3 draw_ground.end.2
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -7
+draw_ground.end.2:
+	lw r3  r2  -7
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 draw_ground.end.7
+	jalr r0  r3 
+	lw r3  r2  -5
+	sw r3  r2  -8
+	lw r3  r2  -3
+	sw r3  r2  -9
+	movi r3 1
+	sw r3  r2  -10
+	lw r3  r2  -8
+	lw r4  r2  -9
+	lw r5  r2  -10
+	call draw_pixel
+	sw r3  r2  -11
+draw_ground.end.7:
+draw_ground.for.1.continue:
+	lw r3  r2  -5
+	movi r4 1
+	add r3  r3  r4 
+	sw r3  r2  -5
+	movi r3 draw_ground.for.1.start
+	jalr r0  r3 
+draw_ground.for.1.break:
+draw_ground.for.0.continue:
+	lw r3  r2  -3
+	movi r4 1
+	add r3  r3  r4 
+	sw r3  r2  -3
+	movi r3 draw_ground.for.0.start
+	jalr r0  r3 
+draw_ground.for.0.break:
+	movi r3 0
+	# Function Epilogue
+	mov r1  r2 
+	lw r7  r2  1
+	lw r2  r2  0
+	addi r1  r1  2
+	jalr r0  r7 
 init_ground_tiles:
 	# Function Prologue
 	sw r7  r1  -1
@@ -350,32 +461,34 @@ init_ground_tiles:
 	addi r1  r1  -2
 	addi r2  r1  0
 	# Function Body
-	addi r1  r1  -33
+	addi r1  r1  -56
 	movi r3 TILEMAP_START
 	lw r3  r3  0
 	sw r3  r2  -1
 	lw r3  r2  -1
 	sw r3  r2  -2
+	movi r3 1
+	sw r3  r2  -3
 	lw r3  r2  -2
 	movi r4 64
 	add r3  r3  r4 
 	sw r3  r2  -2
 	movi r3 0
-	sw r3  r2  -3
+	sw r3  r2  -4
 init_ground_tiles.for.0.start:
 	movi r3 1
-	sw r3  r2  -4
-	lw r3  r2  -3
+	sw r3  r2  -5
+	lw r3  r2  -4
 	movi r4 8
 	cmp r3  r4 
 	bl 1
 	jmp 3
-	movi r3 init_ground_tiles.end.30
+	movi r3 init_ground_tiles.end.73
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -4
-init_ground_tiles.end.30:
-	lw r3  r2  -4
+	sw r3  r2  -5
+init_ground_tiles.end.73:
+	lw r3  r2  -5
 	movi r4 0
 	cmp r3  r4 
 	bz 1
@@ -383,21 +496,21 @@ init_ground_tiles.end.30:
 	movi r3 init_ground_tiles.for.0.break
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -5
+	sw r3  r2  -6
 init_ground_tiles.for.1.start:
 	movi r3 1
-	sw r3  r2  -6
-	lw r3  r2  -5
+	sw r3  r2  -7
+	lw r3  r2  -6
 	movi r4 8
 	cmp r3  r4 
 	bl 1
 	jmp 3
-	movi r3 init_ground_tiles.end.28
+	movi r3 init_ground_tiles.end.71
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -6
-init_ground_tiles.end.28:
-	lw r3  r2  -6
+	sw r3  r2  -7
+init_ground_tiles.end.71:
+	lw r3  r2  -7
 	movi r4 0
 	cmp r3  r4 
 	bz 1
@@ -405,13 +518,7 @@ init_ground_tiles.end.28:
 	movi r3 init_ground_tiles.for.1.break
 	jalr r0  r3 
 	movi r3 1
-	sw r3  r2  -7
-	movi r3 1
 	sw r3  r2  -8
-	movi r3 1
-	sw r3  r2  -9
-	movi r3 1
-	sw r3  r2  -10
 	lw r3  r2  -3
 	movi r4 0
 	cmp r3  r4 
@@ -420,260 +527,357 @@ init_ground_tiles.end.28:
 	movi r3 init_ground_tiles.end.2
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -10
-init_ground_tiles.end.2:
-	lw r3  r2  -10
-	movi r4 0
-	cmp r3  r4 
-	bnz 1
-	jmp 3
-	movi r3 init_ground_tiles.end.6
-	jalr r0  r3 
-	movi r3 1
-	sw r3  r2  -11
-	lw r3  r2  -3
-	movi r4 7
-	cmp r3  r4 
-	bz 1
-	jmp 3
-	movi r3 init_ground_tiles.end.4
-	jalr r0  r3 
-	movi r3 0
-	sw r3  r2  -11
-init_ground_tiles.end.4:
-	lw r3  r2  -11
-	movi r4 0
-	cmp r3  r4 
-	bnz 1
-	jmp 3
-	movi r3 init_ground_tiles.end.6
-	jalr r0  r3 
-	movi r3 0
-	sw r3  r2  -9
-init_ground_tiles.end.6:
-	lw r3  r2  -9
-	movi r4 0
-	cmp r3  r4 
-	bnz 1
-	jmp 3
-	movi r3 init_ground_tiles.end.10
-	jalr r0  r3 
-	movi r3 1
-	sw r3  r2  -12
-	lw r3  r2  -5
-	movi r4 0
-	cmp r3  r4 
-	bz 1
-	jmp 3
-	movi r3 init_ground_tiles.end.8
-	jalr r0  r3 
-	movi r3 0
-	sw r3  r2  -12
-init_ground_tiles.end.8:
-	lw r3  r2  -12
-	movi r4 0
-	cmp r3  r4 
-	bnz 1
-	jmp 3
-	movi r3 init_ground_tiles.end.10
-	jalr r0  r3 
-	movi r3 0
 	sw r3  r2  -8
-init_ground_tiles.end.10:
+init_ground_tiles.end.2:
 	lw r3  r2  -8
 	movi r4 0
 	cmp r3  r4 
-	bnz 1
-	jmp 3
-	movi r3 init_ground_tiles.end.14
-	jalr r0  r3 
-	movi r3 1
-	sw r3  r2  -13
-	lw r3  r2  -5
-	movi r4 7
-	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 init_ground_tiles.end.12
-	jalr r0  r3 
-	movi r3 0
-	sw r3  r2  -13
-init_ground_tiles.end.12:
-	lw r3  r2  -13
-	movi r4 0
-	cmp r3  r4 
-	bnz 1
-	jmp 3
-	movi r3 init_ground_tiles.end.14
-	jalr r0  r3 
-	movi r3 0
-	sw r3  r2  -7
-init_ground_tiles.end.14:
-	lw r3  r2  -7
-	movi r4 0
-	cmp r3  r4 
-	bz 1
-	jmp 3
-	movi r3 init_ground_tiles.else.20
+	movi r3 init_ground_tiles.else.8
 	jalr r0  r3 
 	movi r3 8
-	lw r4  r2  -3
+	lw r4  r2  -4
 	call smul
-	sw r3  r2  -14
-	lw r3  r2  -14
-	lw r4  r2  -5
+	sw r3  r2  -9
+	lw r3  r2  -9
+	lw r4  r2  -6
 	add r3  r3  r4 
-	sw r3  r2  -15
-	lw r3  r2  -15
+	sw r3  r2  -10
+	lw r3  r2  -10
 	movi r4 1
 	call smul
-	sw r3  r2  -16
+	sw r3  r2  -11
 	lw r3  r2  -2
-	lw r4  r2  -16
+	lw r4  r2  -11
 	add r3  r3  r4 
-	sw r3  r2  -17
+	sw r3  r2  -12
 	movi r3 462
-	sw r3  r2  -18
-	lw r3  r2  -17
-	lw r4  r2  -18
+	sw r3  r2  -13
+	lw r3  r2  -12
+	lw r4  r2  -13
 	sw r4  r3  0
-	movi r3 init_ground_tiles.end.26
+	movi r3 init_ground_tiles.end.68
 	jalr r0  r3 
-init_ground_tiles.else.20:
-	movi r3 8
-	lw r4  r2  -3
-	call smul
-	sw r3  r2  -19
-	lw r3  r2  -19
-	lw r4  r2  -5
-	add r3  r3  r4 
-	sw r3  r2  -20
-	lw r3  r2  -20
-	movi r4 1
-	call smul
-	sw r3  r2  -21
-	lw r3  r2  -2
-	lw r4  r2  -21
-	add r3  r3  r4 
-	sw r3  r2  -22
-	movi r3 991
-	sw r3  r2  -23
-	lw r3  r2  -22
-	lw r4  r2  -23
-	sw r4  r3  0
-init_ground_tiles.end.26:
-init_ground_tiles.for.1.continue:
-	lw r3  r2  -5
-	movi r4 1
-	add r3  r3  r4 
-	sw r3  r2  -5
-	movi r3 init_ground_tiles.for.1.start
-	jalr r0  r3 
-init_ground_tiles.for.1.break:
-init_ground_tiles.for.0.continue:
+init_ground_tiles.else.8:
+	movi r3 1
+	sw r3  r2  -14
 	lw r3  r2  -3
 	movi r4 1
-	add r3  r3  r4 
-	sw r3  r2  -3
-	movi r3 init_ground_tiles.for.0.start
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 init_ground_tiles.end.10
 	jalr r0  r3 
-init_ground_tiles.for.0.break:
-	movi r3 FRAMEBUFFER_START
-	lw r3  r3  0
-	sw r3  r2  -24
-	lw r3  r2  -24
-	sw r3  r2  -2
 	movi r3 0
+	sw r3  r2  -14
+init_ground_tiles.end.10:
+	lw r3  r2  -14
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 init_ground_tiles.else.16
+	jalr r0  r3 
+	movi r3 8
+	lw r4  r2  -4
+	call smul
+	sw r3  r2  -15
+	lw r3  r2  -15
+	lw r4  r2  -6
+	add r3  r3  r4 
+	sw r3  r2  -16
+	lw r3  r2  -16
+	movi r4 1
+	call smul
+	sw r3  r2  -17
+	lw r3  r2  -2
+	lw r4  r2  -17
+	add r3  r3  r4 
+	sw r3  r2  -18
+	movi r3 959
+	sw r3  r2  -19
+	lw r3  r2  -18
+	lw r4  r2  -19
+	sw r4  r3  0
+	movi r3 init_ground_tiles.end.67
+	jalr r0  r3 
+init_ground_tiles.else.16:
+	movi r3 1
+	sw r3  r2  -20
+	lw r3  r2  -3
+	movi r4 2
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 init_ground_tiles.end.18
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -20
+init_ground_tiles.end.18:
+	lw r3  r2  -20
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 init_ground_tiles.else.24
+	jalr r0  r3 
+	movi r3 8
+	lw r4  r2  -4
+	call smul
+	sw r3  r2  -21
+	lw r3  r2  -21
+	lw r4  r2  -6
+	add r3  r3  r4 
+	sw r3  r2  -22
+	lw r3  r2  -22
+	movi r4 1
+	call smul
+	sw r3  r2  -23
+	lw r3  r2  -2
+	lw r4  r2  -23
+	add r3  r3  r4 
+	sw r3  r2  -24
+	movi r3 991
 	sw r3  r2  -25
-init_ground_tiles.for.2.start:
+	lw r3  r2  -24
+	lw r4  r2  -25
+	sw r4  r3  0
+	movi r3 init_ground_tiles.end.66
+	jalr r0  r3 
+init_ground_tiles.else.24:
 	movi r3 1
 	sw r3  r2  -26
-	lw r3  r2  -25
-	movi r4 30
+	lw r3  r2  -3
+	movi r4 3
 	cmp r3  r4 
-	bl 1
+	bz 1
 	jmp 3
-	movi r3 init_ground_tiles.end.42
+	movi r3 init_ground_tiles.end.26
 	jalr r0  r3 
 	movi r3 0
 	sw r3  r2  -26
-init_ground_tiles.end.42:
+init_ground_tiles.end.26:
 	lw r3  r2  -26
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 init_ground_tiles.for.2.break
+	movi r3 init_ground_tiles.else.32
 	jalr r0  r3 
-	movi r3 0
+	movi r3 8
+	lw r4  r2  -4
+	call smul
 	sw r3  r2  -27
-init_ground_tiles.for.3.start:
-	movi r3 1
-	sw r3  r2  -28
 	lw r3  r2  -27
-	movi r4 128
-	cmp r3  r4 
-	bl 1
-	jmp 3
-	movi r3 init_ground_tiles.end.40
-	jalr r0  r3 
-	movi r3 0
+	lw r4  r2  -6
+	add r3  r3  r4 
 	sw r3  r2  -28
-init_ground_tiles.end.40:
 	lw r3  r2  -28
-	movi r4 0
-	cmp r3  r4 
-	bz 1
-	jmp 3
-	movi r3 init_ground_tiles.for.3.break
-	jalr r0  r3 
-	movi r3 1
+	movi r4 1
+	call smul
 	sw r3  r2  -29
-	lw r3  r2  -25
-	movi r4 22
-	cmp r3  r4 
-	bg 1
-	jmp 3
-	movi r3 init_ground_tiles.end.33
-	jalr r0  r3 
-	movi r3 0
-	sw r3  r2  -29
-init_ground_tiles.end.33:
-	lw r3  r2  -29
-	movi r4 0
-	cmp r3  r4 
-	bz 1
-	jmp 3
-	movi r3 init_ground_tiles.end.38
-	jalr r0  r3 
-	lw r3  r2  -27
+	lw r3  r2  -2
+	lw r4  r2  -29
+	add r3  r3  r4 
 	sw r3  r2  -30
-	lw r3  r2  -25
+	movi r3 447
 	sw r3  r2  -31
-	movi r3 1
-	sw r3  r2  -32
 	lw r3  r2  -30
 	lw r4  r2  -31
-	lw r5  r2  -32
-	call draw_pixel
+	sw r4  r3  0
+	movi r3 init_ground_tiles.end.65
+	jalr r0  r3 
+init_ground_tiles.else.32:
+	movi r3 1
+	sw r3  r2  -32
+	lw r3  r2  -3
+	movi r4 4
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 init_ground_tiles.end.34
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -32
+init_ground_tiles.end.34:
+	lw r3  r2  -32
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 init_ground_tiles.else.40
+	jalr r0  r3 
+	movi r3 8
+	lw r4  r2  -4
+	call smul
 	sw r3  r2  -33
-init_ground_tiles.end.38:
-init_ground_tiles.for.3.continue:
-	lw r3  r2  -27
+	lw r3  r2  -33
+	lw r4  r2  -6
+	add r3  r3  r4 
+	sw r3  r2  -34
+	lw r3  r2  -34
+	movi r4 1
+	call smul
+	sw r3  r2  -35
+	lw r3  r2  -2
+	lw r4  r2  -35
+	add r3  r3  r4 
+	sw r3  r2  -36
+	movi r3 751
+	sw r3  r2  -37
+	lw r3  r2  -36
+	lw r4  r2  -37
+	sw r4  r3  0
+	movi r3 init_ground_tiles.end.64
+	jalr r0  r3 
+init_ground_tiles.else.40:
+	movi r3 1
+	sw r3  r2  -38
+	lw r3  r2  -3
+	movi r4 5
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 init_ground_tiles.end.42
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -38
+init_ground_tiles.end.42:
+	lw r3  r2  -38
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 init_ground_tiles.else.48
+	jalr r0  r3 
+	movi r3 8
+	lw r4  r2  -4
+	call smul
+	sw r3  r2  -39
+	lw r3  r2  -39
+	lw r4  r2  -6
+	add r3  r3  r4 
+	sw r3  r2  -40
+	lw r3  r2  -40
+	movi r4 1
+	call smul
+	sw r3  r2  -41
+	lw r3  r2  -2
+	lw r4  r2  -41
+	add r3  r3  r4 
+	sw r3  r2  -42
+	movi r3 431
+	sw r3  r2  -43
+	lw r3  r2  -42
+	lw r4  r2  -43
+	sw r4  r3  0
+	movi r3 init_ground_tiles.end.63
+	jalr r0  r3 
+init_ground_tiles.else.48:
+	movi r3 1
+	sw r3  r2  -44
+	lw r3  r2  -3
+	movi r4 6
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 init_ground_tiles.end.50
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -44
+init_ground_tiles.end.50:
+	lw r3  r2  -44
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 init_ground_tiles.else.56
+	jalr r0  r3 
+	movi r3 8
+	lw r4  r2  -4
+	call smul
+	sw r3  r2  -45
+	lw r3  r2  -45
+	lw r4  r2  -6
+	add r3  r3  r4 
+	sw r3  r2  -46
+	lw r3  r2  -46
+	movi r4 1
+	call smul
+	sw r3  r2  -47
+	lw r3  r2  -2
+	lw r4  r2  -47
+	add r3  r3  r4 
+	sw r3  r2  -48
+	movi r3 1007
+	sw r3  r2  -49
+	lw r3  r2  -48
+	lw r4  r2  -49
+	sw r4  r3  0
+	movi r3 init_ground_tiles.end.62
+	jalr r0  r3 
+init_ground_tiles.else.56:
+	movi r3 8
+	lw r4  r2  -4
+	call smul
+	sw r3  r2  -50
+	lw r3  r2  -50
+	lw r4  r2  -6
+	add r3  r3  r4 
+	sw r3  r2  -51
+	lw r3  r2  -51
+	movi r4 1
+	call smul
+	sw r3  r2  -52
+	lw r3  r2  -2
+	lw r4  r2  -52
+	add r3  r3  r4 
+	sw r3  r2  -53
+	movi r3 1023
+	sw r3  r2  -54
+	lw r3  r2  -53
+	lw r4  r2  -54
+	sw r4  r3  0
+init_ground_tiles.end.62:
+init_ground_tiles.end.63:
+init_ground_tiles.end.64:
+init_ground_tiles.end.65:
+init_ground_tiles.end.66:
+init_ground_tiles.end.67:
+init_ground_tiles.end.68:
+	lw r3  r2  -3
+	movi r4 2
+	call left_shift
+	sw r3  r2  -3
+	lw r3  r2  -3
+	movi r4 5
+	add r3  r3  r4 
+	sw r3  r2  -3
+	lw r3  r2  -3
+	movi r4 7
+	call smod
+	sw r3  r2  -55
+	lw r3  r2  -55
+	sw r3  r2  -3
+init_ground_tiles.for.1.continue:
+	lw r3  r2  -6
 	movi r4 1
 	add r3  r3  r4 
-	sw r3  r2  -27
-	movi r3 init_ground_tiles.for.3.start
+	sw r3  r2  -6
+	movi r3 init_ground_tiles.for.1.start
 	jalr r0  r3 
-init_ground_tiles.for.3.break:
-init_ground_tiles.for.2.continue:
-	lw r3  r2  -25
+init_ground_tiles.for.1.break:
+init_ground_tiles.for.0.continue:
+	lw r3  r2  -4
 	movi r4 1
 	add r3  r3  r4 
-	sw r3  r2  -25
-	movi r3 init_ground_tiles.for.2.start
+	sw r3  r2  -4
+	movi r3 init_ground_tiles.for.0.start
 	jalr r0  r3 
-init_ground_tiles.for.2.break:
+init_ground_tiles.for.0.break:
+	call draw_ground
+	sw r3  r2  -56
 	movi r3 0
 	# Function Epilogue
 	mov r1  r2 
