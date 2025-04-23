@@ -345,7 +345,7 @@ unsigned main(void){
     }
 
     frame++;
-    for (unsigned delay = 0; delay < 40000; ++delay)
-      for (unsigned delay = 0; delay < 2; ++delay);
+    for (unsigned delay = 0; delay < 3000; ++delay)
+    ;//  for (unsigned delay = 0; delay < 2; ++delay);
   }
 }
