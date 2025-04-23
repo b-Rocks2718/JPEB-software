@@ -1,6 +1,6 @@
 # Dino Game
 
-A simple version of the [Chrome dinosaur game](chrome://dino/)
+A simple version of the [Chrome dinosaur game](chrome://dino/). This demo makes use of all of our VGA circuits, including the tilemap, scroll registers, and sprites.
 
 
 ## Assets
