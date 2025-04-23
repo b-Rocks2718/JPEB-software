@@ -11,6 +11,12 @@ extern unsigned SPRITE_1_X;
 extern unsigned SPRITE_1_Y;
 extern unsigned SPRITE_2_X;
 extern unsigned SPRITE_2_Y;
+extern unsigned SPRITE_3_X;
+extern unsigned SPRITE_3_Y;
+extern unsigned SPRITE_4_X;
+extern unsigned SPRITE_4_Y;
+extern unsigned SPRITE_5_X;
+extern unsigned SPRITE_5_Y;
 
 int GRAVITY = 3;
 int JUMP_VELOCITY = 0x030;
@@ -26,6 +32,12 @@ int obstacle_1_x = 300;
 int obstacle_1_y = 152;
 int obstacle_2_x = 600;
 int obstacle_2_y = 152;
+int cloud_1_x = 250;
+int cloud_1_y = 60;
+int cloud_2_x = 200;
+int cloud_2_y = 30;
+int cloud_3_x = 150;
+int cloud_3_y = 40;
 unsigned frame = 0;
 
 int draw_pixel(unsigned x, unsigned y, unsigned color);
@@ -75,8 +87,6 @@ int init_ground_tiles(void){
     for (int j = 0; j < 128; ++j){
       if (i > 22){
         draw_pixel(j, i, 1);
-      } else {
-        //draw_pixel(j, i, 0);
       }
     }
   }
@@ -102,6 +112,44 @@ int init_obstacles(void){
       } else {
         p[i * 32 + j] = 0xF000;
       }
+    }
+  }
+}
+
+int init_sky(void){
+  unsigned* p = (unsigned*)TILEMAP_START;
+  p +=128;
+  for (int i = 0; i < 8; ++i){
+    for (int j = 0; j < 8; ++j){
+      p[8 * i + j] = 0xFA0;
+    }
+  }
+  p = (unsigned*)FRAMEBUFFER_START;
+  for (int i = 0; i < 30; ++i){
+    for (int j = 0; j < 128; ++j){
+      if (i <= 22){
+        draw_pixel(j, i, 2);
+      }
+    }
+  }
+
+  // draw clouds
+  p = (unsigned*)SPRITE_DATA_START;
+  p += 32 * 32 * 3;
+  for (int i = 0; i < 32; ++i){
+    for (int j = 0; j < 32; ++j){
+      if (i > 12){
+        p[i * 32 + j] = 0xFFF;
+      } else {
+        p[i * 32 + j] = 0xF000;
+      }
+    }
+  }
+  p += 32 * 32 * 2;
+  for (int i = 0; i < 32; ++i){
+    for (int j = 0; j < 32; ++j){
+      if (i < 8) p[i * 32 + j] = 0x0FFF;
+      else p[i * 32 + j] = 0xF000;
     }
   }
 }
@@ -134,6 +182,21 @@ int move_obstacles(void){
     obstacle_2_x = 500 + 10 * (frame % 20); // respawn offset
   }
 
+  cloud_1_x -= 3;
+  if (cloud_1_x < 0){
+    cloud_1_x = 400 + 10 * (frame % 20); // respawn offset
+  }
+
+  //cloud_2_x -= 4;
+  if (cloud_2_x < 0){
+    cloud_2_x = 450 + 10 * (frame % 20); // respawn offset
+  }
+
+  cloud_3_x -= 1;
+  if (cloud_3_x < 0){
+    cloud_3_x = 450 + 10 * (frame % 20); // respawn offset
+  }
+
   unsigned* p = (unsigned*)SCROLL_X;
   *p = *p - 6;
 }
@@ -163,6 +226,7 @@ unsigned main(void){
   init_dino();
   init_obstacles();
   init_ground_tiles();
+  init_sky();
 
   while (1){
     p = (unsigned*)SPRITE_0_X;
@@ -179,6 +243,21 @@ unsigned main(void){
     *p = obstacle_2_x;
     p = (unsigned*)SPRITE_2_Y;
     *p = obstacle_2_y;
+
+    p = (unsigned*)SPRITE_3_X;
+    *p = cloud_1_x;
+    p = (unsigned*)SPRITE_3_Y;
+    *p = cloud_1_y;
+
+    p = (unsigned*)SPRITE_4_X;
+    *p = cloud_2_x;
+    p = (unsigned*)SPRITE_4_Y;
+    *p = cloud_2_y;
+
+    p = (unsigned*)SPRITE_5_X;
+    *p = cloud_3_x;
+    p = (unsigned*)SPRITE_5_Y;
+    *p = cloud_3_y;
 
     // input
     p = (unsigned*)INPUT_STREAM;
@@ -197,6 +276,6 @@ unsigned main(void){
     //if (handle_collisions()) return 1;
 
     frame++;
-    for (unsigned delay = 0; delay < 50000; ++delay);
+    for (unsigned delay = 0; delay < 40000; ++delay);
   }
 }
