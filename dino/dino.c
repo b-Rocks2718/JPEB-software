@@ -207,14 +207,14 @@ int score;
 
 int handle_collisions(void){
   // collision
-  if (obstacle_1_x <= DINO_X + 1 && obstacle_1_x + 6 >= DINO_X){
+  if (obstacle_1_x <= DINO_X + 5 && obstacle_1_x + 6 >= DINO_X + 5){
     if (obstacle_1_y - 15 < dino_y){
       return 1;
     } else {
       score += 1;
     }
   }
-  if (obstacle_2_x <= DINO_X + 1 && obstacle_2_x + 10 >= DINO_X){
+  if (obstacle_2_x <= DINO_X + 5 && obstacle_2_x + 10 >= DINO_X + 5){
     if (obstacle_2_y - 15 < dino_y){
       return 1;
     } else {
