@@ -24,25 +24,27 @@ int GROUND_Y = 152;
 int DINO_X = 80;
 
 // variables
-int dino_y = 100;
-int dino_vy = 0;
-int is_jumping = 1;
+int dino_y;
+int dino_vy;
+int is_jumping;
 
-int obstacle_1_x = 300;
-int obstacle_1_y = 152;
-int obstacle_2_x = 600;
-int obstacle_2_y = 152;
-int cloud_1_x = 250;
-int cloud_1_y = 60;
-int cloud_2_x = 200;
-int cloud_2_y = 30;
-int cloud_3_x = 150;
-int cloud_3_y = 40;
-unsigned frame = 0;
+int obstacle_1_x;
+int obstacle_1_y;
+int obstacle_2_x;
+int obstacle_2_y;
+int cloud_1_x;
+int cloud_1_y;
+int cloud_2_x;
+int cloud_2_y;
+int cloud_3_x;
+int cloud_3_y;
+unsigned frame;
 
 int draw_pixel(unsigned x, unsigned y, unsigned color);
 int write_text_tilemap(unsigned text_color, unsigned bg_color);
 int clear_screen();
+int print(unsigned* str);
+int print_unsigned(unsigned x);
 
 // simple box draw function
 int draw_box(unsigned x, unsigned y, unsigned w, unsigned h, unsigned color){
@@ -201,21 +203,80 @@ int move_obstacles(void){
   *p = *p - 6;
 }
 
-//int handle_collisions(void){
-//  // collision
-//  if (obstacle_x <= DINO_X + 1 && obstacle_x + 1 >= DINO_X){
-//    unsigned dino_top = dino_y >> 8;
-//    unsigned obs_top = obstacle_y >> 8;
-//    if (dino_top + 3 > obs_top){
-//      write_text_tilemap(0xF00, 0x000);
-//      return 1; // game over
-//    }
-//  }
-//  return 0;
-//}
+int score;
+
+int handle_collisions(void){
+  // collision
+  if (obstacle_1_x <= DINO_X + 1 && obstacle_1_x + 6 >= DINO_X){
+    if (obstacle_1_y - 15 < dino_y){
+      return 1;
+    } else {
+      score += 1;
+    }
+  }
+  if (obstacle_2_x <= DINO_X + 1 && obstacle_2_x + 10 >= DINO_X){
+    if (obstacle_2_y - 15 < dino_y){
+      return 1;
+    } else {
+      score += 1;
+    }
+  }
+  return 0;
+}
+
+int update_positions(){
+  unsigned* p;
+  p = (unsigned*)SPRITE_0_X;
+  *p = DINO_X;
+  p = (unsigned*)SPRITE_0_Y;
+  *p = dino_y;
+
+  p = (unsigned*)SPRITE_1_X;
+  *p = obstacle_1_x;
+  p = (unsigned*)SPRITE_1_Y;
+  *p = obstacle_1_y;
+
+  p = (unsigned*)SPRITE_2_X;
+  *p = obstacle_2_x;
+  p = (unsigned*)SPRITE_2_Y;
+  *p = obstacle_2_y;
+
+  p = (unsigned*)SPRITE_3_X;
+  *p = cloud_1_x;
+  p = (unsigned*)SPRITE_3_Y;
+  *p = cloud_1_y;
+
+  p = (unsigned*)SPRITE_4_X;
+  *p = cloud_2_x;
+  p = (unsigned*)SPRITE_4_Y;
+  *p = cloud_2_y;
+
+  p = (unsigned*)SPRITE_5_X;
+  *p = cloud_3_x;
+  p = (unsigned*)SPRITE_5_Y;
+  *p = cloud_3_y;
+}
+
+int game_over[23] = {0x47,0X61,0X6D,0X65,0X20,0X4F,0X76,0X65,0X72,0X0A,0X59,0X6F,0X75,0X72,0X20,0X53,0X63,0X6F,0X72,0X65,0X3A,0X20,0X00};
 
 unsigned main(void){
-  write_text_tilemap(0x0F0, 0x000);
+  start: dino_y = 100;
+  dino_vy = 0;
+  is_jumping = 1;
+
+  obstacle_1_x = 300;
+  obstacle_1_y = 152;
+  obstacle_2_x = 600;
+  obstacle_2_y = 152;
+  cloud_1_x = 250;
+  cloud_1_y = 60;
+  cloud_2_x = 200;
+  cloud_2_y = 30;
+  cloud_3_x = 150;
+  cloud_3_y = 40;
+  frame = 0;
+
+  write_text_tilemap(0x000, 0xFA0);
   clear_screen();
 
   unsigned *p = (unsigned*)RESOLUTION_REG;
@@ -229,35 +290,7 @@ unsigned main(void){
   init_sky();
 
   while (1){
-    p = (unsigned*)SPRITE_0_X;
-    *p = DINO_X;
-    p = (unsigned*)SPRITE_0_Y;
-    *p = dino_y;
-
-    p = (unsigned*)SPRITE_1_X;
-    *p = obstacle_1_x;
-    p = (unsigned*)SPRITE_1_Y;
-    *p = obstacle_1_y;
-
-    p = (unsigned*)SPRITE_2_X;
-    *p = obstacle_2_x;
-    p = (unsigned*)SPRITE_2_Y;
-    *p = obstacle_2_y;
-
-    p = (unsigned*)SPRITE_3_X;
-    *p = cloud_1_x;
-    p = (unsigned*)SPRITE_3_Y;
-    *p = cloud_1_y;
-
-    p = (unsigned*)SPRITE_4_X;
-    *p = cloud_2_x;
-    p = (unsigned*)SPRITE_4_Y;
-    *p = cloud_2_y;
-
-    p = (unsigned*)SPRITE_5_X;
-    *p = cloud_3_x;
-    p = (unsigned*)SPRITE_5_Y;
-    *p = cloud_3_y;
+    update_positions();
 
     // input
     p = (unsigned*)INPUT_STREAM;
@@ -273,7 +306,20 @@ unsigned main(void){
 
     move_obstacles();
 
-    //if (handle_collisions()) return 1;
+    if (handle_collisions()){
+      // game over
+      p = (unsigned*)SCROLL_X;
+      *p = 0;
+      print(game_over);
+      print_unsigned(score);
+      while (1){
+        // input
+        p = (unsigned*)INPUT_STREAM;
+        unsigned key = *p;
+        if (key == 0x71) return 0; // 'q' to quit
+        if (key == 0x20) goto start;
+      }
+    }
 
     frame++;
     for (unsigned delay = 0; delay < 40000; ++delay);
