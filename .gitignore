@@ -6,3 +6,4 @@ JPEB-emulator
 *.out
 collatz/*.s
 mandelbrot/*.s
+*vcd
