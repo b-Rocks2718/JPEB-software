@@ -62,7 +62,7 @@ int main(void){
     d = *p; // start over on next keypress
     if (d == 0x73) selector = ((selector + 1) % 3);
     else if (d == 0x77) selector = ((selector - 1) % 3);
-    if (d == 13) {
+    if (d == 13 || d == 10) {
       if (selector == 0){
         // collatz
         collatz_main();
