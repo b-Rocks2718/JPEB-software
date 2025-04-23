@@ -507,7 +507,7 @@ FHIGH_SCORE:
   movi r3, 0
 LHIGH_SCORE_DROP:
   addi r3, r3, 1
-  sw r3, r4, 1
+  #sw r3, r4, 1
   movi r2, LOOP_COUNT
   lw r2, r2, 0
 LHIGH_SCORE_STALL:
