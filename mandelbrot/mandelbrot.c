@@ -95,5 +95,12 @@ int main(void){
 
   display_mandelbrot(start_x, start_y, diff);
 
+  p = (unsigned*)SCROLL_X;
+  *p = -200;
+  p = (unsigned*)SCROLL_Y; 
+  *p = -200;
+
+  while (1);
+
   return 0;
 } 
