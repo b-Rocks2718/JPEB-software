@@ -26,6 +26,10 @@ mandelbrot/mandelbrot.bin: mandelbrot/mandelbrot.s
 	rm -f $@
 	$(AS) mandelbrot/mandelbrot.s $(COMMON)
 
+ascii_mandelbrot/mandelbrot.bin: ascii_mandelbrot/mandelbrot.s
+	rm -f $@
+	$(AS) ascii_mandelbrot/mandelbrot.s $(COMMON)
+
 snake/snake_test.bin: snake/snake_test.s
 	rm -f $@
 	$(AS) snake/snake_test.s $(COMMON)
