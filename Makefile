@@ -68,4 +68,4 @@ clean:
 	@find . -type f -name "*.bin" -exec rm -f {} +
 	@find . -type f -name "*.out" -exec rm -f {} +
 	@find . -type f -name "*.hex" -exec rm -f {} +
-	@rm -f collatz/collatz.s common/text.s mandelbrot/mandelbrot.s life/life.s common/text.s common/tile.s
+	@rm -f collatz/collatz.s common/text.s mandelbrot/mandelbrot.s life/life.s common/tile.s math_demos/math_demos.s ascii_mandelbrot/mandelbrot.s
