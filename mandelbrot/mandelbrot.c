@@ -81,7 +81,7 @@ int main(void){
 
   unsigned *p = (unsigned*)RESOLUTION_REG;
   // max resolution
-  *p = 0;
+  *p = 1;
   
   // set up colors
   for (int i = 0; i < 20; ++i){
