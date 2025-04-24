@@ -2146,7 +2146,21 @@ update_positions:
 main:
 	movi r1 40959
 	movi r2 40959
-	addi r1  r1  -61
+	addi r1  r1  -56
+	movi r3 0
+	sw r3  r2  -1
+	movi r3 3720
+	sw r3  r2  -2
+	lw r3  r2  -1
+	lw r4  r2  -2
+	call write_text_tilemap
+	sw r3  r2  -3
+	call init_dino
+	sw r3  r2  -4
+	call init_obstacles
+	sw r3  r2  -5
+	call init_ground_tiles
+	sw r3  r2  -6
 main.start:
 	movi r3 100
 	movi r4 dino_y
@@ -2188,65 +2202,51 @@ main.start:
 	movi r4 sun_y
 	sw r3  r4  0
 	movi r3 0
-	sw r3  r2  -1
-	lw r3  r2  -1
+	sw r3  r2  -7
+	lw r3  r2  -7
 	movi r4 frame
 	sw r3  r4  0
-	movi r3 0
-	sw r3  r2  -2
-	movi r3 3720
-	sw r3  r2  -3
-	lw r3  r2  -2
-	lw r4  r2  -3
-	call write_text_tilemap
-	sw r3  r2  -4
 	call reset_cursor
-	sw r3  r2  -5
+	sw r3  r2  -8
+	call init_sky
+	sw r3  r2  -9
 	movi r3 RESOLUTION_REG
 	lw r3  r3  0
-	sw r3  r2  -6
-	lw r3  r2  -6
-	sw r3  r2  -7
+	sw r3  r2  -10
+	lw r3  r2  -10
+	sw r3  r2  -11
 	movi r3 1
-	sw r3  r2  -8
-	lw r3  r2  -7
-	lw r4  r2  -8
+	sw r3  r2  -12
+	lw r3  r2  -11
+	lw r4  r2  -12
 	sw r4  r3  0
 	movi r3 SPRITE_3_X
 	lw r3  r3  0
-	sw r3  r2  -9
-	lw r3  r2  -9
-	sw r3  r2  -7
+	sw r3  r2  -13
+	lw r3  r2  -13
+	sw r3  r2  -11
 	movi r3 sun_x
 	lw r3  r3  0
-	sw r3  r2  -10
-	lw r3  r2  -7
-	lw r4  r2  -10
+	sw r3  r2  -14
+	lw r3  r2  -11
+	lw r4  r2  -14
 	sw r4  r3  0
 	movi r3 SPRITE_3_Y
 	lw r3  r3  0
+	sw r3  r2  -15
+	lw r3  r2  -15
 	sw r3  r2  -11
-	lw r3  r2  -11
-	sw r3  r2  -7
 	movi r3 sun_y
 	lw r3  r3  0
-	sw r3  r2  -12
-	lw r3  r2  -7
-	lw r4  r2  -12
+	sw r3  r2  -16
+	lw r3  r2  -11
+	lw r4  r2  -16
 	sw r4  r3  0
 	movi r3 INPUT_STREAM
 	lw r3  r3  0
-	sw r3  r2  -13
-	lw r3  r2  -13
-	sw r3  r2  -7
-	call init_dino
-	sw r3  r2  -14
-	call init_obstacles
-	sw r3  r2  -15
-	call init_ground_tiles
-	sw r3  r2  -16
-	call init_sky
 	sw r3  r2  -17
+	lw r3  r2  -17
+	sw r3  r2  -11
 main.while.0.continue:
 	movi r3 1
 	movi r4 0
@@ -2261,8 +2261,8 @@ main.while.0.continue:
 	lw r3  r3  0
 	sw r3  r2  -19
 	lw r3  r2  -19
-	sw r3  r2  -7
-	lw r3  r2  -7
+	sw r3  r2  -11
+	lw r3  r2  -11
 	lw r4  r3  0
 	sw r4  r2  -20
 	lw r3  r2  -20
@@ -2377,10 +2377,10 @@ main.end.31:
 	lw r3  r3  0
 	sw r3  r2  -32
 	lw r3  r2  -32
-	sw r3  r2  -7
+	sw r3  r2  -11
 	movi r3 0
 	sw r3  r2  -33
-	lw r3  r2  -7
+	lw r3  r2  -11
 	lw r4  r2  -33
 	sw r4  r3  0
 	movi r3 game_over
@@ -2408,8 +2408,8 @@ main.while.1.continue:
 	lw r3  r3  0
 	sw r3  r2  -39
 	lw r3  r2  -39
-	sw r3  r2  -7
-	lw r3  r2  -7
+	sw r3  r2  -11
+	lw r3  r2  -11
 	lw r4  r3  0
 	sw r4  r2  -40
 	lw r3  r2  -40
@@ -2521,11 +2521,11 @@ main.for.2.start:
 	cmp r3  r4 
 	bb 1
 	jmp 3
-	movi r3 main.end.69
+	movi r3 main.end.64
 	jalr r0  r3 
 	movi r3 0
 	sw r3  r2  -54
-main.end.69:
+main.end.64:
 	lw r3  r2  -54
 	movi r4 0
 	cmp r3  r4 
@@ -2533,47 +2533,11 @@ main.end.69:
 	jmp 3
 	movi r3 main.for.2.break
 	jalr r0  r3 
-	movi r3 0
-	sw r3  r2  -56
-	lw r3  r2  -56
-	sw r3  r2  -57
-main.for.3.start:
-	movi r3 1
-	sw r3  r2  -58
-	movi r3 3
-	sw r3  r2  -59
-	lw r3  r2  -57
-	lw r4  r2  -59
-	cmp r3  r4 
-	bb 1
-	jmp 3
-	movi r3 main.end.65
-	jalr r0  r3 
-	movi r3 0
-	sw r3  r2  -58
-main.end.65:
-	lw r3  r2  -58
-	movi r4 0
-	cmp r3  r4 
-	bz 1
-	jmp 3
-	movi r3 main.for.3.break
-	jalr r0  r3 
-main.for.3.continue:
-	movi r3 1
-	sw r3  r2  -60
-	lw r3  r2  -57
-	lw r4  r2  -60
-	add r3  r3  r4 
-	sw r3  r2  -57
-	movi r3 main.for.3.start
-	jalr r0  r3 
-main.for.3.break:
 main.for.2.continue:
 	movi r3 1
-	sw r3  r2  -61
+	sw r3  r2  -56
 	lw r3  r2  -53
-	lw r4  r2  -61
+	lw r4  r2  -56
 	add r3  r3  r4 
 	sw r3  r2  -53
 	movi r3 main.for.2.start

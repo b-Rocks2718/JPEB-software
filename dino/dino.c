@@ -113,13 +113,6 @@ int init_sun(void){
       if (p[i * 32 + j] == 0x0F3F) p[i * 32 + j] = 0xF000;
     }
   }
-  //for (int k = 0; k < 3; ++k){
-  //  for (int i = 0; i < 32; ++i){
-  //    for (int j = 0; j < 32; ++j){
-  //      if (p[i * 32 + j] == 0x0F3F) p[i * 32 + j] = 0xF000;
-  //    }
-  //  }
-  //}
 }
 
 int init_sky(void){
@@ -258,6 +251,11 @@ int do_animations(void);
 int game_over[23] = {0x47,0X61,0X6D,0X65,0X20,0X4F,0X76,0X65,0X72,0X0A,0X59,0X6F,0X75,0X72,0X20,0X53,0X63,0X6F,0X72,0X65,0X3A,0X20,0X00};
 
 unsigned main(void){
+  write_text_tilemap(0x000, 0xe88);
+  init_dino();
+  init_obstacles();
+  init_ground_tiles();
+
   start: dino_y = 100;
   dino_vy = 0;
   is_jumping = 1;
@@ -274,8 +272,8 @@ unsigned main(void){
   sun_y = 30;
   frame = 0;
 
-  write_text_tilemap(0x000, 0xe88);
   reset_cursor();
+  init_sky();
 
   unsigned *p = (unsigned*)RESOLUTION_REG;
   *p = 1;
@@ -286,11 +284,6 @@ unsigned main(void){
   *p = sun_y;
 
   p = (unsigned*)INPUT_STREAM;
-
-  init_dino();
-  init_obstacles();
-  init_ground_tiles();
-  init_sky();
 
   while (1){
     update_positions();
@@ -329,6 +322,6 @@ unsigned main(void){
 
     frame++;
     for (unsigned delay = 0; delay < 40000; ++delay)
-      for (unsigned delay = 0; delay < 3; ++delay);
+      ;//for (unsigned delay = 0; delay < 3; ++delay);
   }
 }
