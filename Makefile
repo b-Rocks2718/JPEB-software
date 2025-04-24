@@ -27,7 +27,8 @@ math_demos/math_demos.bin: math_demos/math_demos.s math_demos/mandelbrot/mandelb
 
 %.bin: %.s
 	rm -f $@
-	$(AS) $<
+	rm -f $*.hex
+	$(AS) $< $(COMMON)
 
 %.run: %.bin
 	$(EMU) $<
@@ -36,7 +37,7 @@ math_demos/math_demos.bin: math_demos/math_demos.s math_demos/mandelbrot/mandelb
 	@cp ${DATA_DIR}/*.hex ${SIM_DATA}/
 	@cp $*.hex ${SIM_DATA}/program.hex
 	@sed -i '1s/^/@0\n/' ${SIM_DATA}/program.hex
-	$(SIM) +DATAPATH=${SIM_DATA}/
+	# $(SIM) +DATAPATH=${SIM_DATA}/
 
 common/text.s: common/text.c
 	rm -f common/text.s

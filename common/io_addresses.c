@@ -22,3 +22,4 @@ unsigned SPRITE_6_X = 0xFFEC;
 unsigned SPRITE_6_Y = 0xFFED;
 unsigned SPRITE_7_X = 0xFFEE;
 unsigned SPRITE_7_Y = 0xFFEF;
+unsigned UART_TX_REG = 0xF000;

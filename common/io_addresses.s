@@ -1,5 +1,7 @@
 
 # Data Section:
+UART_TX_REG:
+	.fill 61440
 SPRITE_7_Y:
 	.fill 65519
 SPRITE_7_X:
