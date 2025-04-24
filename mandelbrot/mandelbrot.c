@@ -37,7 +37,7 @@ int mandelbrot_count(int c_x, int c_y){
   int z_y = 0;
   int i;
   for (i = 0; i < 100; ++i){
-    int temp_x;
+    int temp_x; 
     int temp_y;
     mul_complex(z_x, z_y, z_x, z_y, &temp_x, &temp_y);
     z_x = temp_x + c_x;

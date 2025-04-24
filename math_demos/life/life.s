@@ -1,12 +1,12 @@
 
 # Data Section:
-next_erase.15:
+next_erase.13:
 	.fill 1
-erase.14:
+erase.12:
 	.fill 1
-cur_y.13:
+cur_y.11:
 	.fill 1
-cur_x.12:
+cur_x.10:
 	.fill 5
 FRAMEBUFFER_BUFFER:
 	.fill 24576
@@ -94,7 +94,7 @@ setup_loop.end.7:
 	jalr r0  r3 
 	movi r3 1
 	sw r3  r2  -10
-	movi r3 cur_y.13
+	movi r3 cur_y.11
 	lw r3  r3  0
 	movi r4 0
 	cmp r3  r4 
@@ -122,7 +122,7 @@ setup_loop.end.11:
 	jmp 3
 	movi r3 setup_loop.else.23
 	jalr r0  r3 
-	movi r3 erase.14
+	movi r3 erase.12
 	lw r3  r3  0
 	movi r4 0
 	cmp r3  r4 
@@ -130,10 +130,10 @@ setup_loop.end.11:
 	jmp 3
 	movi r3 setup_loop.else.16
 	jalr r0  r3 
-	movi r3 cur_x.12
+	movi r3 cur_x.10
 	lw r3  r3  0
 	sw r3  r2  -11
-	movi r3 cur_y.13
+	movi r3 cur_y.11
 	lw r3  r3  0
 	sw r3  r2  -12
 	movi r3 0
@@ -146,10 +146,10 @@ setup_loop.end.11:
 	movi r3 setup_loop.end.21
 	jalr r0  r3 
 setup_loop.else.16:
-	movi r3 cur_x.12
+	movi r3 cur_x.10
 	lw r3  r3  0
 	sw r3  r2  -15
-	movi r3 cur_y.13
+	movi r3 cur_y.11
 	lw r3  r3  0
 	sw r3  r2  -16
 	movi r3 1
@@ -160,14 +160,14 @@ setup_loop.else.16:
 	call draw_pixel
 	sw r3  r2  -18
 setup_loop.end.21:
-	movi r3 cur_y.13
+	movi r3 cur_y.11
 	lw r3  r3  0
 	sw r3  r2  -19
-	movi r3 cur_y.13
+	movi r3 cur_y.11
 	lw r3  r3  0
 	movi r4 1
 	sub r3  r3  r4 
-	movi r4 cur_y.13
+	movi r4 cur_y.11
 	sw r3  r4  0
 	movi r3 1
 	sw r3  r2  -6
@@ -197,7 +197,7 @@ setup_loop.end.25:
 	jalr r0  r3 
 	movi r3 1
 	sw r3  r2  -22
-	movi r3 cur_y.13
+	movi r3 cur_y.11
 	lw r3  r3  0
 	movi r4 59
 	cmp r3  r4 
@@ -225,7 +225,7 @@ setup_loop.end.29:
 	jmp 3
 	movi r3 setup_loop.end.41
 	jalr r0  r3 
-	movi r3 erase.14
+	movi r3 erase.12
 	lw r3  r3  0
 	movi r4 0
 	cmp r3  r4 
@@ -233,10 +233,10 @@ setup_loop.end.29:
 	jmp 3
 	movi r3 setup_loop.else.34
 	jalr r0  r3 
-	movi r3 cur_x.12
+	movi r3 cur_x.10
 	lw r3  r3  0
 	sw r3  r2  -23
-	movi r3 cur_y.13
+	movi r3 cur_y.11
 	lw r3  r3  0
 	sw r3  r2  -24
 	movi r3 0
@@ -249,10 +249,10 @@ setup_loop.end.29:
 	movi r3 setup_loop.end.39
 	jalr r0  r3 
 setup_loop.else.34:
-	movi r3 cur_x.12
+	movi r3 cur_x.10
 	lw r3  r3  0
 	sw r3  r2  -27
-	movi r3 cur_y.13
+	movi r3 cur_y.11
 	lw r3  r3  0
 	sw r3  r2  -28
 	movi r3 1
@@ -263,14 +263,14 @@ setup_loop.else.34:
 	call draw_pixel
 	sw r3  r2  -30
 setup_loop.end.39:
-	movi r3 cur_y.13
+	movi r3 cur_y.11
 	lw r3  r3  0
 	sw r3  r2  -31
-	movi r3 cur_y.13
+	movi r3 cur_y.11
 	lw r3  r3  0
 	movi r4 1
 	add r3  r3  r4 
-	movi r4 cur_y.13
+	movi r4 cur_y.11
 	sw r3  r4  0
 	movi r3 1
 	sw r3  r2  -6
@@ -300,7 +300,7 @@ setup_loop.end.45:
 	jalr r0  r3 
 	movi r3 1
 	sw r3  r2  -34
-	movi r3 cur_x.12
+	movi r3 cur_x.10
 	lw r3  r3  0
 	movi r4 0
 	cmp r3  r4 
@@ -328,7 +328,7 @@ setup_loop.end.49:
 	jmp 3
 	movi r3 setup_loop.else.61
 	jalr r0  r3 
-	movi r3 erase.14
+	movi r3 erase.12
 	lw r3  r3  0
 	movi r4 0
 	cmp r3  r4 
@@ -336,10 +336,10 @@ setup_loop.end.49:
 	jmp 3
 	movi r3 setup_loop.else.54
 	jalr r0  r3 
-	movi r3 cur_x.12
+	movi r3 cur_x.10
 	lw r3  r3  0
 	sw r3  r2  -35
-	movi r3 cur_y.13
+	movi r3 cur_y.11
 	lw r3  r3  0
 	sw r3  r2  -36
 	movi r3 0
@@ -352,10 +352,10 @@ setup_loop.end.49:
 	movi r3 setup_loop.end.59
 	jalr r0  r3 
 setup_loop.else.54:
-	movi r3 cur_x.12
+	movi r3 cur_x.10
 	lw r3  r3  0
 	sw r3  r2  -39
-	movi r3 cur_y.13
+	movi r3 cur_y.11
 	lw r3  r3  0
 	sw r3  r2  -40
 	movi r3 1
@@ -366,14 +366,14 @@ setup_loop.else.54:
 	call draw_pixel
 	sw r3  r2  -42
 setup_loop.end.59:
-	movi r3 cur_x.12
+	movi r3 cur_x.10
 	lw r3  r3  0
 	sw r3  r2  -43
-	movi r3 cur_x.12
+	movi r3 cur_x.10
 	lw r3  r3  0
 	movi r4 1
 	sub r3  r3  r4 
-	movi r4 cur_x.12
+	movi r4 cur_x.10
 	sw r3  r4  0
 	movi r3 1
 	sw r3  r2  -6
@@ -403,7 +403,7 @@ setup_loop.end.63:
 	jalr r0  r3 
 	movi r3 1
 	sw r3  r2  -46
-	movi r3 cur_x.12
+	movi r3 cur_x.10
 	lw r3  r3  0
 	movi r4 79
 	cmp r3  r4 
@@ -431,7 +431,7 @@ setup_loop.end.67:
 	jmp 3
 	movi r3 setup_loop.else.79
 	jalr r0  r3 
-	movi r3 erase.14
+	movi r3 erase.12
 	lw r3  r3  0
 	movi r4 0
 	cmp r3  r4 
@@ -439,10 +439,10 @@ setup_loop.end.67:
 	jmp 3
 	movi r3 setup_loop.else.72
 	jalr r0  r3 
-	movi r3 cur_x.12
+	movi r3 cur_x.10
 	lw r3  r3  0
 	sw r3  r2  -47
-	movi r3 cur_y.13
+	movi r3 cur_y.11
 	lw r3  r3  0
 	sw r3  r2  -48
 	movi r3 0
@@ -455,10 +455,10 @@ setup_loop.end.67:
 	movi r3 setup_loop.end.77
 	jalr r0  r3 
 setup_loop.else.72:
-	movi r3 cur_x.12
+	movi r3 cur_x.10
 	lw r3  r3  0
 	sw r3  r2  -51
-	movi r3 cur_y.13
+	movi r3 cur_y.11
 	lw r3  r3  0
 	sw r3  r2  -52
 	movi r3 1
@@ -469,14 +469,14 @@ setup_loop.else.72:
 	call draw_pixel
 	sw r3  r2  -54
 setup_loop.end.77:
-	movi r3 cur_x.12
+	movi r3 cur_x.10
 	lw r3  r3  0
 	sw r3  r2  -55
-	movi r3 cur_x.12
+	movi r3 cur_x.10
 	lw r3  r3  0
 	movi r4 1
 	add r3  r3  r4 
-	movi r4 cur_x.12
+	movi r4 cur_x.10
 	sw r3  r4  0
 	movi r3 1
 	sw r3  r2  -6
@@ -504,7 +504,7 @@ setup_loop.end.81:
 	jalr r0  r3 
 	movi r3 1
 	sw r3  r2  -57
-	movi r3 erase.14
+	movi r3 erase.12
 	lw r3  r3  0
 	movi r4 0
 	cmp r3  r4 
@@ -516,7 +516,7 @@ setup_loop.end.81:
 	sw r3  r2  -57
 setup_loop.end.83:
 	lw r3  r2  -57
-	movi r4 erase.14
+	movi r4 erase.12
 	sw r3  r4  0
 	movi r3 setup_loop.end.92
 	jalr r0  r3 
@@ -577,10 +577,10 @@ setup_loop.end.91:
 setup_loop.end.92:
 setup_loop.end.93:
 setup_loop.end.94:
-	movi r3 cur_x.12
+	movi r3 cur_x.10
 	lw r3  r3  0
 	sw r3  r2  -61
-	movi r3 cur_y.13
+	movi r3 cur_y.11
 	lw r3  r3  0
 	sw r3  r2  -62
 	movi r3 2

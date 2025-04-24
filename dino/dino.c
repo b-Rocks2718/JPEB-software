@@ -210,7 +210,7 @@ int handle_collisions(void){
   // collision
   if (obstacle_1_x <= DINO_X + 1 && obstacle_1_x + 6 >= DINO_X){
     if (obstacle_1_y - 10 < dino_y){
-      return 1;
+      return 1; 
     } else {
       score += 1;
     }

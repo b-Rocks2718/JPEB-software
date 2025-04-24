@@ -334,7 +334,7 @@ main.start:
 	sw r3  r2  -1
 	movi r3 240
 	movi r4 273
-	call write_text_tilemap
+	call write_text_tilemap_all
 	sw r3  r2  -2
 	movi r3 RESOLUTION_REG
 	lw r3  r3  0

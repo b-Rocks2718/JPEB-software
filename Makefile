@@ -14,20 +14,29 @@ COMMON      := $(strip $(MAPPED_S) $(EXTRA_S))
 
 .PRECIOUS: %.bin %.s
 
-math_demos/math_demos.run: math_demos/math_demos.bin
-	$(EMU) math_demos/math_demos.bin
-
 math_demos/math_demos.bin: math_demos/math_demos.s math_demos/mandelbrot/mandelbrot.s math_demos/collatz/collatz.s math_demos/life/life.s $(COMMON)
 	rm -f $@
 	$(AS) math_demos/math_demos.s math_demos/mandelbrot/mandelbrot.s math_demos/collatz/collatz.s math_demos/life/life.s $(COMMON)
 
+dino/dino.bin: dino/dino.s dino/dino_animations.s $(COMMON)
+	rm -f $@
+	$(AS) dino/dino.s dino/dino_animations.s $(COMMON)
+
+mandelbrot/mandelbrot.bin: mandelbrot/mandelbrot.s
+	rm -f $@
+	$(AS) mandelbrot/mandelbrot.s $(COMMON)
+
+snake/snake_test.bin: snake/snake_test.s
+	rm -f $@
+	$(AS) snake/snake_test.s $(COMMON)
+
+snake/snake_low_res.bin: snake/snake_low_res.s
+	rm -f $@
+	$(AS) snake/snake_low_res.s $(COMMON)
+
 %.s: %.c
 	rm -f $@
 	$(CC) $<
-
-%.bin: %.s
-	rm -f $@
-	$(AS) $<
 
 %.run: %.bin
 	$(EMU) $<

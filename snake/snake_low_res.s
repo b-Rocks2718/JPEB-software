@@ -5,7 +5,7 @@
 INIT:
   movi r3, 0x0000
   movi r4, 0x05A4
-  call write_text_tilemap
+  call write_text_tilemap_all
   # color the background to green (tile number 0)
   movi r3, 0
   movi r4, 0x05A4
