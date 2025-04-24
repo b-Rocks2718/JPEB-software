@@ -61,7 +61,7 @@ dino_y:
 DINO_X:
 	.fill 80
 GROUND_Y:
-	.fill 152
+	.fill 156
 JUMP_VELOCITY:
 	.fill 48
 GRAVITY:
@@ -1860,7 +1860,7 @@ handle_collisions.end.7:
 	sw r3  r2  -6
 	movi r3 obstacle_1_y
 	lw r3  r3  0
-	movi r4 15
+	movi r4 10
 	sub r3  r3  r4 
 	sw r3  r2  -7
 	lw r3  r2  -7
@@ -1965,7 +1965,7 @@ handle_collisions.end.21:
 	sw r3  r2  -13
 	movi r3 obstacle_2_y
 	lw r3  r3  0
-	movi r4 15
+	movi r4 5
 	sub r3  r3  r4 
 	sw r3  r2  -14
 	lw r3  r2  -14
@@ -2146,7 +2146,7 @@ update_positions:
 main:
 	movi r1 40959
 	movi r2 40959
-	addi r1  r1  -56
+	addi r1  r1  -61
 main.start:
 	movi r3 100
 	movi r4 dino_y
@@ -2474,9 +2474,38 @@ main.end.53:
 	jalr r0  r3 
 main.while.1.break:
 main.end.54:
+	movi r3 1
+	sw r3  r2  -48
+	movi r3 10
+	sw r3  r2  -49
 	movi r3 frame
 	lw r3  r3  0
+	lw r4  r2  -49
+	call umod
+	sw r3  r2  -50
+	lw r3  r2  -50
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 main.end.58
+	jalr r0  r3 
+	movi r3 0
 	sw r3  r2  -48
+main.end.58:
+	lw r3  r2  -48
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 main.end.60
+	jalr r0  r3 
+	call do_animations
+	sw r3  r2  -51
+main.end.60:
+	movi r3 frame
+	lw r3  r3  0
+	sw r3  r2  -52
 	movi r3 frame
 	lw r3  r3  0
 	movi r4 1
@@ -2484,57 +2513,58 @@ main.end.54:
 	movi r4 frame
 	sw r3  r4  0
 	movi r3 1
-	sw r3  r2  -49
-	movi r3 60000
-	sw r3  r2  -50
+	sw r3  r2  -53
+	movi r3 30000
+	sw r3  r2  -54
 	movi r3 frame
 	lw r3  r3  0
-	lw r4  r2  -50
+	lw r4  r2  -54
 	cmp r3  r4 
 	ba 1
-	jmp 3
-	movi r3 main.end.58
-	jalr r0  r3 
-	movi r3 0
-	sw r3  r2  -49
-main.end.58:
-	lw r3  r2  -49
-	movi r4 0
-	cmp r3  r4 
-	bz 1
-	jmp 3
-	movi r3 main.end.60
-	jalr r0  r3 
-	movi r3 frame2
-	lw r3  r3  0
-	sw r3  r2  -51
-	movi r3 frame2
-	lw r3  r3  0
-	movi r4 1
-	add r3  r3  r4 
-	movi r4 frame2
-	sw r3  r4  0
-main.end.60:
-	movi r3 0
-	sw r3  r2  -52
-	lw r3  r2  -52
-	sw r3  r2  -53
-main.for.2.start:
-	movi r3 1
-	sw r3  r2  -54
-	movi r3 40000
-	sw r3  r2  -55
-	lw r3  r2  -53
-	lw r4  r2  -55
-	cmp r3  r4 
-	bb 1
 	jmp 3
 	movi r3 main.end.64
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -54
+	sw r3  r2  -53
 main.end.64:
-	lw r3  r2  -54
+	lw r3  r2  -53
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 main.end.67
+	jalr r0  r3 
+	movi r3 1
+	sw r3  r2  -55
+	movi r3 frame2
+	lw r3  r3  0
+	lw r4  r2  -55
+	add r3  r3  r4 
+	sw r3  r2  -56
+	lw r3  r2  -56
+	movi r4 frame2
+	sw r3  r4  0
+main.end.67:
+	movi r3 0
+	sw r3  r2  -57
+	lw r3  r2  -57
+	sw r3  r2  -58
+main.for.2.start:
+	movi r3 1
+	sw r3  r2  -59
+	movi r3 40000
+	sw r3  r2  -60
+	lw r3  r2  -58
+	lw r4  r2  -60
+	cmp r3  r4 
+	bb 1
+	jmp 3
+	movi r3 main.end.71
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -59
+main.end.71:
+	lw r3  r2  -59
 	movi r4 0
 	cmp r3  r4 
 	bz 1
@@ -2543,11 +2573,11 @@ main.end.64:
 	jalr r0  r3 
 main.for.2.continue:
 	movi r3 1
-	sw r3  r2  -56
-	lw r3  r2  -53
-	lw r4  r2  -56
+	sw r3  r2  -61
+	lw r3  r2  -58
+	lw r4  r2  -61
 	add r3  r3  r4 
-	sw r3  r2  -53
+	sw r3  r2  -58
 	movi r3 main.for.2.start
 	jalr r0  r3 
 main.for.2.break:

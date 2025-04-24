@@ -20,7 +20,7 @@ extern unsigned SPRITE_5_Y;
 
 int GRAVITY = 3;
 int JUMP_VELOCITY = 0x030;
-int GROUND_Y = 152;
+int GROUND_Y = 156;
 int DINO_X = 80;
 
 // variables
@@ -209,14 +209,14 @@ int score;
 int handle_collisions(void){
   // collision
   if (obstacle_1_x <= DINO_X + 1 && obstacle_1_x + 6 >= DINO_X){
-    if (obstacle_1_y - 15 < dino_y){
+    if (obstacle_1_y - 10 < dino_y){
       return 1;
     } else {
       score += 1;
     }
   }
   if (obstacle_2_x <= DINO_X + 1 && obstacle_2_x + 10 >= DINO_X){
-    if (obstacle_2_y - 15 < dino_y){
+    if (obstacle_2_y - 5 < dino_y){
       return 1;
     } else {
       score += 1;
@@ -325,11 +325,11 @@ unsigned main(void){
       }
     }
 
-    //if (frame2 % 100)
-    //  do_animations();
+    if (!(frame % 10))
+      do_animations();
 
     frame++;
-    if (frame > 60000) frame2++;
+    if (frame > 30000) frame2 = frame2 + 1;
     for (unsigned delay = 0; delay < 40000; ++delay);
   }
 }
