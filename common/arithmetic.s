@@ -184,3 +184,4 @@ rs_loop: # repeated shift
 rs_end:
 	lw r5 r1 -1 # pop registers
 	jalr r0 r7
+

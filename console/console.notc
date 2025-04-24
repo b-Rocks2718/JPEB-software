@@ -26,6 +26,7 @@ unsigned main(void) {
     while (1) {
         unsigned key = *inputPtr;
         // Not empty and not key release
+        // if ((key & 0x00FF) != 0 && (key & 0xFF00) != 0xF000) {
         if ((key & 0x00FF) != 0 && (key & 0xFF00) != 0xF000) {
             *txPtr = key;
         }
