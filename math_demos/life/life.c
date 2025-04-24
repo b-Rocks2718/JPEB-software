@@ -6,7 +6,6 @@ unsigned FRAMEBUFFER_BUFFER = 0x6000; // gonna hope this doesnt cause problems
 
 unsigned putchar(unsigned n);
 unsigned print_unsigned(unsigned n);
-int write_text_tilemap(int text_color, int bg_color);
 int write_solid_tile(unsigned tile_num, unsigned color);
 unsigned draw_pixel(unsigned x, unsigned y, unsigned p);
 unsigned read_pixel(unsigned x, unsigned y);

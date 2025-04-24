@@ -20,6 +20,28 @@ write_text_tilemap_loop_2:
 		pop r2
   	jalr r0 r7
 
+write_text_tilemap_all: # first param is text color, ssecond is bg color
+		push r2
+    mov  r6 r3
+    movi r2 0xC000
+    movi r3 0xE000
+write_text_tilemap_all_loop:
+    sw   r4 r2 0
+    addi r2 r2 1
+    cmp  r2 r3
+    bnz  write_text_tilemap_all_loop
+  	movi r2 text_tilemap
+  	mov  r4 r6
+  	movi r5 text_tilemap_end
+write_text_tilemap_all_loop_2:
+  	lw   r3 r2 0
+  	sw   r4 r3 0
+  	addi r2 r2 1
+  	cmp  r2 r5
+  	bnz  write_text_tilemap_all_loop_2
+		pop r2
+  	jalr r0 r7
+
 text_tilemap:
 	# space
 
