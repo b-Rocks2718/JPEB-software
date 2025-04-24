@@ -8,7 +8,7 @@ unsigned print(unsigned* p);
 unsigned print_unsigned(unsigned n);
 int write_text_tilemap_all(int text_color, int bg_color);
 int write_solid_tile(unsigned tile_num, unsigned color);
-int clear_screen(void);
+int clear(void);
 
 unsigned math[14] = {0X4D,0X61,0X74,0X68,0X20,0X44,0X65,0X6D,0X6F,0X73,0X21, 0X0A, 0X0A, 0X00};
 unsigned option1[21] = {32, 32, 0X43,0X6F,0X6C,0X6C,0X61,0X74,0X7A,0X20,0X53,0X65,0X71,0X75,0X65,0X6E,0X63,0X65,0X73,0X0A,0X00};
@@ -38,7 +38,7 @@ int update_selector(int selector){
 
 int main(void){
   start:
-  clear_screen();
+  clear();
   write_text_tilemap_all(0x0F0, 0x111);
   unsigned *p = (unsigned*)RESOLUTION_REG;
   // lower resolution

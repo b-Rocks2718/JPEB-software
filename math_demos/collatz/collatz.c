@@ -3,7 +3,7 @@
 int write_text_tilemap_all(int text_color, int bg_color);
 unsigned putchar(unsigned c);
 unsigned print_unsigned(unsigned x);
-unsigned clear_screen(void);
+unsigned clear(void);
 unsigned print(unsigned* string);
 
 extern unsigned cursor_index;
@@ -78,7 +78,7 @@ unsigned reset[26] = {0X50,0X72,0X65,0X73,0X73,0X20,0X61,0X6E,0X79,0X20,0X6B,0X6
   0X79,0X20,0X74,0X6F,0X20,0X72,0X65,0X73,0X74,0X61,0X72,0X74,0X0A,0X00};
 
 int collatz_main(void) {
-  clear_screen();
+  clear();
   write_text_tilemap_all(0xFF0, 0x333);
   unsigned *p = (unsigned*)RESOLUTION_REG;
   // decrease resolution
@@ -116,7 +116,7 @@ int collatz_main(void) {
       d = *p; // start over on next keypress
       if (d != 0) {
         if (d == 0x71) return 0; // this was a q
-        end: clear_screen();
+        end: clear();
         print(enter_digit);
         break;
       }

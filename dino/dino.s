@@ -65,7 +65,7 @@ GROUND_Y:
 JUMP_VELOCITY:
 	.fill 48
 GRAVITY:
-	.fill 3
+	.fill 2
 
 # Code Section:
 draw_box:
@@ -2194,64 +2194,59 @@ main.start:
 	sw r3  r4  0
 	movi r3 0
 	sw r3  r2  -2
-	lw r3  r2  -2
-	movi r4 frame2
-	sw r3  r4  0
-	movi r3 0
-	sw r3  r2  -3
 	movi r3 3720
-	sw r3  r2  -4
-	lw r3  r2  -3
-	lw r4  r2  -4
+	sw r3  r2  -3
+	lw r3  r2  -2
+	lw r4  r2  -3
 	call write_text_tilemap
+	sw r3  r2  -4
+	call reset_cursor
 	sw r3  r2  -5
-	call clear_screen
-	sw r3  r2  -6
 	movi r3 RESOLUTION_REG
 	lw r3  r3  0
+	sw r3  r2  -6
+	lw r3  r2  -6
 	sw r3  r2  -7
-	lw r3  r2  -7
-	sw r3  r2  -8
 	movi r3 1
-	sw r3  r2  -9
-	lw r3  r2  -8
-	lw r4  r2  -9
+	sw r3  r2  -8
+	lw r3  r2  -7
+	lw r4  r2  -8
 	sw r4  r3  0
 	movi r3 SPRITE_3_X
 	lw r3  r3  0
-	sw r3  r2  -10
-	lw r3  r2  -10
-	sw r3  r2  -8
+	sw r3  r2  -9
+	lw r3  r2  -9
+	sw r3  r2  -7
 	movi r3 sun_x
 	lw r3  r3  0
-	sw r3  r2  -11
-	lw r3  r2  -8
-	lw r4  r2  -11
+	sw r3  r2  -10
+	lw r3  r2  -7
+	lw r4  r2  -10
 	sw r4  r3  0
 	movi r3 SPRITE_3_Y
 	lw r3  r3  0
-	sw r3  r2  -12
-	lw r3  r2  -12
-	sw r3  r2  -8
+	sw r3  r2  -11
+	lw r3  r2  -11
+	sw r3  r2  -7
 	movi r3 sun_y
 	lw r3  r3  0
-	sw r3  r2  -13
-	lw r3  r2  -8
-	lw r4  r2  -13
+	sw r3  r2  -12
+	lw r3  r2  -7
+	lw r4  r2  -12
 	sw r4  r3  0
 	movi r3 INPUT_STREAM
 	lw r3  r3  0
-	sw r3  r2  -14
-	lw r3  r2  -14
-	sw r3  r2  -8
+	sw r3  r2  -13
+	lw r3  r2  -13
+	sw r3  r2  -7
 	call init_dino
-	sw r3  r2  -15
+	sw r3  r2  -14
 	call init_obstacles
-	sw r3  r2  -16
+	sw r3  r2  -15
 	call init_ground_tiles
-	sw r3  r2  -17
+	sw r3  r2  -16
 	call init_sky
-	sw r3  r2  -18
+	sw r3  r2  -17
 main.while.0.continue:
 	movi r3 1
 	movi r4 0
@@ -2261,98 +2256,98 @@ main.while.0.continue:
 	movi r3 main.while.0.break
 	jalr r0  r3 
 	call update_positions
-	sw r3  r2  -19
+	sw r3  r2  -18
 	movi r3 INPUT_STREAM
 	lw r3  r3  0
-	sw r3  r2  -20
-	lw r3  r2  -20
-	sw r3  r2  -8
-	lw r3  r2  -8
+	sw r3  r2  -19
+	lw r3  r2  -19
+	sw r3  r2  -7
+	lw r3  r2  -7
 	lw r4  r3  0
-	sw r4  r2  -21
-	lw r3  r2  -21
-	sw r3  r2  -22
+	sw r4  r2  -20
+	lw r3  r2  -20
+	sw r3  r2  -21
 	movi r3 1
-	sw r3  r2  -23
+	sw r3  r2  -22
 	movi r3 113
-	sw r3  r2  -24
-	lw r3  r2  -22
-	lw r4  r2  -24
+	sw r3  r2  -23
+	lw r3  r2  -21
+	lw r4  r2  -23
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.end.22
+	movi r3 main.end.21
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -23
-main.end.22:
-	lw r3  r2  -23
+	sw r3  r2  -22
+main.end.21:
+	lw r3  r2  -22
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.end.24
+	movi r3 main.end.23
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -25
-	lw r3  r2  -25
+	sw r3  r2  -24
+	lw r3  r2  -24
 	# Function Epilogue
 	sys EXIT
-main.end.24:
+main.end.23:
 	movi r3 0
-	sw r3  r2  -26
+	sw r3  r2  -25
 	movi r3 1
-	sw r3  r2  -27
+	sw r3  r2  -26
 	movi r3 32
-	sw r3  r2  -28
-	lw r3  r2  -22
-	lw r4  r2  -28
+	sw r3  r2  -27
+	lw r3  r2  -21
+	lw r4  r2  -27
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.end.27
+	movi r3 main.end.26
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -27
-main.end.27:
-	lw r3  r2  -27
+	sw r3  r2  -26
+main.end.26:
+	lw r3  r2  -26
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.end.31
+	movi r3 main.end.30
 	jalr r0  r3 
 	movi r3 1
-	sw r3  r2  -29
+	sw r3  r2  -28
 	movi r3 is_jumping
 	lw r3  r3  0
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.end.29
+	movi r3 main.end.28
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -29
-main.end.29:
-	lw r3  r2  -29
+	sw r3  r2  -28
+main.end.28:
+	lw r3  r2  -28
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 main.end.30
+	jalr r0  r3 
+	movi r3 1
+	sw r3  r2  -25
+main.end.30:
+	lw r3  r2  -25
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
 	movi r3 main.end.31
 	jalr r0  r3 
-	movi r3 1
-	sw r3  r2  -26
-main.end.31:
-	lw r3  r2  -26
-	movi r4 0
-	cmp r3  r4 
-	bz 1
-	jmp 3
-	movi r3 main.end.32
-	jalr r0  r3 
-	movi r3 15
+	movi r3 13
 	movi r4 dino_vy
 	sw r3  r4  0
 	movi r3 dino_y
@@ -2364,43 +2359,43 @@ main.end.31:
 	movi r3 1
 	movi r4 is_jumping
 	sw r3  r4  0
-main.end.32:
+main.end.31:
 	call handle_physics
-	sw r3  r2  -30
+	sw r3  r2  -29
 	call move_obstacles
-	sw r3  r2  -31
+	sw r3  r2  -30
 	call handle_collisions
-	sw r3  r2  -32
-	lw r3  r2  -32
+	sw r3  r2  -31
+	lw r3  r2  -31
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.end.54
+	movi r3 main.end.53
 	jalr r0  r3 
 	movi r3 SCROLL_X
 	lw r3  r3  0
-	sw r3  r2  -33
-	lw r3  r2  -33
-	sw r3  r2  -8
+	sw r3  r2  -32
+	lw r3  r2  -32
+	sw r3  r2  -7
 	movi r3 0
-	sw r3  r2  -34
-	lw r3  r2  -8
-	lw r4  r2  -34
+	sw r3  r2  -33
+	lw r3  r2  -7
+	lw r4  r2  -33
 	sw r4  r3  0
 	movi r3 game_over
+	sw r3  r2  -34
+	lw r3  r2  -34
 	sw r3  r2  -35
 	lw r3  r2  -35
-	sw r3  r2  -36
-	lw r3  r2  -36
 	call print
-	sw r3  r2  -37
+	sw r3  r2  -36
 	movi r3 score
 	lw r3  r3  0
-	sw r3  r2  -38
-	lw r3  r2  -38
+	sw r3  r2  -37
+	lw r3  r2  -37
 	call print_unsigned
-	sw r3  r2  -39
+	sw r3  r2  -38
 main.while.1.continue:
 	movi r3 1
 	movi r4 0
@@ -2411,173 +2406,176 @@ main.while.1.continue:
 	jalr r0  r3 
 	movi r3 INPUT_STREAM
 	lw r3  r3  0
-	sw r3  r2  -40
-	lw r3  r2  -40
-	sw r3  r2  -8
-	lw r3  r2  -8
+	sw r3  r2  -39
+	lw r3  r2  -39
+	sw r3  r2  -7
+	lw r3  r2  -7
 	lw r4  r3  0
-	sw r4  r2  -41
-	lw r3  r2  -41
-	sw r3  r2  -42
+	sw r4  r2  -40
+	lw r3  r2  -40
+	sw r3  r2  -41
 	movi r3 1
-	sw r3  r2  -43
+	sw r3  r2  -42
 	movi r3 113
-	sw r3  r2  -44
-	lw r3  r2  -42
-	lw r4  r2  -44
+	sw r3  r2  -43
+	lw r3  r2  -41
+	lw r4  r2  -43
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.end.47
+	movi r3 main.end.46
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -43
-main.end.47:
-	lw r3  r2  -43
+	sw r3  r2  -42
+main.end.46:
+	lw r3  r2  -42
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.end.49
+	movi r3 main.end.48
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -45
-	lw r3  r2  -45
+	sw r3  r2  -44
+	lw r3  r2  -44
 	# Function Epilogue
 	sys EXIT
-main.end.49:
+main.end.48:
 	movi r3 1
-	sw r3  r2  -46
+	sw r3  r2  -45
 	movi r3 0
-	sw r3  r2  -47
-	lw r3  r2  -42
-	lw r4  r2  -47
+	sw r3  r2  -46
+	lw r3  r2  -41
+	lw r4  r2  -46
 	cmp r3  r4 
 	bnz 1
 	jmp 3
-	movi r3 main.end.52
+	movi r3 main.end.51
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -46
-main.end.52:
-	lw r3  r2  -46
+	sw r3  r2  -45
+main.end.51:
+	lw r3  r2  -45
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.end.53
+	movi r3 main.end.52
 	jalr r0  r3 
 	movi r3 main.start
 	jalr r0  r3 
-main.end.53:
+main.end.52:
 	movi r3 main.while.1.continue
 	jalr r0  r3 
 main.while.1.break:
-main.end.54:
+main.end.53:
 	movi r3 1
-	sw r3  r2  -48
+	sw r3  r2  -47
 	movi r3 10
-	sw r3  r2  -49
+	sw r3  r2  -48
 	movi r3 frame
 	lw r3  r3  0
-	lw r4  r2  -49
+	lw r4  r2  -48
 	call umod
-	sw r3  r2  -50
-	lw r3  r2  -50
+	sw r3  r2  -49
+	lw r3  r2  -49
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.end.58
+	movi r3 main.end.57
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -48
-main.end.58:
-	lw r3  r2  -48
+	sw r3  r2  -47
+main.end.57:
+	lw r3  r2  -47
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.end.60
+	movi r3 main.end.59
 	jalr r0  r3 
 	call do_animations
-	sw r3  r2  -51
-main.end.60:
+	sw r3  r2  -50
+main.end.59:
 	movi r3 frame
 	lw r3  r3  0
-	sw r3  r2  -52
+	sw r3  r2  -51
 	movi r3 frame
 	lw r3  r3  0
 	movi r4 1
 	add r3  r3  r4 
 	movi r4 frame
 	sw r3  r4  0
-	movi r3 1
-	sw r3  r2  -53
-	movi r3 30000
-	sw r3  r2  -54
-	movi r3 frame
-	lw r3  r3  0
-	lw r4  r2  -54
-	cmp r3  r4 
-	ba 1
-	jmp 3
-	movi r3 main.end.64
-	jalr r0  r3 
 	movi r3 0
+	sw r3  r2  -52
+	lw r3  r2  -52
 	sw r3  r2  -53
-main.end.64:
-	lw r3  r2  -53
-	movi r4 0
-	cmp r3  r4 
-	bz 1
-	jmp 3
-	movi r3 main.end.67
-	jalr r0  r3 
-	movi r3 1
-	sw r3  r2  -55
-	movi r3 frame2
-	lw r3  r3  0
-	lw r4  r2  -55
-	add r3  r3  r4 
-	sw r3  r2  -56
-	lw r3  r2  -56
-	movi r4 frame2
-	sw r3  r4  0
-main.end.67:
-	movi r3 0
-	sw r3  r2  -57
-	lw r3  r2  -57
-	sw r3  r2  -58
 main.for.2.start:
 	movi r3 1
-	sw r3  r2  -59
+	sw r3  r2  -54
 	movi r3 40000
-	sw r3  r2  -60
-	lw r3  r2  -58
-	lw r4  r2  -60
+	sw r3  r2  -55
+	lw r3  r2  -53
+	lw r4  r2  -55
 	cmp r3  r4 
 	bb 1
 	jmp 3
-	movi r3 main.end.71
+	movi r3 main.end.69
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -59
-main.end.71:
-	lw r3  r2  -59
+	sw r3  r2  -54
+main.end.69:
+	lw r3  r2  -54
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
 	movi r3 main.for.2.break
 	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -56
+	lw r3  r2  -56
+	sw r3  r2  -57
+main.for.3.start:
+	movi r3 1
+	sw r3  r2  -58
+	movi r3 3
+	sw r3  r2  -59
+	lw r3  r2  -57
+	lw r4  r2  -59
+	cmp r3  r4 
+	bb 1
+	jmp 3
+	movi r3 main.end.65
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -58
+main.end.65:
+	lw r3  r2  -58
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 main.for.3.break
+	jalr r0  r3 
+main.for.3.continue:
+	movi r3 1
+	sw r3  r2  -60
+	lw r3  r2  -57
+	lw r4  r2  -60
+	add r3  r3  r4 
+	sw r3  r2  -57
+	movi r3 main.for.3.start
+	jalr r0  r3 
+main.for.3.break:
 main.for.2.continue:
 	movi r3 1
 	sw r3  r2  -61
-	lw r3  r2  -58
+	lw r3  r2  -53
 	lw r4  r2  -61
 	add r3  r3  r4 
-	sw r3  r2  -58
+	sw r3  r2  -53
 	movi r3 main.for.2.start
 	jalr r0  r3 
 main.for.2.break:

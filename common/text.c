@@ -7,6 +7,8 @@ extern unsigned INPUT_STREAM;
 static unsigned cursor_index = 0;
 static unsigned line_index = 0;
 
+unsigned clear_screen(void);
+
 unsigned putchar (unsigned c){
   unsigned* p = (unsigned*)FRAMEBUFFER_START + 64 * line_index + cursor_index / 2;
 
@@ -42,14 +44,14 @@ unsigned print_unsigned(unsigned x){
   putchar(ZERO_CHAR + d);
 }
 
-unsigned clear_screen(void){
+unsigned reset_cursor(void){
   cursor_index = 0;
   line_index = 0;
-  for (int i = 0; i < 60 * 80; ++i){
-    putchar(0);
-  }
-  cursor_index = 0;
-  line_index = 0;
+}
+
+unsigned clear(void){
+  reset_cursor();
+  clear_screen();
 }
 
 unsigned print(unsigned* string){

@@ -489,39 +489,37 @@ mandelbrot_main:
 	addi r1  r1  -2
 	addi r2  r1  0
 	# Function Body
-	addi r1  r1  -27
+	addi r1  r1  -26
 	movi r3 240
 	movi r4 0
 	call write_text_tilemap
 	sw r3  r2  -1
-	call clear_screen
-	sw r3  r2  -2
 	movi r3 RESOLUTION_REG
 	lw r3  r3  0
+	sw r3  r2  -2
+	lw r3  r2  -2
 	sw r3  r2  -3
-	lw r3  r2  -3
-	sw r3  r2  -4
 	movi r3 0
-	sw r3  r2  -5
-	lw r3  r2  -4
-	lw r4  r2  -5
+	sw r3  r2  -4
+	lw r3  r2  -3
+	lw r4  r2  -4
 	sw r4  r3  0
 	movi r3 0
-	sw r3  r2  -6
+	sw r3  r2  -5
 mandelbrot_main.for.0.start:
 	movi r3 1
-	sw r3  r2  -7
-	lw r3  r2  -6
+	sw r3  r2  -6
+	lw r3  r2  -5
 	movi r4 20
 	cmp r3  r4 
 	bl 1
 	jmp 3
-	movi r3 mandelbrot_main.end.14
+	movi r3 mandelbrot_main.end.13
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -7
-mandelbrot_main.end.14:
-	lw r3  r2  -7
+	sw r3  r2  -6
+mandelbrot_main.end.13:
+	lw r3  r2  -6
 	movi r4 0
 	cmp r3  r4 
 	bz 1
@@ -529,77 +527,77 @@ mandelbrot_main.end.14:
 	movi r3 mandelbrot_main.for.0.break
 	jalr r0  r3 
 	movi r3 1
-	sw r3  r2  -8
-	lw r3  r2  -6
+	sw r3  r2  -7
+	lw r3  r2  -5
 	movi r4 10
 	cmp r3  r4 
 	bnz 1
 	jmp 3
-	movi r3 mandelbrot_main.end.5
+	movi r3 mandelbrot_main.end.4
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -8
-mandelbrot_main.end.5:
-	lw r3  r2  -8
+	sw r3  r2  -7
+mandelbrot_main.end.4:
+	lw r3  r2  -7
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 mandelbrot_main.end.12
+	movi r3 mandelbrot_main.end.11
 	jalr r0  r3 
-	lw r3  r2  -6
-	sw r3  r2  -9
+	lw r3  r2  -5
+	sw r3  r2  -8
 	movi r3 colors
-	sw r3  r2  -10
-	lw r3  r2  -6
+	sw r3  r2  -9
+	lw r3  r2  -5
 	movi r4 1
 	call smul
-	sw r3  r2  -11
-	lw r3  r2  -10
-	lw r4  r2  -11
-	add r3  r3  r4 
-	sw r3  r2  -12
-	lw r3  r2  -12
-	lw r4  r3  0
-	sw r4  r2  -13
+	sw r3  r2  -10
 	lw r3  r2  -9
-	lw r4  r2  -13
+	lw r4  r2  -10
+	add r3  r3  r4 
+	sw r3  r2  -11
+	lw r3  r2  -11
+	lw r4  r3  0
+	sw r4  r2  -12
+	lw r3  r2  -8
+	lw r4  r2  -12
 	call write_solid_tile
-	sw r3  r2  -14
-mandelbrot_main.end.12:
+	sw r3  r2  -13
+mandelbrot_main.end.11:
 mandelbrot_main.for.0.continue:
-	lw r3  r2  -6
+	lw r3  r2  -5
 	movi r4 1
 	add r3  r3  r4 
-	sw r3  r2  -6
+	sw r3  r2  -5
 	movi r3 mandelbrot_main.for.0.start
 	jalr r0  r3 
 mandelbrot_main.for.0.break:
 	movi r3 INPUT_STREAM
 	lw r3  r3  0
-	sw r3  r2  -15
-	lw r3  r2  -15
-	sw r3  r2  -4
+	sw r3  r2  -14
+	lw r3  r2  -14
+	sw r3  r2  -3
 	movi r3 512
 	sub r3  r0  r3 
+	sw r3  r2  -15
+	lw r3  r2  -15
 	sw r3  r2  -16
-	lw r3  r2  -16
-	sw r3  r2  -17
 	movi r3 272
-	sw r3  r2  -18
+	sw r3  r2  -17
 	movi r3 9
+	sw r3  r2  -18
+	lw r3  r2  -16
 	sw r3  r2  -19
 	lw r3  r2  -17
 	sw r3  r2  -20
 	lw r3  r2  -18
 	sw r3  r2  -21
 	lw r3  r2  -19
-	sw r3  r2  -22
-	lw r3  r2  -20
-	lw r4  r2  -21
-	lw r5  r2  -22
+	lw r4  r2  -20
+	lw r5  r2  -21
 	call display_mandelbrot
-	sw r3  r2  -23
+	sw r3  r2  -22
 mandelbrot_main.while.1.continue:
 	movi r3 1
 	movi r4 0
@@ -608,31 +606,31 @@ mandelbrot_main.while.1.continue:
 	jmp 3
 	movi r3 mandelbrot_main.while.1.break
 	jalr r0  r3 
-	lw r3  r2  -4
+	lw r3  r2  -3
 	lw r4  r3  0
-	sw r4  r2  -24
+	sw r4  r2  -23
+	lw r3  r2  -23
+	sw r3  r2  -24
 	lw r3  r2  -24
 	sw r3  r2  -25
-	lw r3  r2  -25
-	sw r3  r2  -26
 	movi r3 1
-	sw r3  r2  -27
-	lw r3  r2  -26
+	sw r3  r2  -26
+	lw r3  r2  -25
 	movi r4 113
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 mandelbrot_main.end.24
+	movi r3 mandelbrot_main.end.23
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -27
-mandelbrot_main.end.24:
-	lw r3  r2  -27
+	sw r3  r2  -26
+mandelbrot_main.end.23:
+	lw r3  r2  -26
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 mandelbrot_main.end.25
+	movi r3 mandelbrot_main.end.24
 	jalr r0  r3 
 	movi r3 0
 	# Function Epilogue
@@ -641,7 +639,7 @@ mandelbrot_main.end.24:
 	lw r2  r2  0
 	addi r1  r1  2
 	jalr r0  r7 
-mandelbrot_main.end.25:
+mandelbrot_main.end.24:
 	movi r3 mandelbrot_main.while.1.continue
 	jalr r0  r3 
 mandelbrot_main.while.1.break:

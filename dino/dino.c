@@ -18,7 +18,7 @@ extern unsigned SPRITE_4_Y;
 extern unsigned SPRITE_5_X;
 extern unsigned SPRITE_5_Y;
 
-int GRAVITY = 3;
+int GRAVITY = 2;
 int JUMP_VELOCITY = 0x030;
 int GROUND_Y = 156;
 int DINO_X = 80;
@@ -43,7 +43,7 @@ unsigned frame2;
 
 int draw_pixel(unsigned x, unsigned y, unsigned color);
 int write_text_tilemap(unsigned text_color, unsigned bg_color);
-int clear_screen();
+int reset_cursor();
 int print(unsigned* str);
 int print_unsigned(unsigned x);
 
@@ -273,10 +273,9 @@ unsigned main(void){
   sun_x = 260;
   sun_y = 30;
   frame = 0;
-  frame2 = 0;
 
   write_text_tilemap(0x000, 0xe88);
-  clear_screen();
+  reset_cursor();
 
   unsigned *p = (unsigned*)RESOLUTION_REG;
   *p = 1;
@@ -301,7 +300,7 @@ unsigned main(void){
     unsigned key = *p;
     if (key == 0x71) return 0; // 'q' to quit
     if (key == 0x20 && !is_jumping){ // spacebar
-      dino_vy = 15;//JUMP_VELOCITY;
+      dino_vy = 13;//JUMP_VELOCITY;
       dino_y -= 3;
       is_jumping = 1;
     }
@@ -329,7 +328,7 @@ unsigned main(void){
       do_animations();
 
     frame++;
-    if (frame > 30000) frame2 = frame2 + 1;
-    for (unsigned delay = 0; delay < 40000; ++delay);
+    for (unsigned delay = 0; delay < 40000; ++delay)
+      for (unsigned delay = 0; delay < 3; ++delay);
   }
 }

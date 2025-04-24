@@ -330,7 +330,7 @@ main:
 	movi r2 40959
 	addi r1  r1  -36
 main.start:
-	call clear_screen
+	call clear
 	sw r3  r2  -1
 	movi r3 240
 	movi r4 273

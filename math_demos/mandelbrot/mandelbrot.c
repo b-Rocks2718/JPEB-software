@@ -10,7 +10,6 @@ unsigned putchar(unsigned n);
 unsigned print_unsigned(unsigned n);
 int write_text_tilemap(int text_color, int bg_color);
 int write_solid_tile(unsigned tile_num, unsigned color);
-int clear_screen(void);
 unsigned read_pixel(unsigned x, unsigned y);
 unsigned draw_pixel(unsigned x, unsigned y, unsigned color);
 
@@ -77,7 +76,6 @@ int display_mandelbrot(unsigned start_x, unsigned start_y, unsigned diff){
 
 int mandelbrot_main(void){
   write_text_tilemap(0x0F0, 0x000);
-  clear_screen();
 
   unsigned *p = (unsigned*)RESOLUTION_REG;
   // max resolution

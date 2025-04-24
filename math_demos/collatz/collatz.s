@@ -419,7 +419,7 @@ collatz_main:
 	addi r2  r1  0
 	# Function Body
 	addi r1  r1  -51
-	call clear_screen
+	call clear
 	sw r3  r2  -1
 	movi r3 4080
 	movi r4 819
@@ -756,7 +756,7 @@ collatz_main.end.57:
 	jalr r0  r7 
 collatz_main.end.58:
 collatz_main.end:
-	call clear_screen
+	call clear
 	sw r3  r2  -49
 	movi r3 enter_digit
 	sw r3  r2  -50

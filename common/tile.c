@@ -37,3 +37,11 @@ unsigned read_pixel(unsigned x, unsigned y){
     return v;
   }
 }
+
+unsigned clear_screen(void){
+  for (int i = 0; i < 80; ++i){
+    for (int j = 0; j < 60; ++j){
+      draw_pixel(i, j, 0);
+    }
+  }
+}
