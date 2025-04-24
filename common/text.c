@@ -12,7 +12,7 @@ unsigned clear_screen(void);
 unsigned putchar (unsigned c){
   unsigned* p = (unsigned*)FRAMEBUFFER_START + 64 * line_index + cursor_index / 2;
 
-  if (c == 10){
+  if (c == 10 || c == 13){
     cursor_index = 0;
     line_index++;
     return 0;

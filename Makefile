@@ -38,11 +38,15 @@ snake/snake_low_res.bin: snake/snake_low_res.s
 	rm -f $@
 	$(AS) snake/snake_low_res.s $(COMMON)
 
-%.s: %.c
+console/console.bin: console/console.s
+	rm -f $@
+	$(AS) console/console.s $(COMMON)
+
+%.s: %.c $(COMMON)
 	rm -f $@
 	$(CC) $<
 
-%.bin: %.s
+%.bin: %.s $(COMMON)
 	rm -f $@
 	rm -f $*.hex
 	$(AS) $< $(COMMON)
