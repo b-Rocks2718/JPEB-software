@@ -1,7 +1,7 @@
 write_text_tilemap: # first param is text color, ssecond is bg color
 		push r2
     mov  r6 r3
-    movi r2 0xC000
+    movi r2 0xC800
     movi r3 0xE000
 write_text_tilemap_loop:
     sw   r4 r2 0

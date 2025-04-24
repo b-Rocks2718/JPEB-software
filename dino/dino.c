@@ -39,6 +39,7 @@ int cloud_2_y;
 int sun_x;
 int sun_y;
 unsigned frame;
+unsigned frame2;
 
 int draw_pixel(unsigned x, unsigned y, unsigned color);
 int write_text_tilemap(unsigned text_color, unsigned bg_color);
@@ -63,64 +64,33 @@ int init_dino(void){
   unsigned* p = (unsigned*)SPRITE_DATA_START;
   for (int i = 0; i < 32; ++i){
     for (int j = 0; j < 32; ++j){
-      if (p[i * 32 + j] == 0x0A4A){
+      if (p[i * 32 + j] == 0x0F3F){
         p[i * 32 + j] = 0xF000;
       }
     }
   }
 }
 
-int draw_ground(void){
+
+int init_ground_tiles(void){
   unsigned* p = (unsigned*)FRAMEBUFFER_START;
   for (int i = 0; i < 30; ++i){
     for (int j = 0; j < 128; ++j){
       if (i > 22){
-        draw_pixel(j, i, 1);
+        int tile = (i * 3 + j * 7 + i ^ j) & 0x1F;
+        if (tile == 0) tile++;
+        draw_pixel(j, i, tile);
       }
     }
   }
 }
-
-int init_ground_tiles(void){
-  unsigned* p = (unsigned*)TILEMAP_START;
-  int k = 1;
-  p += 64;
-  for (int i = 0; i < 8; ++i){
-    for (int j = 0; j < 8; ++j){
-      if (k == 0){
-        p[8 * i + j] = 0x1CE;
-      } else if (k == 1){
-        p[8 * i + j] = 0x3BF;
-      } else if (k == 2){
-        p[8 * i + j] = 0x3DF;
-      } else if (k == 3){
-        p[8 * i + j] = 0x1BF;
-      } else if (k == 4){
-        p[8 * i + j] = 0x2EF;
-      } else if (k == 5){
-        p[8 * i + j] = 0x1AF;
-      } else if (k == 6){
-        p[8 * i + j] = 0x3EF;
-      } else {
-        p[8 * i + j] = 0x3FF;
-      }
-      k <<= 2;
-      k += 5;
-      k = k % 7;
-    }
-  }
-  draw_ground();
-}
-
-
-// #a349a4
 
 int init_obstacles(void){
   unsigned* p = (unsigned*)SPRITE_DATA_START;
   p += 32 * 32;
   for (int i = 0; i < 32; ++i){
     for (int j = 0; j < 32; ++j){
-      if (p[i * 32 + j] == 0x0A4A){
+      if (p[i * 32 + j] == 0x0F3F){
         p[i * 32 + j] = 0xF000;
       }
     }
@@ -128,7 +98,7 @@ int init_obstacles(void){
   p += 32 * 32;
   for (int i = 0; i < 32; ++i){
     for (int j = 0; j < 32; ++j){
-      if (p[i * 32 + j] == 0x0A4A){
+      if (p[i * 32 + j] == 0x0F3F){
         p[i * 32 + j] = 0xF000;
       }
     }
@@ -140,24 +110,31 @@ int init_sun(void){
   p += 32 * 32 * 3;
   for (int i = 0; i < 32; ++i){
     for (int j = 0; j < 32; ++j){
-      if (p[i * 32 + j] == 0x0A4A) p[i * 32 + j] = 0xF000;
+      if (p[i * 32 + j] == 0x0F3F) p[i * 32 + j] = 0xF000;
     }
   }
+  //for (int k = 0; k < 3; ++k){
+  //  for (int i = 0; i < 32; ++i){
+  //    for (int j = 0; j < 32; ++j){
+  //      if (p[i * 32 + j] == 0x0F3F) p[i * 32 + j] = 0xF000;
+  //    }
+  //  }
+  //}
 }
 
 int init_sky(void){
   unsigned* p = (unsigned*)TILEMAP_START;
-  p +=128;
   for (int i = 0; i < 8; ++i){
     for (int j = 0; j < 8; ++j){
-      p[8 * i + j] = 0xFB5;
+      p[8 * i + j] = 0xe88;
+      p[8128 + 8 * i + j] = 0xe88;
     }
   }
   p = (unsigned*)FRAMEBUFFER_START;
   for (int i = 0; i < 30; ++i){
     for (int j = 0; j < 128; ++j){
       if (i <= 22){
-        draw_pixel(j, i, 2);
+        draw_pixel(j, i, 127);
       }
     }
   }
@@ -167,7 +144,7 @@ int init_sky(void){
   p += 32 * 32 * 4;
   for (int i = 0; i < 32; ++i){
     for (int j = 0; j < 32; ++j){
-      if (p[i * 32 + j] == 0x0A4A){
+      if (p[i * 32 + j] == 0x0F3F){
         p[i * 32 + j] = 0xF000;
       }
     }
@@ -175,7 +152,7 @@ int init_sky(void){
   p += 32 * 32;
   for (int i = 0; i < 32; ++i){
     for (int j = 0; j < 32; ++j){
-      if (p[i * 32 + j] == 0x0A4A){
+      if (p[i * 32 + j] == 0x0F3F){
         p[i * 32 + j] = 0xF000;
       }
     }
@@ -276,6 +253,8 @@ int update_positions(){
   *p = cloud_2_y;
 }
 
+int do_animations(void);
+
 int game_over[23] = {0x47,0X61,0X6D,0X65,0X20,0X4F,0X76,0X65,0X72,0X0A,0X59,0X6F,0X75,0X72,0X20,0X53,0X63,0X6F,0X72,0X65,0X3A,0X20,0X00};
 
 unsigned main(void){
@@ -294,17 +273,18 @@ unsigned main(void){
   sun_x = 260;
   sun_y = 30;
   frame = 0;
+  frame2 = 0;
 
-  write_text_tilemap(0x000, 0xFB5);
+  write_text_tilemap(0x000, 0xe88);
   clear_screen();
 
   unsigned *p = (unsigned*)RESOLUTION_REG;
   *p = 1;
 
-  //p = (unsigned*)SPRITE_3_X;
-  //*p = sun_x;
-  //p = (unsigned*)SPRITE_3_Y;
-  //*p = sun_y;
+  p = (unsigned*)SPRITE_3_X;
+  *p = sun_x;
+  p = (unsigned*)SPRITE_3_Y;
+  *p = sun_y;
 
   p = (unsigned*)INPUT_STREAM;
 
@@ -345,8 +325,11 @@ unsigned main(void){
       }
     }
 
+    //if (frame2 % 100)
+    //  do_animations();
+
     frame++;
-    for (unsigned delay = 0; delay < 30000; ++delay)
-      for (unsigned delay = 0; delay < 2; ++delay);
+    if (frame > 60000) frame2++;
+    for (unsigned delay = 0; delay < 40000; ++delay);
   }
 }

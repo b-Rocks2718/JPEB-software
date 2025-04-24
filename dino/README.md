@@ -4,6 +4,6 @@ A simple version of the [Chrome dinosaur game](chrome://dino/). This demo makes 
 
 
 ## Assets
-- [Dinosaur](https://www.deviantart.com/litsho/art/Running-dinosaur-580515510)  
-- [Cacti](https://wrlck.itch.io/simple-desert)  
+- [Dinosaur and sun](https://virgils-wings.itch.io/) made by my friend Ethan 
+- [Cacti and desert tiles](https://wrlck.itch.io/simple-desert)  
 - [Clouds](https://artisan-studio.itch.io/2d-pixel-art-semi-realistic-clouds)
