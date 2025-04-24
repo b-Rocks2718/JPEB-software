@@ -63,9 +63,7 @@ int init_dino(void){
   unsigned* p = (unsigned*)SPRITE_DATA_START;
   for (int i = 0; i < 32; ++i){
     for (int j = 0; j < 32; ++j){
-      if (j < 16){
-        p[i * 32 + j] = 0x03F;
-      } else {
+      if (p[i * 32 + j] == 0x0A4A){
         p[i * 32 + j] = 0xF000;
       }
     }
@@ -114,12 +112,15 @@ int init_ground_tiles(void){
   draw_ground();
 }
 
+
+// #a349a4
+
 int init_obstacles(void){
   unsigned* p = (unsigned*)SPRITE_DATA_START;
   p += 32 * 32;
   for (int i = 0; i < 32; ++i){
     for (int j = 0; j < 32; ++j){
-      if (p[i * 32 + j] == 0x0FFF){
+      if (p[i * 32 + j] == 0x0A4A){
         p[i * 32 + j] = 0xF000;
       }
     }
@@ -127,7 +128,7 @@ int init_obstacles(void){
   p += 32 * 32;
   for (int i = 0; i < 32; ++i){
     for (int j = 0; j < 32; ++j){
-      if (p[i * 32 + j] == 0x0FFF){
+      if (p[i * 32 + j] == 0x0A4A){
         p[i * 32 + j] = 0xF000;
       }
     }
@@ -139,7 +140,7 @@ int init_sun(void){
   p += 32 * 32 * 3;
   for (int i = 0; i < 32; ++i){
     for (int j = 0; j < 32; ++j){
-      if (p[i * 32 + j] >= 0x7FF) p[i * 32 + j] = 0xF000;
+      if (p[i * 32 + j] == 0x0A4A) p[i * 32 + j] = 0xF000;
     }
   }
 }
@@ -166,7 +167,7 @@ int init_sky(void){
   p += 32 * 32 * 4;
   for (int i = 0; i < 32; ++i){
     for (int j = 0; j < 32; ++j){
-      if (p[i * 32 + j] < 0xE96){
+      if (p[i * 32 + j] == 0x0A4A){
         p[i * 32 + j] = 0xF000;
       }
     }
@@ -174,7 +175,7 @@ int init_sky(void){
   p += 32 * 32;
   for (int i = 0; i < 32; ++i){
     for (int j = 0; j < 32; ++j){
-      if (p[i * 32 + j] < 0xE96){
+      if (p[i * 32 + j] == 0x0A4A){
         p[i * 32 + j] = 0xF000;
       }
     }
@@ -202,7 +203,7 @@ int move_obstacles(void){
   // move obstacle
   obstacle_1_x -= 6;
   if (obstacle_1_x < 0){
-    obstacle_1_x = 500 + 10 * (frame % 20); // respawn offset
+    obstacle_1_x = 400 + 10 * (frame % 20); // respawn offset
   }
 
   obstacle_2_x -= 6;
@@ -250,19 +251,19 @@ int handle_collisions(void){
 int update_positions(){
   unsigned* p;
   p = (unsigned*)SPRITE_0_X;
-  *p = DINO_X;
-  p = (unsigned*)SPRITE_0_Y;
-  *p = dino_y;
-
-  p = (unsigned*)SPRITE_1_X;
   *p = obstacle_1_x;
-  p = (unsigned*)SPRITE_1_Y;
+  p = (unsigned*)SPRITE_0_Y;
   *p = obstacle_1_y;
 
-  p = (unsigned*)SPRITE_2_X;
+  p = (unsigned*)SPRITE_1_X;
   *p = obstacle_2_x;
-  p = (unsigned*)SPRITE_2_Y;
+  p = (unsigned*)SPRITE_1_Y;
   *p = obstacle_2_y;
+
+  p = (unsigned*)SPRITE_2_X;
+  *p = DINO_X;
+  p = (unsigned*)SPRITE_2_Y;
+  *p = dino_y;
 
   p = (unsigned*)SPRITE_4_X;
   *p = cloud_1_x;
@@ -300,10 +301,10 @@ unsigned main(void){
   unsigned *p = (unsigned*)RESOLUTION_REG;
   *p = 1;
 
-  p = (unsigned*)SPRITE_3_X;
-  *p = sun_x;
-  p = (unsigned*)SPRITE_3_Y;
-  *p = sun_y;
+  //p = (unsigned*)SPRITE_3_X;
+  //*p = sun_x;
+  //p = (unsigned*)SPRITE_3_Y;
+  //*p = sun_y;
 
   p = (unsigned*)INPUT_STREAM;
 
@@ -345,7 +346,7 @@ unsigned main(void){
     }
 
     frame++;
-    for (unsigned delay = 0; delay < 3000; ++delay)
-    ;//  for (unsigned delay = 0; delay < 2; ++delay);
+    for (unsigned delay = 0; delay < 30000; ++delay)
+      for (unsigned delay = 0; delay < 2; ++delay);
   }
 }
