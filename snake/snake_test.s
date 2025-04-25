@@ -5,7 +5,7 @@
 INIT:
   movi r3, 0x0000
   movi r4, 0x05A4
-  call write_text_tilemap_all
+  call write_text_tilemap
   # color the background to green (tile number 0)
   movi r3, 0
   movi r4, 0x05A4
@@ -15,6 +15,9 @@ INIT:
   movi r4, 0x1FF
   call write_solid_tile
   # design the apple red (tile number 4)
+  movi r3, 4
+  movi r4, 0x05A4
+  call write_solid_tile
   movi r4, 0xC100
   movi r3, 0x01F1
   sw r3, r4, 4
