@@ -1,5 +1,6 @@
 # note that this follows the following ISA convensions
 # r1 = stack pointer
+# r1 = unused
 # r7 = return link
   movi r1, 0x9FFF
   movi r2, 0x9FFF
@@ -59,7 +60,6 @@ INIT:
   sw r3, r4, 3
   sw r3, r4, 4
   sw r3, r4, 5
-  call clear_screen
 PRESS_SPACE_TO_START:
   movi r3, TPRESS_SPACE_TO_START
   call print
@@ -115,7 +115,7 @@ MAIN:
   movi r4, LOOP_COUNT
   lw r3, r4, 0
   push r5
-  movi r5, 100
+  movi r5, 1  # <======= changes made here: replaced outer loop count of 100 with 1
 LSTALL:
   addi r3, r3, -1
   bnz LSTALL
@@ -125,10 +125,9 @@ LSTALL:
   lw r3, r4, 0
 LMOVE:
   push r7
-  addi r3, r0, 100
+  addi r3, r0, 10
   call waitKeyFor
   call serialWrite
-  # movi r3, 119
   pop r7
   movi r4, DIRECTION
   lw r6, r4, 0 # copy original direction into r6

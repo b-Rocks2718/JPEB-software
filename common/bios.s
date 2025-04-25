@@ -30,7 +30,7 @@ waitKey_loop:
 	jalr r0 r7
 
 wk.skip_key:
-	movi r6 1000
+	movi r6 100 # <====== changes made here: replaced delay cycles of 1000 with 100
 wk.delay_loop:
 	addi r6 r6 -1
 	bnz wk.delay_loop
@@ -56,7 +56,7 @@ wkF.skip_key:
 	addi r4 r4 -1
 	bz wkF.exit
 
-	movi r6 1000
+	movi r6 100 # <====== changes made here: replaced delay cycles of 1000 with 100
 wkF.delay_loop:
 	addi r6 r6 -1
 	bnz wkF.delay_loop
