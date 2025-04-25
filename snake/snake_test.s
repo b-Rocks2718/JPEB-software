@@ -72,6 +72,7 @@ LPRESS_SPACE_TO_START:
   movi r3, 0x20
   cmp r4, r3
   bne LPRESS_SPACE_TO_START
+	call reset_cursor
   call clear_screen
   # restore scale 
   movi r4, 0xFFFC
@@ -457,6 +458,13 @@ TPRESS_SPACE_TO_START:
   .fill 0x52
   .fill 0x54
   .fill 0x00
+THIGH:
+  .fill 0x48
+  .fill 0x49
+  .fill 0x47
+  .fill 0x48
+  .fill 0x20
+  .fill 0x00
 TSCORE:
   .fill 0x53
   .fill 0x43
@@ -466,21 +474,26 @@ TSCORE:
   .fill 0x20
   .fill 0x00
 FEND:
+  movi r3, SNAKE_LENGTH
+  lw r3, r3, 0
+  addi r3, r3, -2
+  movi r4, HIGH_SCORE
+  lw r4, r4, 0
+  cmp r3, r4
+  ble LNOT_HIGH_SCORE
+LHIGH_SCORE:
+  movi r4, HIGH_SCORE
+  sw r3, r4, 0
+  # printing high score sign
+  movi r3, THIGH
+  call print
+LNOT_HIGH_SCORE:
   movi r3, TSCORE
   call print
   movi r4, SNAKE_LENGTH
   lw r3, r4, 0
   addi r3, r3, -2
-  push r3
   call print_unsigned
-  # determine if new high score
-  movi r4, HIGH_SCORE
-  lw r4, r4, 0
-  pop r3
-  cmp r3, r4
-  ble LNOT_HIGH_SCORE
-  call FHIGH_SCORE
-LNOT_HIGH_SCORE:
   movi r3, 0x0A
   call putchar
   # increase scale to see score
@@ -490,24 +503,3 @@ LNOT_HIGH_SCORE:
   movi r4, PRESS_SPACE_TO_START
   jalr r0, r4
   sys EXIT
-
-FHIGH_SCORE:
-  movi r4, HIGH_SCORE
-  sw r3, r4, 0
-  # summoning high score sign
-  movi r4, 0xFFE0
-  movi r3, 304
-  sw r3, r4, 0
-  movi r3, 0
-LHIGH_SCORE_DROP:
-  addi r3, r3, 1
-  sw r3, r4, 1
-  movi r2, LOOP_COUNT
-  lw r2, r2, 0
-LHIGH_SCORE_STALL:
-  addi r2, r2, -1
-  bnz LHIGH_SCORE_STALL
-  movi r2, 480
-  cmp r2, r3
-  bnz LHIGH_SCORE_DROP
-  jalr r0, r7
