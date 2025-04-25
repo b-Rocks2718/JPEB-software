@@ -46,6 +46,10 @@ console/console.bin: console/console.s
 	rm -f $@
 	$(AS) console/console.s $(COMMON)
 
+console/printx.bin: console/printx.s
+	rm -f $@
+	$(AS) console/printx.s $(COMMON)
+
 %.s: %.c $(COMMON)
 	rm -f $@
 	$(CC) $<
