@@ -3,6 +3,7 @@
 # r7 = return link
 
 INIT:
+  movi r1, 0x9FFF
   movi r3, 0x0000
   movi r4, 0x05A4
   call write_text_tilemap
