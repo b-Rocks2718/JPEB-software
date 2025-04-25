@@ -292,8 +292,7 @@ unsigned main(void){
 
     // input
     p = (unsigned*)INPUT_STREAM;
-    unsigned key;
-    if (!(frame & 0xFFF)) key = getKey();
+    unsigned key = getKey();
     if (key == 0x71) return 0; // 'q' to quit
     if (key == 0x20 && !is_jumping){ // spacebar
       dino_vy = 13;//JUMP_VELOCITY;
@@ -314,9 +313,10 @@ unsigned main(void){
       while (1){
         // input
         p = (unsigned*)INPUT_STREAM;
-        unsigned key = *p;
+        unsigned key = getKey();
         if (key == 0x71) return 0; // 'q' to quit
         if (key != 0) goto start;
+        frame++;
       }
     }
 
