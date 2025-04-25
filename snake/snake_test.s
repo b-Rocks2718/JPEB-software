@@ -501,6 +501,6 @@ LNOT_HIGH_SCORE:
   movi r4, 0xFFFC
   movi r3, 2
   sw r3, r4, 0
-  # movi r4, PRESS_SPACE_TO_START
-  # jalr r0, r4
+  movi r4, PRESS_SPACE_TO_START
+  jalr r0, r4
   sys EXIT

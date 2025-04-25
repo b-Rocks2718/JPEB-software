@@ -11,7 +11,7 @@ getKey:
 # 	movi r5 0xF000
 # 	cmp r6 r5
 # 	bz skip_key
-	mov r3 r4
+	lw r3 r4 0
 skip_key:
 	# movi r5 0x00FF
 	# and r3 r3 r5
