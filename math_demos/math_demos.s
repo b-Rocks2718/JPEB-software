@@ -328,7 +328,7 @@ update_selector.end.47:
 main:
 	movi r1 40959
 	movi r2 40959
-	addi r1  r1  -44
+	addi r1  r1  -41
 main.start:
 	call clear
 	sw r3  r2  -1
@@ -393,18 +393,18 @@ main.while.0.continue:
 	lw r3  r2  -7
 	call update_selector
 	sw r3  r2  -20
-	call getKey
+	call waitKey
 	sw r3  r2  -21
 	lw r3  r2  -21
 	sw r3  r2  -19
 	movi r3 1
 	sw r3  r2  -22
-	movi r3 0
+	movi r3 115
 	sw r3  r2  -23
 	lw r3  r2  -19
 	lw r4  r2  -23
 	cmp r3  r4 
-	bnz 1
+	bz 1
 	jmp 3
 	movi r3 main.end.19
 	jalr r0  r3 
@@ -416,217 +416,192 @@ main.end.19:
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.end.21
-	jalr r0  r3 
-	lw r3  r2  -19
-	call serialWrite
-	sw r3  r2  -24
-main.end.21:
-	movi r3 1
-	sw r3  r2  -25
-	movi r3 115
-	sw r3  r2  -26
-	lw r3  r2  -19
-	lw r4  r2  -26
-	cmp r3  r4 
-	bz 1
-	jmp 3
-	movi r3 main.end.24
-	jalr r0  r3 
-	movi r3 0
-	sw r3  r2  -25
-main.end.24:
-	lw r3  r2  -25
-	movi r4 0
-	cmp r3  r4 
-	bz 1
-	jmp 3
-	movi r3 main.else.27
+	movi r3 main.else.22
 	jalr r0  r3 
 	lw r3  r2  -7
 	movi r4 1
 	add r3  r3  r4 
-	sw r3  r2  -27
-	lw r3  r2  -27
+	sw r3  r2  -24
+	lw r3  r2  -24
 	movi r4 3
 	call smod
-	sw r3  r2  -28
-	lw r3  r2  -28
+	sw r3  r2  -25
+	lw r3  r2  -25
 	sw r3  r2  -7
-	movi r3 main.end.34
+	movi r3 main.end.29
 	jalr r0  r3 
-main.else.27:
+main.else.22:
 	movi r3 1
-	sw r3  r2  -29
+	sw r3  r2  -26
 	movi r3 119
-	sw r3  r2  -30
+	sw r3  r2  -27
 	lw r3  r2  -19
-	lw r4  r2  -30
+	lw r4  r2  -27
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.end.30
+	movi r3 main.end.25
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -29
-main.end.30:
-	lw r3  r2  -29
+	sw r3  r2  -26
+main.end.25:
+	lw r3  r2  -26
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.end.33
+	movi r3 main.end.28
 	jalr r0  r3 
 	lw r3  r2  -7
 	movi r4 1
 	sub r3  r3  r4 
-	sw r3  r2  -31
-	lw r3  r2  -31
+	sw r3  r2  -28
+	lw r3  r2  -28
 	movi r4 3
 	call smod
-	sw r3  r2  -32
-	lw r3  r2  -32
+	sw r3  r2  -29
+	lw r3  r2  -29
 	sw r3  r2  -7
-main.end.33:
-main.end.34:
+main.end.28:
+main.end.29:
 	movi r3 1
-	sw r3  r2  -33
+	sw r3  r2  -30
 	movi r3 1
-	sw r3  r2  -34
+	sw r3  r2  -31
 	movi r3 13
-	sw r3  r2  -35
+	sw r3  r2  -32
 	lw r3  r2  -19
-	lw r4  r2  -35
+	lw r4  r2  -32
 	cmp r3  r4 
 	bz 1
+	jmp 3
+	movi r3 main.end.32
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -31
+main.end.32:
+	lw r3  r2  -31
+	movi r4 0
+	cmp r3  r4 
+	bnz 1
+	jmp 3
+	movi r3 main.end.37
+	jalr r0  r3 
+	movi r3 1
+	sw r3  r2  -33
+	movi r3 10
+	sw r3  r2  -34
+	lw r3  r2  -19
+	lw r4  r2  -34
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 main.end.35
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -33
+main.end.35:
+	lw r3  r2  -33
+	movi r4 0
+	cmp r3  r4 
+	bnz 1
 	jmp 3
 	movi r3 main.end.37
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -34
+	sw r3  r2  -30
 main.end.37:
-	lw r3  r2  -34
-	movi r4 0
-	cmp r3  r4 
-	bnz 1
-	jmp 3
-	movi r3 main.end.42
-	jalr r0  r3 
-	movi r3 1
-	sw r3  r2  -36
-	movi r3 10
-	sw r3  r2  -37
-	lw r3  r2  -19
-	lw r4  r2  -37
-	cmp r3  r4 
-	bz 1
-	jmp 3
-	movi r3 main.end.40
-	jalr r0  r3 
-	movi r3 0
-	sw r3  r2  -36
-main.end.40:
-	lw r3  r2  -36
-	movi r4 0
-	cmp r3  r4 
-	bnz 1
-	jmp 3
-	movi r3 main.end.42
-	jalr r0  r3 
-	movi r3 0
-	sw r3  r2  -33
-main.end.42:
-	lw r3  r2  -33
+	lw r3  r2  -30
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.end.54
+	movi r3 main.end.49
 	jalr r0  r3 
 	movi r3 1
-	sw r3  r2  -38
+	sw r3  r2  -35
 	lw r3  r2  -7
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.end.44
+	movi r3 main.end.39
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -38
-main.end.44:
-	lw r3  r2  -38
+	sw r3  r2  -35
+main.end.39:
+	lw r3  r2  -35
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.else.46
+	movi r3 main.else.41
 	jalr r0  r3 
 	call collatz_main
-	sw r3  r2  -39
+	sw r3  r2  -36
 	movi r3 main.start
 	jalr r0  r3 
-	movi r3 main.end.53
+	movi r3 main.end.48
 	jalr r0  r3 
-main.else.46:
+main.else.41:
 	movi r3 1
-	sw r3  r2  -40
+	sw r3  r2  -37
 	lw r3  r2  -7
 	movi r4 1
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.end.48
+	movi r3 main.end.43
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -37
+main.end.43:
+	lw r3  r2  -37
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 main.else.45
+	jalr r0  r3 
+	call mandelbrot_main
+	sw r3  r2  -38
+	movi r3 main.start
+	jalr r0  r3 
+	movi r3 main.end.47
+	jalr r0  r3 
+main.else.45:
+	call life_main
+	sw r3  r2  -39
+	movi r3 main.start
+	jalr r0  r3 
+main.end.47:
+main.end.48:
+main.end.49:
+	movi r3 1
+	sw r3  r2  -40
+	movi r3 113
+	sw r3  r2  -41
+	lw r3  r2  -19
+	lw r4  r2  -41
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 main.end.52
 	jalr r0  r3 
 	movi r3 0
 	sw r3  r2  -40
-main.end.48:
+main.end.52:
 	lw r3  r2  -40
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 main.else.50
-	jalr r0  r3 
-	call mandelbrot_main
-	sw r3  r2  -41
-	movi r3 main.start
-	jalr r0  r3 
-	movi r3 main.end.52
-	jalr r0  r3 
-main.else.50:
-	call life_main
-	sw r3  r2  -42
-	movi r3 main.start
-	jalr r0  r3 
-main.end.52:
-main.end.53:
-main.end.54:
-	movi r3 1
-	sw r3  r2  -43
-	movi r3 113
-	sw r3  r2  -44
-	lw r3  r2  -19
-	lw r4  r2  -44
-	cmp r3  r4 
-	bz 1
-	jmp 3
-	movi r3 main.end.57
-	jalr r0  r3 
-	movi r3 0
-	sw r3  r2  -43
-main.end.57:
-	lw r3  r2  -43
-	movi r4 0
-	cmp r3  r4 
-	bz 1
-	jmp 3
-	movi r3 main.end.58
+	movi r3 main.end.53
 	jalr r0  r3 
 	movi r3 0
 	# Function Epilogue
 	sys EXIT
-main.end.58:
+main.end.53:
 	movi r3 main.while.0.continue
 	jalr r0  r3 
 main.while.0.break:

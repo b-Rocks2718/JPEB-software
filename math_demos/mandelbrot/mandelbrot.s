@@ -606,9 +606,8 @@ mandelbrot_main.while.1.continue:
 	jmp 3
 	movi r3 mandelbrot_main.while.1.break
 	jalr r0  r3 
-	lw r3  r2  -3
-	lw r4  r3  0
-	sw r4  r2  -23
+	call waitKey
+	sw r3  r2  -23
 	lw r3  r2  -23
 	sw r3  r2  -24
 	lw r3  r2  -24

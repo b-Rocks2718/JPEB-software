@@ -23,7 +23,8 @@
 
 update_loop:
 
-	call getKey
+	# call getKey
+	call serialRead
 
 	cmp r3 r0
 	bz skip_key2

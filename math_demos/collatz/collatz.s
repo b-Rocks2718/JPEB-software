@@ -418,7 +418,7 @@ collatz_main:
 	addi r1  r1  -2
 	addi r2  r1  0
 	# Function Body
-	addi r1  r1  -51
+	addi r1  r1  -49
 	call clear
 	sw r3  r2  -1
 	movi r3 4080
@@ -465,55 +465,35 @@ collatz_main.while.1.continue:
 	jmp 3
 	movi r3 collatz_main.while.1.break
 	jalr r0  r3 
-	lw r3  r2  -4
-	lw r4  r3  0
-	sw r4  r2  -11
+	call waitKey
+	sw r3  r2  -11
 	lw r3  r2  -11
 	sw r3  r2  -12
 	lw r3  r2  -12
 	sw r3  r2  -9
-	movi r3 1
-	sw r3  r2  -13
 	lw r3  r2  -9
-	movi r4 0
-	cmp r3  r4 
-	bnz 1
-	jmp 3
-	movi r3 collatz_main.end.10
-	jalr r0  r3 
-	movi r3 0
 	sw r3  r2  -13
-collatz_main.end.10:
 	lw r3  r2  -13
-	movi r4 0
-	cmp r3  r4 
-	bz 1
-	jmp 3
-	movi r3 collatz_main.end.35
-	jalr r0  r3 
-	lw r3  r2  -9
-	sw r3  r2  -14
-	lw r3  r2  -14
 	call putchar
-	sw r3  r2  -15
+	sw r3  r2  -14
 	movi r3 1
-	sw r3  r2  -16
+	sw r3  r2  -15
 	lw r3  r2  -9
 	movi r4 113
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 collatz_main.end.14
+	movi r3 collatz_main.end.12
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -16
-collatz_main.end.14:
-	lw r3  r2  -16
+	sw r3  r2  -15
+collatz_main.end.12:
+	lw r3  r2  -15
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 collatz_main.end.15
+	movi r3 collatz_main.end.13
 	jalr r0  r3 
 	movi r3 0
 	# Function Epilogue
@@ -522,178 +502,177 @@ collatz_main.end.14:
 	lw r2  r2  0
 	addi r1  r1  2
 	jalr r0  r7 
-collatz_main.end.15:
+collatz_main.end.13:
+	movi r3 1
+	sw r3  r2  -16
 	movi r3 1
 	sw r3  r2  -17
-	movi r3 1
-	sw r3  r2  -18
 	lw r3  r2  -9
-	sw r3  r2  -19
-	lw r3  r2  -19
+	sw r3  r2  -18
+	lw r3  r2  -18
 	movi r4 ZERO_CHAR
 	lw r4  r4  0
 	cmp r3  r4 
 	bb 1
 	jmp 3
-	movi r3 collatz_main.end.18
+	movi r3 collatz_main.end.16
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -18
-collatz_main.end.18:
-	lw r3  r2  -18
+	sw r3  r2  -17
+collatz_main.end.16:
+	lw r3  r2  -17
 	movi r4 0
 	cmp r3  r4 
 	bnz 1
 	jmp 3
-	movi r3 collatz_main.end.25
+	movi r3 collatz_main.end.23
 	jalr r0  r3 
 	movi r3 1
-	sw r3  r2  -20
+	sw r3  r2  -19
 	lw r3  r2  -9
-	sw r3  r2  -21
+	sw r3  r2  -20
 	movi r3 9
-	sw r3  r2  -22
+	sw r3  r2  -21
 	movi r3 ZERO_CHAR
 	lw r3  r3  0
-	lw r4  r2  -22
+	lw r4  r2  -21
 	add r3  r3  r4 
-	sw r3  r2  -23
-	lw r3  r2  -21
-	lw r4  r2  -23
+	sw r3  r2  -22
+	lw r3  r2  -20
+	lw r4  r2  -22
 	cmp r3  r4 
 	ba 1
+	jmp 3
+	movi r3 collatz_main.end.21
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -19
+collatz_main.end.21:
+	lw r3  r2  -19
+	movi r4 0
+	cmp r3  r4 
+	bnz 1
 	jmp 3
 	movi r3 collatz_main.end.23
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -20
+	sw r3  r2  -16
 collatz_main.end.23:
-	lw r3  r2  -20
-	movi r4 0
-	cmp r3  r4 
-	bnz 1
-	jmp 3
-	movi r3 collatz_main.end.25
-	jalr r0  r3 
-	movi r3 0
-	sw r3  r2  -17
-collatz_main.end.25:
-	lw r3  r2  -17
+	lw r3  r2  -16
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 collatz_main.end.26
+	movi r3 collatz_main.end.24
 	jalr r0  r3 
 	movi r3 collatz_main.end
 	jalr r0  r3 
-collatz_main.end.26:
+collatz_main.end.24:
 	movi r3 digits
-	sw r3  r2  -24
+	sw r3  r2  -23
 	lw r3  r2  -10
 	movi r4 1
 	call smul
-	sw r3  r2  -25
-	lw r3  r2  -24
-	lw r4  r2  -25
+	sw r3  r2  -24
+	lw r3  r2  -23
+	lw r4  r2  -24
 	add r3  r3  r4 
-	sw r3  r2  -26
+	sw r3  r2  -25
 	lw r3  r2  -9
-	sw r3  r2  -27
-	lw r3  r2  -27
+	sw r3  r2  -26
+	lw r3  r2  -26
 	movi r4 ZERO_CHAR
 	lw r4  r4  0
 	sub r3  r3  r4 
-	sw r3  r2  -28
-	lw r3  r2  -26
-	lw r4  r2  -28
+	sw r3  r2  -27
+	lw r3  r2  -25
+	lw r4  r2  -27
 	sw r4  r3  0
 	lw r3  r2  -10
 	movi r4 1
 	add r3  r3  r4 
 	sw r3  r2  -10
 	movi r3 1
-	sw r3  r2  -29
+	sw r3  r2  -28
 	lw r3  r2  -10
 	movi r4 3
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 collatz_main.end.33
+	movi r3 collatz_main.end.31
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -29
-collatz_main.end.33:
-	lw r3  r2  -29
+	sw r3  r2  -28
+collatz_main.end.31:
+	lw r3  r2  -28
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 collatz_main.end.34
+	movi r3 collatz_main.end.32
 	jalr r0  r3 
 	movi r3 collatz_main.while.1.break
 	jalr r0  r3 
-collatz_main.end.34:
-collatz_main.end.35:
+collatz_main.end.32:
 	movi r3 collatz_main.while.1.continue
 	jalr r0  r3 
 collatz_main.while.1.break:
 	call read_num
+	sw r3  r2  -29
+	lw r3  r2  -29
 	sw r3  r2  -30
-	lw r3  r2  -30
+	movi r3 1
 	sw r3  r2  -31
 	movi r3 1
 	sw r3  r2  -32
-	movi r3 1
-	sw r3  r2  -33
-	lw r3  r2  -31
-	lw r4  r2  -33
+	lw r3  r2  -30
+	lw r4  r2  -32
 	cmp r3  r4 
 	bb 1
 	jmp 3
-	movi r3 collatz_main.end.39
+	movi r3 collatz_main.end.36
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -32
-collatz_main.end.39:
-	lw r3  r2  -32
+	sw r3  r2  -31
+collatz_main.end.36:
+	lw r3  r2  -31
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 collatz_main.end.40
+	movi r3 collatz_main.end.37
 	jalr r0  r3 
 	movi r3 collatz_main.end
 	jalr r0  r3 
-collatz_main.end.40:
+collatz_main.end.37:
 	movi r3 10
+	sw r3  r2  -33
+	lw r3  r2  -33
+	call putchar
 	sw r3  r2  -34
-	lw r3  r2  -34
-	call putchar
+	movi r3 10
 	sw r3  r2  -35
-	movi r3 10
+	lw r3  r2  -35
+	call putchar
 	sw r3  r2  -36
-	lw r3  r2  -36
-	call putchar
-	sw r3  r2  -37
-	lw r3  r2  -31
+	lw r3  r2  -30
 	call print_seq
-	sw r3  r2  -38
+	sw r3  r2  -37
 	movi r3 10
-	sw r3  r2  -39
-	lw r3  r2  -39
+	sw r3  r2  -38
+	lw r3  r2  -38
 	call putchar
-	sw r3  r2  -40
+	sw r3  r2  -39
 	movi r3 reset
+	sw r3  r2  -40
+	lw r3  r2  -40
+	call print
 	sw r3  r2  -41
-	lw r3  r2  -41
-	call print
-	sw r3  r2  -42
 	movi r3 quit
-	sw r3  r2  -43
-	lw r3  r2  -43
+	sw r3  r2  -42
+	lw r3  r2  -42
 	call print
-	sw r3  r2  -44
+	sw r3  r2  -43
 collatz_main.while.2.continue:
 	movi r3 1
 	movi r4 0
@@ -702,50 +681,30 @@ collatz_main.while.2.continue:
 	jmp 3
 	movi r3 collatz_main.while.2.break
 	jalr r0  r3 
-	lw r3  r2  -4
-	lw r4  r3  0
-	sw r4  r2  -45
+	call waitKey
+	sw r3  r2  -44
+	lw r3  r2  -44
+	sw r3  r2  -45
 	lw r3  r2  -45
-	sw r3  r2  -46
-	lw r3  r2  -46
 	sw r3  r2  -9
 	movi r3 1
-	sw r3  r2  -47
-	lw r3  r2  -9
-	movi r4 0
-	cmp r3  r4 
-	bnz 1
-	jmp 3
-	movi r3 collatz_main.end.55
-	jalr r0  r3 
-	movi r3 0
-	sw r3  r2  -47
-collatz_main.end.55:
-	lw r3  r2  -47
-	movi r4 0
-	cmp r3  r4 
-	bz 1
-	jmp 3
-	movi r3 collatz_main.end.62
-	jalr r0  r3 
-	movi r3 1
-	sw r3  r2  -48
+	sw r3  r2  -46
 	lw r3  r2  -9
 	movi r4 113
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 collatz_main.end.57
+	movi r3 collatz_main.end.52
 	jalr r0  r3 
 	movi r3 0
-	sw r3  r2  -48
-collatz_main.end.57:
-	lw r3  r2  -48
+	sw r3  r2  -46
+collatz_main.end.52:
+	lw r3  r2  -46
 	movi r4 0
 	cmp r3  r4 
 	bz 1
 	jmp 3
-	movi r3 collatz_main.end.58
+	movi r3 collatz_main.end.53
 	jalr r0  r3 
 	movi r3 0
 	# Function Epilogue
@@ -754,18 +713,17 @@ collatz_main.end.57:
 	lw r2  r2  0
 	addi r1  r1  2
 	jalr r0  r7 
-collatz_main.end.58:
+collatz_main.end.53:
 collatz_main.end:
 	call clear
-	sw r3  r2  -49
+	sw r3  r2  -47
 	movi r3 enter_digit
-	sw r3  r2  -50
-	lw r3  r2  -50
+	sw r3  r2  -48
+	lw r3  r2  -48
 	call print
-	sw r3  r2  -51
+	sw r3  r2  -49
 	movi r3 collatz_main.while.2.break
 	jalr r0  r3 
-collatz_main.end.62:
 	movi r3 collatz_main.while.2.continue
 	jalr r0  r3 
 collatz_main.while.2.break:
