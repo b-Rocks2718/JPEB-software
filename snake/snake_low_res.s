@@ -125,10 +125,9 @@ LSTALL:
   lw r3, r4, 0
 LMOVE:
   push r7
-  addi r3, r0, 100
+  addi r3, r0, 10
   call waitKeyFor
   call serialWrite
-  # movi r3, 119
   pop r7
   movi r4, DIRECTION
   lw r6, r4, 0 # copy original direction into r6
