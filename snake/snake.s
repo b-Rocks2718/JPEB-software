@@ -67,11 +67,11 @@ PRESS_SPACE_TO_START:
   movi r3, 2
   sw r3, r4, 0
 LPRESS_SPACE_TO_START:
-  # movi r4, 0xFFFF
-  # lw r4, r4, 0
-  # movi r3, 0x20
-  # cmp r4, r3
-  # bne LPRESS_SPACE_TO_START
+  movi r4, 0xFFFF
+  lw r4, r4, 0
+  movi r3, 0x20
+  cmp r4, r3
+  bne LPRESS_SPACE_TO_START
   call clear_screen
   # restore scale 
   movi r4, 0xFFFC
@@ -487,8 +487,8 @@ LNOT_HIGH_SCORE:
   movi r4, 0xFFFC
   movi r3, 2
   sw r3, r4, 0
-  # movi r4, PRESS_SPACE_TO_START
-  # jalr r0, r4
+  movi r4, PRESS_SPACE_TO_START
+  jalr r0, r4
   sys EXIT
 
 FHIGH_SCORE:
