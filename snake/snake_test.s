@@ -69,7 +69,7 @@ PRESS_SPACE_TO_START:
 LPRESS_SPACE_TO_START:
   call getKey
   movi r4, 0x20
-  cmp r4, r4
+  cmp r4, r3
   bne LPRESS_SPACE_TO_START
 	call reset_cursor
   call clear_screen
