@@ -5,6 +5,7 @@ unsigned putchar(unsigned c);
 unsigned print_unsigned(unsigned x);
 unsigned clear(void);
 unsigned print(unsigned* string);
+unsigned waitKey(void);
 
 extern unsigned cursor_index;
 extern unsigned line_index;
@@ -92,15 +93,13 @@ int collatz_main(void) {
     int d = 0;
     int i = 0;
     while (1){
-      d = *p; // read input
-      if (d != 0) {
-        putchar(d);
-        if (d == 0x71) return 0; // this was a q
-        if (d < ZERO_CHAR || d > ZERO_CHAR + 9) goto end; // invalid input
-        digits[i] = d - ZERO_CHAR; // store input
-        ++i;
-        if (i == 3) break;
-      }
+      d = waitKey();
+      putchar(d);
+      if (d == 0x71) return 0; // this was a q
+      if (d < ZERO_CHAR || d > ZERO_CHAR + 9) goto end; // invalid input
+      digits[i] = d - ZERO_CHAR; // store input
+      ++i;
+      if (i == 3) break;
     }
 
     unsigned result = read_num();
@@ -113,13 +112,11 @@ int collatz_main(void) {
     print(quit);
 
     while (1){
-      d = *p; // start over on next keypress
-      if (d != 0) {
-        if (d == 0x71) return 0; // this was a q
-        end: clear();
-        print(enter_digit);
-        break;
-      }
+      d = waitKey();
+      if (d == 0x71) return 0; // this was a q
+      end: clear();
+      print(enter_digit);
+      break;
     }
   }
 }

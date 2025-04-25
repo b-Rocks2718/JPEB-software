@@ -18,6 +18,25 @@ skip_key:
 	and r3 r3 r5
 	jalr r0 r7
 
+waitKey:
+	sw r7 r1 -1 # push registers
+waitKey_loop:
+	call getKey
+	cmp r3 r0
+	bz wk.skip_key
+
+	# call serialWrite # keylogging
+	lw r7 r1 -1 # pop registers
+	jalr r0 r7
+
+wk.skip_key:
+	movi r6 1000
+wk.delay_loop:
+	addi r6 r6 -1
+	bnz wk.delay_loop
+	jmp waitKey_loop
+
+
 serialWrite:
 	movi r4 UART_TX_REG
 	lw r4 r4 0

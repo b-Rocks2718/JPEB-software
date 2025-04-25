@@ -10,10 +10,10 @@ int write_solid_tile(unsigned tile_num, unsigned color);
 unsigned draw_pixel(unsigned x, unsigned y, unsigned p);
 unsigned read_pixel(unsigned x, unsigned y);
 unsigned clear_screen(void);
+unsigned waitKey(void);
+unsigned getKey(void);
 
 int setup_loop(void){
-
-  unsigned* input = (unsigned*)INPUT_STREAM;
 
   static int cur_x = 5; // static to help out the compiler
   static int cur_y = 1;
@@ -22,7 +22,7 @@ int setup_loop(void){
 
   int keypress;
   while (1){
-    keypress = *input; // start over on next keypress
+    keypress = waitKey(); // start over on next keypress
     int moved = 0;
     if (keypress == 0x71) return 0; // this was a q
     else if (keypress == 0x77 && cur_y > 0) {
@@ -129,8 +129,6 @@ int life_main(void){
   // lower resolution
   *p = 1;
 
-  unsigned* input = (unsigned*)INPUT_STREAM;
-
   int paused = 0;
   int keypress;
 
@@ -165,7 +163,7 @@ int life_main(void){
       }
     }
 
-    keypress = *input; // start over on next keypress
+    keypress = getKey();
     if (keypress == 32) paused = !paused;
     else if (keypress == 0x71) return 0; // this was a q
   }

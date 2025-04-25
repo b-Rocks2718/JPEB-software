@@ -12,6 +12,7 @@ int write_text_tilemap(int text_color, int bg_color);
 int write_solid_tile(unsigned tile_num, unsigned color);
 unsigned read_pixel(unsigned x, unsigned y);
 unsigned draw_pixel(unsigned x, unsigned y, unsigned color);
+unsigned waitKey(void);
 
 // constants
 int FIXED_ONE = 0x0100;
@@ -97,7 +98,7 @@ int mandelbrot_main(void){
 
   int d;
   while (1){
-    d = *p; // start over on next keypress
+    d = waitKey();
     if (d == 0x71) return 0; // this was a q
   }
 } 
