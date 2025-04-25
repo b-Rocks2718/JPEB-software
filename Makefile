@@ -34,6 +34,10 @@ snake/snake_test.bin: snake/snake_test.s
 	rm -f $@
 	$(AS) snake/snake_test.s $(COMMON)
 
+snake/snake.bin: snake/snake.s
+	rm -f $@
+	$(AS) snake/snake.s $(COMMON)
+
 snake/snake_low_res.bin: snake/snake_low_res.s
 	rm -f $@
 	$(AS) snake/snake_low_res.s $(COMMON)
@@ -41,6 +45,10 @@ snake/snake_low_res.bin: snake/snake_low_res.s
 console/console.bin: console/console.s
 	rm -f $@
 	$(AS) console/console.s $(COMMON)
+
+console/printx.bin: console/printx.s
+	rm -f $@
+	$(AS) console/printx.s $(COMMON)
 
 %.s: %.c $(COMMON)
 	rm -f $@
@@ -67,6 +75,10 @@ common/text.s: common/text.c
 common/tile.s: common/tile.c
 	rm -f common/tile.s
 	$(CC) common/tile.c
+
+common/io_addresses.s: common/io_addresses.c
+	rm -f common/io_addresses.s
+	$(CC) common/io_addresses.c
 
 clean:
 	@find . -type f -name "*.bin" -exec rm -f {} +
