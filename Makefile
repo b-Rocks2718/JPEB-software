@@ -22,6 +22,10 @@ dino/dino.bin: dino/dino.s dino/dino_animations.s $(COMMON)
 	rm -f $@
 	$(AS) dino/dino.s dino/dino_animations.s $(COMMON)
 
+dino/dino_simple.bin: dino/dino_simple.s dino/dino_animations.s $(COMMON)
+	rm -f $@
+	$(AS) dino/dino_simple.s dino/dino_animations.s $(COMMON)
+
 mandelbrot/mandelbrot.bin: mandelbrot/mandelbrot.s
 	rm -f $@
 	$(AS) mandelbrot/mandelbrot.s $(COMMON)
