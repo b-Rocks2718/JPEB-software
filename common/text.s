@@ -180,7 +180,7 @@ putchar.end.26:
 	sw r3  r2  -27
 	lw r3  r2  -27
 	sw r3  r2  -28
-	movi r3 80
+	movi r3 60
 	lw r4  r2  -28
 	call right_shift
 	sw r3  r2  -29

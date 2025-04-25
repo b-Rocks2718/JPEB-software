@@ -27,7 +27,7 @@ unsigned putchar (unsigned c){
 
   p = (unsigned*)RESOLUTION_REG;
   int resolution = *p;
-  int max = 80 >> resolution;
+  int max = 60 >> resolution;
 
   if (cursor_index >= max){
     cursor_index = 0; // go to next line

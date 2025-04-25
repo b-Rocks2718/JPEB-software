@@ -9,6 +9,8 @@ unsigned print_unsigned(unsigned n);
 int write_text_tilemap_all(int text_color, int bg_color);
 int write_solid_tile(unsigned tile_num, unsigned color);
 int clear(void);
+unsigned getKey(void);
+int serialWrite(unsigned data);
 
 unsigned math[14] = {0X4D,0X61,0X74,0X68,0X20,0X44,0X65,0X6D,0X6F,0X73,0X21, 0X0A, 0X0A, 0X00};
 unsigned option1[21] = {32, 32, 0X43,0X6F,0X6C,0X6C,0X61,0X74,0X7A,0X20,0X53,0X65,0X71,0X75,0X65,0X6E,0X63,0X65,0X73,0X0A,0X00};
@@ -55,11 +57,15 @@ int main(void){
   print(option2);
   print(option3);
 
-  int d;
+  unsigned d = 0;
   while (1){
     update_selector(selector);
 
-    d = *p; // start over on next keypress
+    d = getKey(); // start over on next keypress
+    // d = *p;
+    if (d != 0) {
+      serialWrite(d);
+    }
     if (d == 0x73) selector = ((selector + 1) % 3);
     else if (d == 0x77) selector = ((selector - 1) % 3);
     if (d == 13 || d == 10) {
@@ -77,5 +83,6 @@ int main(void){
       }
     }
     if (d == 0x71) return 0; // this was a q
+    // for (unsigned delay = 0; delay < 100; ++delay);
   }
 }

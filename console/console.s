@@ -1,4 +1,8 @@
 
+	# Set stack pointer
+	movi r1 0x9fff
+	movi r2 0x9fff
+
 	movi r3 0x0F0
 	movi r4 0x000
 	call write_text_tilemap
@@ -20,13 +24,16 @@
 update_loop:
 
 	call getKey
+
 	cmp r3 r0
 	bz skip_key2
 
 	mov r2 r3
 	call putchar
+
 	mov r3 r2
 	call serialWrite
+
 skip_key2:
 
 	movi r6 1000
