@@ -67,10 +67,9 @@ PRESS_SPACE_TO_START:
   movi r3, 2
   sw r3, r4, 0
 LPRESS_SPACE_TO_START:
-  movi r4, 0xFFFF
-  lw r4, r4, 0
-  movi r3, 0x20
-  cmp r4, r3
+  call getKey
+  movi r4, 0x20
+  cmp r4, r4
   bne LPRESS_SPACE_TO_START
 	call reset_cursor
   call clear_screen
@@ -117,8 +116,7 @@ LSTALL:
   bnz LSTALL
   lw r3, r4, 0
 LMOVE:
-  movi r4, 0xFFFF
-  lw r3, r4, 0 # get a key press
+  call getKey
   movi r4, DIRECTION
   lw r6, r4, 0 # copy original direction into r6
 
