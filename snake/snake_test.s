@@ -58,7 +58,6 @@ INIT:
   sw r3, r4, 3
   sw r3, r4, 4
   sw r3, r4, 5
-  call clear_screen
 PRESS_SPACE_TO_START:
   movi r3, TPRESS_SPACE_TO_START
   call print
