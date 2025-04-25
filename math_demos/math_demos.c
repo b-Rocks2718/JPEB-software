@@ -61,8 +61,8 @@ int main(void){
   while (1){
     update_selector(selector);
 
-    d = getKey(); // start over on next keypress
-    // d = *p;
+    d = *p;
+    d = d & 0x00ff;
     if (d != 0) {
       serialWrite(d);
     }
@@ -83,6 +83,6 @@ int main(void){
       }
     }
     if (d == 0x71) return 0; // this was a q
-    // for (unsigned delay = 0; delay < 100; ++delay);
+    for (unsigned delay = 0; delay < 100; ++delay);
   }
 }
