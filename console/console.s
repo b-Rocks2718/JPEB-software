@@ -1,19 +1,33 @@
-	movi r4 UART_TX_REG
-	lw r4 r4 0
-	movi r5 INPUT_STREAM
-	lw r5 r5 0
-	movi r7 0x00FF
-	movi r2 0xFF00
-	movi r1 0xF000
+
+	movi r3 0x0F0
+	movi r4 0x000
+	call write_text_tilemap
+
+	movi r3 0
+	movi r4 0
+	call write_solid_tile
+
+	call clear_screen
+
+	movi r3 1
+	call setResolution
+
+	movi r3 62
+	call serialWrite
+	movi r3 62
+    call putchar
+
 update_loop:
-	lw r3 r5 0 # Load key
-	and r6 r3 r7
-	bz skip_key
-	and r6 r3 r2
-	cmp r6 r1
-	bz skip_key
-	sw r3 r4 0 # Output to TX
-skip_key:
+
+	call getKey
+	cmp r3 r0
+	bz skip_key2
+
+	mov r2 r3
+	call putchar
+	mov r3 r2
+	call serialWrite
+skip_key2:
 
 	movi r6 1000
 delay_loop:

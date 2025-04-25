@@ -1,6 +1,13 @@
 
-extern unsigned UART_TX_REG;
-extern unsigned INPUT_STREAM;
+unsigned getKey(void);
+int serialWrite(unsigned data);
+int setResolution(unsigned scale);
+int consoleRun(void);
+
+int write_text_tilemap(int text_color, int bg_color);
+int write_solid_tile(unsigned tile_num, unsigned color);
+int clear_screen(void);
+unsigned putchar(unsigned n);
 
 // hello\n
 // unsigned text[6] = {0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x0A};
@@ -20,15 +27,20 @@ extern unsigned INPUT_STREAM;
 // Prints what is typed to serial
 unsigned main(void) {
 
-    unsigned* txPtr = (unsigned*) UART_TX_REG;
-    unsigned* inputPtr = (unsigned*) INPUT_STREAM;
+    write_text_tilemap(0x0F0, 0x000);
+    write_solid_tile(0, 0x0000);
+    clear_screen();
+    setResolution(1);
+
+    serialWrite(62);
+    putchar(62);
     
+    unsigned key = 0;
     while (1) {
-        unsigned key = *inputPtr;
-        // Not empty and not key release
-        // if ((key & 0x00FF) != 0 && (key & 0xFF00) != 0xF000) {
-        if ((key & 0x00FF) != 0 && (key & 0xFF00) != 0xF000) {
-            *txPtr = key;
+        key = getKey();
+        if (key != 0) {
+            serialWrite(key);
+            putchar(key);
         }
         for (unsigned delay = 0; delay < 100; ++delay);
     }
