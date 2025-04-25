@@ -69,9 +69,9 @@ PRESS_SPACE_TO_START:
   sw r3, r4, 0
 LPRESS_SPACE_TO_START:
   push r7
-  call getKey
+  call waitKey
   pop r7
-  movi r3, 0x20
+  movi r4, 0x20
   cmp r4, r3
   bne LPRESS_SPACE_TO_START
   call clear_screen
@@ -125,7 +125,10 @@ LSTALL:
   lw r3, r4, 0
 LMOVE:
   push r7
-  call getKey
+  addi r3, r0, 100
+  call waitKeyFor
+  call serialWrite
+  # movi r3, 119
   pop r7
   movi r4, DIRECTION
   lw r6, r4, 0 # copy original direction into r6
@@ -180,20 +183,20 @@ LADVANCE_SNAKE:
   # if next position is border, we die (i.e. if carry in y or x)
   # left and top overflow are equivalent to right and bottom overflow, resp
   # right overflow
-  add r2, r5, r3
-  movi r6, 0x2800
-  cmp r2, r6
-  bae LFAIL_ADV # too far right
-  # down overflow
-  movi r6, 0x00FF # we use this to mask out the y coordinate
-  and r2, r2, r6
-  movi r6, 0x1E
-  cmp r2, r6
-  bae LFAIL_ADV # too far down
-  jmp LEND_CHECKWALL
+  # add r2, r5, r3
+#   movi r6, 0x2800
+#   cmp r2, r6
+#   bae LFAIL_ADV # too far right
+#   # down overflow
+#   movi r6, 0x00FF # we use this to mask out the y coordinate
+#   and r2, r2, r6
+#   movi r6, 0x1E
+#   cmp r2, r6
+#   bae LFAIL_ADV # too far down
+  # jmp LEND_CHECKWALL
 LFAIL_ADV:
-  movi r4, FEND
-  jalr r0, r4
+  # movi r4, FEND
+  # jalr r0, r4
 LEND_CHECKWALL:
   # correct for drift due to carry between y and x
   movi r6, 0x00FF
@@ -206,11 +209,11 @@ LEND_CHECKWALL:
 
   # if next position is part of snake (except tail), we die
   # we are in a sweet spot here where none of the registers except r3 matter
-  push r7
-  call FIN_SNAKE
-  pop r7
-  cmp r4, r0
-  bz LFAIL_ADV
+  # push r7
+  # call FIN_SNAKE
+  # pop r7
+  # cmp r4, r0
+  # bz LFAIL_ADV
 
   movi r4, SNAKE_LENGTH
   lw r2, r4, 0

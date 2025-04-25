@@ -63,10 +63,11 @@ console/printx.bin: console/printx.s
 	$(EMU) $<
 
 %.deploy: %.bin
-	@cp ${DATA_DIR}/*.hex ${SIM_DATA}/
-	@cp $*.hex ${SIM_DATA}/program.hex
-	@sed -i '1s/^/@0\n/' ${SIM_DATA}/program.hex
-	# $(SIM) +DATAPATH=${SIM_DATA}/
+	@cp ${DATA_DIR}/*.mem ${SIM_DATA}/
+	@cp $*.hex ${SIM_DATA}/program.mem
+	@sed -i '1s/^/@0\n/' ${SIM_DATA}/program.mem
+	@echo "Deployed $*"
+#	$(SIM) +DATAPATH=${SIM_DATA}/
 
 common/text.s: common/text.c
 	rm -f common/text.s
