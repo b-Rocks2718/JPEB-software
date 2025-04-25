@@ -46,6 +46,8 @@ int write_text_tilemap(unsigned text_color, unsigned bg_color);
 int reset_cursor();
 int print(unsigned* str);
 int print_unsigned(unsigned x);
+int getKey(void);
+int waitKey(void);
 
 // simple box draw function
 int draw_box(unsigned x, unsigned y, unsigned w, unsigned h, unsigned color){
@@ -290,7 +292,8 @@ unsigned main(void){
 
     // input
     p = (unsigned*)INPUT_STREAM;
-    unsigned key = *p;
+    unsigned key;
+    if (!(frame & 0xFFF)) key = getKey();
     if (key == 0x71) return 0; // 'q' to quit
     if (key == 0x20 && !is_jumping){ // spacebar
       dino_vy = 13;//JUMP_VELOCITY;

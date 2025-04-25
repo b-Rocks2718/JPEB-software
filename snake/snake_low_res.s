@@ -1,7 +1,8 @@
 # note that this follows the following ISA convensions
 # r1 = stack pointer
 # r7 = return link
-
+  movi r1, 0x9FFF
+  movi r2, 0x9FFF
 INIT:
   movi r3, 0x0000
   movi r4, 0x05A4
