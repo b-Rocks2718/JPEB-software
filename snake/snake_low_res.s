@@ -67,8 +67,9 @@ PRESS_SPACE_TO_START:
   movi r3, 2
   sw r3, r4, 0
 LPRESS_SPACE_TO_START:
-  movi r4, 0xFFFF
-  lw r4, r4, 0
+  push r7
+  call getKey
+  pop r7
   movi r3, 0x20
   cmp r4, r3
   bne LPRESS_SPACE_TO_START
@@ -122,8 +123,9 @@ LSTALL:
   pop  r5
   lw r3, r4, 0
 LMOVE:
-  movi r4, 0xFFFF
-  lw r3, r4, 0 # get a key press
+  push r7
+  call getKey
+  pop r7
   movi r4, DIRECTION
   lw r6, r4, 0 # copy original direction into r6
 
