@@ -1369,7 +1369,7 @@ update_positions:
 main:
 	movi r1 40959
 	movi r2 40959
-	addi r1  r1  -59
+	addi r1  r1  -64
 	movi r3 0
 	sw r3  r2  -1
 	movi r3 3720
@@ -1737,11 +1737,11 @@ main.for.2.start:
 	cmp r3  r4 
 	bb 1
 	jmp 3
-	movi r3 main.end.67
+	movi r3 main.end.72
 	jalr r0  r3 
 	movi r3 0
 	sw r3  r2  -57
-main.end.67:
+main.end.72:
 	lw r3  r2  -57
 	movi r4 0
 	cmp r3  r4 
@@ -1749,11 +1749,47 @@ main.end.67:
 	jmp 3
 	movi r3 main.for.2.break
 	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -59
+	lw r3  r2  -59
+	sw r3  r2  -60
+main.for.3.start:
+	movi r3 1
+	sw r3  r2  -61
+	movi r3 3
+	sw r3  r2  -62
+	lw r3  r2  -60
+	lw r4  r2  -62
+	cmp r3  r4 
+	bb 1
+	jmp 3
+	movi r3 main.end.68
+	jalr r0  r3 
+	movi r3 0
+	sw r3  r2  -61
+main.end.68:
+	lw r3  r2  -61
+	movi r4 0
+	cmp r3  r4 
+	bz 1
+	jmp 3
+	movi r3 main.for.3.break
+	jalr r0  r3 
+main.for.3.continue:
+	movi r3 1
+	sw r3  r2  -63
+	lw r3  r2  -60
+	lw r4  r2  -63
+	add r3  r3  r4 
+	sw r3  r2  -60
+	movi r3 main.for.3.start
+	jalr r0  r3 
+main.for.3.break:
 main.for.2.continue:
 	movi r3 1
-	sw r3  r2  -59
+	sw r3  r2  -64
 	lw r3  r2  -56
-	lw r4  r2  -59
+	lw r4  r2  -64
 	add r3  r3  r4 
 	sw r3  r2  -56
 	movi r3 main.for.2.start

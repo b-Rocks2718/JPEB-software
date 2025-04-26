@@ -1,3 +1,7 @@
+
+// seems that we can't synthesize the hardware for more than 3 sprites, so
+// this version of the game only uses 3
+
 extern unsigned FRAMEBUFFER_START;
 extern unsigned RESOLUTION_REG;
 extern unsigned INPUT_STREAM;
@@ -242,6 +246,6 @@ unsigned main(void){
 
     frame++;
     for (unsigned delay = 0; delay < 40000; ++delay)
-      ;//for (unsigned delay = 0; delay < 3; ++delay);
+      for (unsigned delay = 0; delay < 3; ++delay);
   }
 }
