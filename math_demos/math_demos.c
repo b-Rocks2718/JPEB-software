@@ -13,6 +13,7 @@ unsigned getKey(void);
 unsigned waitKey(void);
 int serialWrite(unsigned data);
 
+// strings
 unsigned math[14] = {0X4D,0X61,0X74,0X68,0X20,0X44,0X65,0X6D,0X6F,0X73,0X21, 0X0A, 0X0A, 0X00};
 unsigned option1[21] = {32, 32, 0X43,0X6F,0X6C,0X6C,0X61,0X74,0X7A,0X20,0X53,0X65,0X71,0X75,0X65,0X6E,0X63,0X65,0X73,0X0A,0X00};
 unsigned option2[18] = {32, 32, 0x4D,0X61,0X6E,0X64,0X65,0X6C,0X62,0X72,0X6F,0X74,0X20,0X53,0X65,0X74,0X0A,0X00};
@@ -24,6 +25,7 @@ int life_main(void);
 
 int update_selector(int selector){
   unsigned* fb = (unsigned*)FRAMEBUFFER_START;
+  // 0x3E is the > symbol, 0x00 is a blank square
   if (selector == 0){
     *(fb + 64 * 2) = 0x3E;
     *(fb + 64 * 3) = 0x00;
